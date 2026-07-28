@@ -1,0 +1,2592 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AGCF — Agentic Governance &amp; Control Framework · Self-Assessment</title>
+<style>
+:root{
+  color-scheme: light;
+  --surface-1:#fcfcfb; --page:#f9f9f7;
+  --text-primary:#0b0b0b; --text-secondary:#52514e; --text-muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+  --good:#0ca30c; --warning:#fab219; --serious:#ec835a; --critical:#d03b3b;
+  --accent:#2a78d6; --accent-soft:#cde2fb; --violet:#4a3aa7;
+  --track:#eceae4;
+  --shadow:0 1px 2px rgba(11,11,11,.05), 0 8px 24px rgba(11,11,11,.05);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --surface-1:#1a1a19; --page:#0d0d0d;
+  --text-primary:#ffffff; --text-secondary:#c3c2b7; --text-muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+  --good:#0ca30c; --warning:#fab219; --serious:#ec835a; --critical:#d03b3b;
+  --accent:#3987e5; --accent-soft:#184f95; --violet:#9085e9;
+  --track:#262624;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--page); color:var(--text-primary);
+  font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 80px}
+
+/* ---------- header ---------- */
+header.top{
+  border-bottom:1px solid var(--border); background:var(--surface-1);
+  position:sticky; top:0; z-index:40;
+}
+.top-in{max-width:1180px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;gap:1px;margin-right:auto}
+.brand h1{margin:0;font-size:16px;font-weight:650;letter-spacing:-.01em}
+.brand span{font-size:12px;color:var(--text-muted)}
+.btn{
+  font:inherit;font-size:13px;padding:6px 12px;border-radius:7px;cursor:pointer;
+  border:1px solid var(--border); background:var(--surface-1); color:var(--text-primary);
+}
+.btn:hover{background:var(--track)}
+.btn.primary{background:var(--accent);border-color:transparent;color:#fff}
+.btn.primary:hover{filter:brightness(1.08)}
+
+/* ---------- tabs ---------- */
+nav.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);background:var(--surface-1);position:sticky;top:57px;z-index:39}
+.tabs-in{max-width:1180px;margin:0 auto;padding:0 20px;display:flex;gap:4px;width:100%}
+.tab{
+  font:inherit;font-size:13.5px;padding:11px 14px;border:0;background:none;color:var(--text-secondary);
+  cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;
+}
+.tab[aria-selected="true"]{color:var(--text-primary);border-bottom-color:var(--accent);font-weight:600}
+.tab:hover{color:var(--text-primary)}
+
+/* ---------- cards ---------- */
+.card{
+  background:var(--surface-1);border:1px solid var(--border);border-radius:12px;
+  padding:20px;margin:16px 0;box-shadow:var(--shadow);
+}
+.card h2{margin:0 0 4px;font-size:15px;font-weight:650;letter-spacing:-.005em}
+.card .sub{margin:0 0 16px;font-size:13px;color:var(--text-secondary)}
+h3.sec{font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);margin:28px 0 8px;font-weight:650}
+
+/* ---------- profile ---------- */
+.profile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.opts{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.opt{
+  display:flex;gap:10px;align-items:flex-start;padding:9px 11px;border:1px solid var(--border);
+  border-radius:8px;cursor:pointer;background:var(--surface-1);
+}
+.opt:hover{background:var(--track)}
+.opt[data-on="1"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--surface-1))}
+.opt input{margin-top:3px;accent-color:var(--accent)}
+.opt b{font-size:13.5px;font-weight:600;display:block}
+.opt em{font-style:normal;font-size:12.5px;color:var(--text-secondary);display:block;margin-top:1px}
+label.fl{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);font-weight:650}
+
+/* ---------- hero + stats ---------- */
+.hero{display:grid;grid-template-columns:230px 1fr;gap:32px;align-items:start}
+@media (max-width:860px){.hero{grid-template-columns:1fr;gap:20px}}
+.heronum{font-size:56px;line-height:1;font-weight:680;letter-spacing:-.03em}
+.heronum small{font-size:22px;font-weight:600;color:var(--text-muted);margin-left:2px}
+.herolab{font-size:13px;color:var(--text-secondary);margin-top:8px}
+.tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+@media (max-width:1000px){.tiles{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}}
+.tile{border:1px solid var(--border);border-radius:10px;padding:12px 13px;background:var(--surface-1)}
+.tile .v{font-size:26px;font-weight:650;letter-spacing:-.02em;line-height:1.1}
+.tile .k{font-size:12px;color:var(--text-secondary);margin-top:2px}
+.tile .m{font-size:11.5px;color:var(--text-muted);margin-top:5px}
+
+/* ---------- bars ---------- */
+.barrow{display:grid;grid-template-columns:265px 1fr 46px;gap:12px;align-items:center;padding:5px 0}
+.barlab{font-size:13px;display:flex;align-items:center;gap:7px;min-width:0}
+.barlab .dcode{font:600 10.5px/1 var(--mono);color:var(--text-muted);border:1px solid var(--border);padding:3px 4px;border-radius:4px}
+.barlab .dname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stack{display:flex;height:22px;border-radius:4px;overflow:hidden;background:var(--track);gap:2px}
+.seg{position:relative;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:650;color:#fff;min-width:0;transition:flex-basis .25s ease}
+.seg:first-child{border-radius:4px 0 0 4px}
+.seg:last-child{border-radius:0 4px 4px 0}
+.seg.good{background:var(--good)} .seg.warning{background:var(--warning);color:#0b0b0b}
+.seg.critical{background:var(--critical)} .seg.serious{background:var(--serious);color:#0b0b0b}
+.seg.none{background:var(--track)}
+.barpct{font:600 13px/1 var(--mono);text-align:right;font-variant-numeric:tabular-nums;color:var(--text-secondary)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin:0 0 14px;font-size:12.5px;color:var(--text-secondary)}
+.legend i{display:inline-flex;align-items:center;gap:6px;font-style:normal}
+.sw{width:11px;height:11px;border-radius:3px;display:inline-block}
+.ic{font-size:11px;width:13px;display:inline-block;text-align:center}
+
+/* ---------- plane strip ---------- */
+.planes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.plane{border:1px solid var(--border);border-radius:10px;padding:13px 15px}
+.plane .pn{font-size:13.5px;font-weight:650}
+.plane .pd{font-size:12px;color:var(--text-secondary);margin:3px 0 9px;min-height:32px}
+.meter{height:6px;border-radius:3px;background:var(--track);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.plane .pv{font:600 12px/1 var(--mono);margin-top:6px;color:var(--text-secondary);font-variant-numeric:tabular-nums}
+
+/* ---------- assessment ---------- */
+.dom{border:1px solid var(--border);border-radius:12px;margin:12px 0;background:var(--surface-1);overflow:hidden}
+.domhd{display:flex;gap:12px;align-items:center;padding:14px 18px;cursor:pointer;user-select:none}
+.domhd:hover{background:var(--track)}
+.domhd .code{font:650 11px/1 var(--mono);padding:4px 6px;border-radius:5px;border:1px solid var(--border);color:var(--text-secondary)}
+.domhd .nm{font-weight:650;font-size:14.5px;flex:1}
+.domhd .pill{font-size:11.5px;color:var(--text-secondary);white-space:nowrap}
+.domhd .chev{color:var(--text-muted);font-size:12px;transition:transform .2s}
+.dom[data-open="1"] .chev{transform:rotate(90deg)}
+.dombody{display:none;padding:0 18px 18px;border-top:1px solid var(--border)}
+.dom[data-open="1"] .dombody{display:block}
+.purpose{font-size:13px;color:var(--text-secondary);margin:14px 0 4px}
+.purpose b{color:var(--text-primary);font-weight:600}
+.why{font-size:12.5px;color:var(--text-muted);margin:0 0 16px;padding-left:11px;border-left:2px solid var(--grid)}
+
+.ctrl{border-top:1px solid var(--grid);padding:14px 0}
+.ctrl:first-of-type{border-top:0}
+.ctrl-hd{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.cid{font:650 11px/1 var(--mono);color:var(--accent)}
+.ctitle{font-weight:600;font-size:14px}
+.badges{display:flex;gap:5px;margin-left:auto}
+.bdg{font:600 10px/1 var(--mono);padding:3px 5px;border-radius:4px;border:1px solid var(--border);color:var(--text-muted);letter-spacing:.02em}
+.bdg.req{border-color:var(--accent);color:var(--accent)}
+.bdg.hz{border-color:var(--violet);color:var(--violet)}
+.cstate{font-size:13.5px;color:var(--text-secondary);margin:6px 0 9px}
+.cmeta{font-size:12px;color:var(--text-muted);margin:0 0 10px}
+.cmeta b{color:var(--text-secondary);font-weight:600}
+.xw{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 11px}
+.xwi{font-size:11px;border:1px solid var(--border);border-radius:5px;padding:3px 7px;color:var(--text-secondary);background:var(--page)}
+.xwi b{color:var(--text-muted);font-weight:650;text-transform:uppercase;letter-spacing:.04em;font-size:9.5px;margin-right:4px}
+.statusrow{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.sbtn{
+  font:inherit;font-size:12.5px;padding:5px 10px;border-radius:6px;cursor:pointer;
+  border:1px solid var(--border);background:var(--surface-1);color:var(--text-secondary);
+  display:inline-flex;align-items:center;gap:5px;
+}
+.sbtn:hover{background:var(--track);color:var(--text-primary)}
+.sbtn[aria-pressed="true"]{color:#fff;border-color:transparent;font-weight:600}
+.sbtn[data-s="in_place"][aria-pressed="true"]{background:var(--good)}
+.sbtn[data-s="partial"][aria-pressed="true"]{background:var(--warning);color:#0b0b0b}
+.sbtn[data-s="must"][aria-pressed="true"]{background:var(--critical)}
+.sbtn[data-s="develop"][aria-pressed="true"]{background:var(--serious);color:#0b0b0b}
+.sbtn[data-s="na"][aria-pressed="true"]{background:var(--text-muted)}
+.note{
+  width:100%;margin-top:9px;font:inherit;font-size:13px;padding:8px 10px;border-radius:7px;
+  border:1px solid var(--border);background:var(--page);color:var(--text-primary);resize:vertical;min-height:34px;
+}
+.note::placeholder{color:var(--text-muted)}
+.ctrl[data-applies="0"]{opacity:.62}
+
+/* ---------- tables ---------- */
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{
+  text-align:left;font-weight:650;color:var(--text-muted);font-size:11px;text-transform:uppercase;
+  letter-spacing:.06em;padding:8px 10px;border-bottom:1px solid var(--axis);position:sticky;top:0;background:var(--surface-1);
+}
+td{padding:8px 10px;border-bottom:1px solid var(--grid);vertical-align:top}
+td.num{font-variant-numeric:tabular-nums;font-family:var(--mono);text-align:right}
+tbody tr:hover{background:var(--track)}
+.tblwrap{max-height:70vh;overflow:auto;border:1px solid var(--border);border-radius:10px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:2px 7px;border-radius:20px;white-space:nowrap}
+.chip.good{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--good)}
+.chip.warning{background:color-mix(in srgb,var(--warning) 22%,transparent);color:#8a5d00}
+.chip.critical{background:color-mix(in srgb,var(--critical) 16%,transparent);color:var(--critical)}
+.chip.serious{background:color-mix(in srgb,var(--serious) 22%,transparent);color:#9c4a1e}
+.chip.none{background:var(--track);color:var(--text-muted)}
+:root[data-theme="dark"] .chip.warning{color:var(--warning)}
+:root[data-theme="dark"] .chip.serious{color:var(--serious)}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+input[type=search],select{
+  font:inherit;font-size:13px;padding:6px 10px;border-radius:7px;border:1px solid var(--border);
+  background:var(--surface-1);color:var(--text-primary);
+}
+input[type=search]{min-width:220px}
+
+/* ---------- report ---------- */
+.report{font-size:14px;line-height:1.65}
+.report h2{font-size:19px;margin:30px 0 6px;letter-spacing:-.01em}
+.report h3{font-size:15px;margin:22px 0 6px}
+.report ul{margin:6px 0 14px;padding-left:22px}
+.report li{margin:4px 0}
+.report .lede{font-size:14.5px;color:var(--text-secondary);border-left:3px solid var(--accent);padding-left:14px;margin:14px 0}
+.kv{display:grid;grid-template-columns:190px 1fr;gap:4px 14px;font-size:13.5px;margin:12px 0}
+.kv dt{color:var(--text-muted)}
+.kv dd{margin:0}
+.actionlist{counter-reset:a}
+.actionitem{border:1px solid var(--border);border-radius:9px;padding:12px 14px;margin:8px 0;display:flex;gap:12px}
+.actionitem .rank{font:650 13px/1 var(--mono);color:var(--text-muted);padding-top:2px}
+.actionitem .body{flex:1}
+.actionitem .t{font-weight:600;font-size:13.5px}
+.actionitem .d{font-size:12.5px;color:var(--text-secondary);margin-top:3px}
+.emptynote{color:var(--text-muted);font-size:13px;font-style:italic}
+.warnbox{border:1px solid var(--warning);background:color-mix(in srgb,var(--warning) 10%,transparent);border-radius:9px;padding:12px 14px;font-size:13px;margin:14px 0}
+.hidden{display:none !important}
+
+@media print{
+  header.top,nav.tabs,.noprint{display:none !important}
+  body{background:#fff}
+  .card{break-inside:avoid;box-shadow:none;border-color:#ccc}
+  .tblwrap{max-height:none;overflow:visible}
+}
+@media (max-width:720px){
+  .barrow{grid-template-columns:120px 1fr 42px}
+  .heronum{font-size:44px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <h1>AGCF · Agentic Governance &amp; Control Framework</h1>
+      <span id="brandsub">Self-assessment instrument</span>
+    </div>
+    <button class="btn" id="btnLoad">Load</button>
+    <input type="file" id="fileIn" accept="application/json" class="hidden">
+    <button class="btn" id="btnSave">Save</button>
+    <button class="btn" id="btnTheme" title="Toggle light/dark">◐</button>
+  </div>
+</header>
+
+<nav class="tabs"><div class="tabs-in" role="tablist">
+  <button class="tab" role="tab" data-view="setup" aria-selected="true">Profile</button>
+  <button class="tab" role="tab" data-view="dash" aria-selected="false">Dashboard</button>
+  <button class="tab" role="tab" data-view="assess" aria-selected="false">Assessment</button>
+  <button class="tab" role="tab" data-view="cross" aria-selected="false">Crosswalk</button>
+  <button class="tab" role="tab" data-view="report" aria-selected="false">Report</button>
+</div></nav>
+
+<div class="wrap">
+
+<!-- ============ SETUP ============ -->
+<section id="v-setup">
+  <div class="card">
+    <h2>Set your profile</h2>
+    <p class="sub">These two choices decide which of the 104 controls you are held to. Everything above your profile stays visible as a horizon marker rather than a failure.</p>
+    <div class="profile-grid">
+      <div>
+        <label class="fl">Organization tier</label>
+        <div class="opts" id="tierOpts"></div>
+      </div>
+      <div>
+        <label class="fl">Highest autonomy you operate (or plan to)</label>
+        <div class="opts" id="autoOpts"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Context flags</h2>
+    <p class="sub">These do not change which controls apply. They mark controls where the consequence of a gap is materially higher for you, and they drive the regulatory notes in the report.</p>
+    <div class="opts" id="ctxOpts" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:8px"></div>
+  </div>
+
+  <div class="card">
+    <h2>How to score</h2>
+    <p class="sub">Answer honestly against the evidence you could produce today, not against intent. An unevidenced control is Partial at best.</p>
+    <div class="tblwrap" style="max-height:none">
+      <table>
+        <thead><tr><th style="width:150px">Status</th><th style="width:70px">Weight</th><th>Means</th></tr></thead>
+        <tbody id="scaleTbl"></tbody>
+      </table>
+    </div>
+    <p class="sub" style="margin:14px 0 0">Nothing is stored in your browser or sent anywhere. Use <b>Save</b> to write your assessment to a JSON file and <b>Load</b> to resume it.</p>
+  </div>
+</section>
+
+<!-- ============ DASHBOARD ============ -->
+<section id="v-dash" class="hidden">
+  <div class="card">
+    <h2>Readiness</h2>
+    <p class="sub" id="dashSub"></p>
+    <div class="hero">
+      <div>
+        <div class="heronum" id="heroPct">—<small>%</small></div>
+        <div class="herolab" id="heroLab">Set your profile, then work through the assessment.</div>
+      </div>
+      <div class="tiles" id="heroTiles"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>By plane</h2>
+    <p class="sub">The four planes of the reference architecture. A weak Trust Gate with a strong Execution plane is the most common and most dangerous shape.</p>
+    <div class="planes" id="planeStrip"></div>
+  </div>
+
+  <div class="card">
+    <h2>By domain</h2>
+    <p class="sub">Applicable controls only. Segment width is the count of controls in each state.</p>
+    <div class="legend" id="legend"></div>
+    <div id="domBars"></div>
+    <div style="margin-top:14px" class="noprint">
+      <button class="btn" id="btnTable">Show as table</button>
+    </div>
+    <div id="domTable" class="hidden" style="margin-top:14px">
+      <div class="tblwrap">
+        <table>
+          <thead><tr><th>Domain</th><th>Plane</th><th class="num">In place</th><th class="num">Partial</th><th class="num">Must implement</th><th class="num">Develop</th><th class="num">Not assessed</th><th class="num">N/A</th><th class="num">Readiness</th></tr></thead>
+          <tbody id="domTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Gap composition</h2>
+    <p class="sub">Two different kinds of work. <b>Must implement</b> is execution — a known control you have not put in. <b>Develop</b> is design — no off-the-shelf answer exists for your context, so someone has to invent it. Budget them separately.</p>
+    <div class="legend">
+      <i><span class="sw" style="background:var(--critical)"></span><span class="ic">▲</span> Must implement — execution work</i>
+      <i><span class="sw" style="background:var(--serious)"></span><span class="ic">◆</span> Develop — design work</i>
+    </div>
+    <div class="stack" id="gapStack" style="height:30px"></div>
+    <div id="gapNote" class="sub" style="margin:12px 0 0"></div>
+  </div>
+</section>
+
+<!-- ============ ASSESSMENT ============ -->
+<section id="v-assess" class="hidden">
+  <div class="card">
+    <div class="filters">
+      <input type="search" id="qAssess" placeholder="Search controls, statements, standards…">
+      <select id="fApplies">
+        <option value="req">Applicable to me</option>
+        <option value="all">Full catalogue</option>
+        <option value="hz">Horizon only (above my profile)</option>
+      </select>
+      <select id="fStatus">
+        <option value="">Any status</option>
+        <option value="unassessed">Not assessed</option>
+        <option value="in_place">In place</option>
+        <option value="partial">Partial</option>
+        <option value="must">Must implement</option>
+        <option value="develop">Develop</option>
+        <option value="na">Not applicable</option>
+      </select>
+      <button class="btn" id="btnExpand">Expand all</button>
+      <span id="assessCount" style="font-size:12.5px;color:var(--text-muted);margin-left:auto"></span>
+    </div>
+  </div>
+  <div id="domList"></div>
+</section>
+
+<!-- ============ CROSSWALK ============ -->
+<section id="v-cross" class="hidden">
+  <div class="card">
+    <h2>Standards crosswalk</h2>
+    <p class="sub">Every control mapped to the frameworks an auditor, regulator or enterprise customer is likely to ask about. Use it in both directions: to reuse evidence you already produce, and to find obligations no existing programme covers.</p>
+    <div class="filters">
+      <input type="search" id="qCross" placeholder="Filter — e.g. GOVERN 1.6, A.6.2.8, Art. 14, OWASP">
+      <select id="fDomain"><option value="">All domains</option></select>
+    </div>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th style="width:74px">ID</th><th style="width:200px">Control</th><th>NIST AI RMF 1.0</th><th>ISO/IEC 42001</th><th>EU AI Act</th><th>Other</th></tr></thead>
+        <tbody id="crossBody"></tbody>
+      </table>
+    </div>
+    <p class="sub" style="margin-top:14px">Mappings are indicative, not certifications of equivalence. Verify against the source standard before relying on one in an audit. Statuses of cited instruments are current as of 28 July 2026 — see the framework document for the moving parts.</p>
+  </div>
+</section>
+
+<!-- ============ REPORT ============ -->
+<section id="v-report" class="hidden">
+  <div class="card noprint">
+    <h2>Gap report</h2>
+    <p class="sub">Generated from your current answers. Print to PDF, or copy as Markdown for a ticket, a board pack, or a supplier questionnaire.</p>
+    <div class="filters">
+      <button class="btn primary" id="btnPrint">Print / Save PDF</button>
+      <button class="btn" id="btnMd">Copy as Markdown</button>
+      <button class="btn" id="btnMdFile">Download Markdown</button>
+      <span id="copyOk" style="font-size:12.5px;color:var(--good);opacity:0;transition:opacity .2s">Copied</span>
+    </div>
+  </div>
+  <div class="card report" id="reportBody"></div>
+</section>
+
+</div>
+
+<script id="catalog" type="application/json">{
+  "meta": {
+    "name": "AGCF — Agentic Governance & Control Framework",
+    "version": "0.9.2 (draft for review)",
+    "date": "2026-07-28",
+    "summary": "A vendor-neutral reference architecture and self-assessment instrument for governing AI agents, assistants and automation. Scales from an individual practitioner to a regulated enterprise.",
+    "planes": [
+      {
+        "id": "F",
+        "name": "Foundation",
+        "desc": "Who is accountable, and what do we actually have running."
+      },
+      {
+        "id": "T",
+        "name": "Trust Gate",
+        "desc": "What may enter, on whose authority, under what policy. Evaluated before the agent reasons or acts."
+      },
+      {
+        "id": "X",
+        "name": "Execution",
+        "desc": "What the agent may do, how far the damage can travel, who can stop it, and what is recorded."
+      },
+      {
+        "id": "A",
+        "name": "Assurance & Learning",
+        "desc": "How we know it works, what happens when it doesn't, and how the system improves."
+      }
+    ],
+    "tiers": [
+      {
+        "id": "T1",
+        "name": "Individual / Solo",
+        "desc": "One person or a handful, no dedicated security or compliance function. Personal or small-client work. The bar is: know what you're running, don't leak, don't let it break things you can't undo."
+      },
+      {
+        "id": "T2",
+        "name": "Small–Mid Organization",
+        "desc": "Has IT, may have security. Real customer or employee data. Contractual and sectoral obligations. The bar is: repeatable process, technical enforcement, evidence you can produce on request."
+      },
+      {
+        "id": "T3",
+        "name": "Enterprise / Regulated",
+        "desc": "Formal risk function, audit, regulator or large-customer scrutiny. The bar is: policy as code, independent assurance, evidence that survives adversarial review."
+      }
+    ],
+    "autonomy": [
+      {
+        "id": "A0",
+        "name": "Advisory",
+        "desc": "Reads and answers. No access to systems of record, no actions. A chat assistant with no tools."
+      },
+      {
+        "id": "A1",
+        "name": "Assistive",
+        "desc": "Reads organizational data and produces artifacts a human then uses. Retrieval, summarization, drafting. Reads real data; writes nothing."
+      },
+      {
+        "id": "A2",
+        "name": "Gated executor",
+        "desc": "Proposes actions in real systems; a human approves each consequential one before it happens."
+      },
+      {
+        "id": "A3",
+        "name": "Bounded autonomous",
+        "desc": "Executes within a pre-approved envelope without per-action approval. Humans supervise on the loop, not in it."
+      },
+      {
+        "id": "A4",
+        "name": "Open autonomous / multi-agent",
+        "desc": "Sets its own sub-goals, spawns or directs other agents, or operates with an envelope broad enough that its actions cannot be individually anticipated."
+      }
+    ],
+    "status_scale": [
+      {
+        "id": "in_place",
+        "label": "In Place",
+        "score": 3,
+        "desc": "Implemented, operating, and you could show evidence today."
+      },
+      {
+        "id": "partial",
+        "label": "Partial",
+        "score": 2,
+        "desc": "Exists but incomplete, inconsistent, or unevidenced."
+      },
+      {
+        "id": "must",
+        "label": "Must Implement",
+        "score": 0,
+        "desc": "Required at your tier and autonomy level. Absent. Known solution exists — this is execution work."
+      },
+      {
+        "id": "develop",
+        "label": "Develop",
+        "score": 1,
+        "desc": "Required, absent, and there is no off-the-shelf answer for your context. This is design work, not procurement."
+      },
+      {
+        "id": "na",
+        "label": "Not Applicable",
+        "score": null,
+        "desc": "Genuinely out of scope. Requires a written justification to count."
+      },
+      {
+        "id": "unassessed",
+        "label": "Not Assessed",
+        "score": null,
+        "desc": "Default state."
+      }
+    ],
+    "verification": "Crosswalk independently verified 28 Jul 2026 against NIST AI 100-1 Appendix A, ISO/IEC 42001:2023 Annex A, the consolidated AI Act as amended by Reg. (EU) 2026/1744, and OWASP/MCP primary sources. 28 citations corrected."
+  },
+  "domains": [
+    {
+      "id": "GOV",
+      "plane": "F",
+      "name": "Governance & Accountability",
+      "purpose": "Someone owns this. There is a written rule about what AI may and may not be used for, people know it, and the rule is reviewed as the ground shifts.",
+      "why": "Every downstream control inherits its authority from here. Without a named owner and a written boundary, the rest of the framework is a wish list.",
+      "controls": [
+        {
+          "id": "GOV-01",
+          "title": "Named accountable owner",
+          "statement": "A specific named person is accountable for AI and agent use, with the authority to stop it. Not a committee, not 'IT'.",
+          "tier": "T1",
+          "autonomy": "A0",
+          "evidence": "Role description, org chart entry, or a line in the AI policy naming the person.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 2.1, GOVERN 2.3",
+            "ISO 42001": "A.3.2",
+            "EU AI Act": "Art. 26(2)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "GOV-02",
+          "title": "Written AI use policy",
+          "statement": "A written, accessible policy states what AI use is permitted, what is prohibited, what requires approval, and who to ask.",
+          "tier": "T1",
+          "autonomy": "A0",
+          "evidence": "The policy document, with a version and date. Evidence it was distributed.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.2, GOVERN 1.4",
+            "ISO 42001": "A.2.2, A.2.3, A.9.2",
+            "EU AI Act": "Art. 26(1)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "GOV-03",
+          "title": "Risk appetite and prohibited-use list",
+          "statement": "The organization has decided, in writing, which categories of AI use it will not undertake at all, and what level of residual risk it will accept.",
+          "tier": "T2",
+          "autonomy": "A0",
+          "evidence": "Prohibited-use list; documented risk tolerance statement approved at the right level.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.3, MAP 1.5, MANAGE 1.4",
+            "ISO 42001": "A.2.2, Annex C",
+            "EU AI Act": "Art. 5 (prohibited practices)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "GOV-04",
+          "title": "AI literacy and role-based training",
+          "statement": "People who build, operate, approve or are affected by AI systems receive training proportionate to their role, including what the systems get wrong.",
+          "tier": "T1",
+          "autonomy": "A0",
+          "evidence": "Training materials, completion records, role-to-training mapping.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 2.2, MAP 3.4",
+            "ISO 42001": "A.4.6",
+            "EU AI Act": "Art. 4 (in force since 2 Feb 2025; amended 27 Jul 2026 to a support-and-provide standard)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "GOV-05",
+          "title": "Executive and board accountability",
+          "statement": "Leadership formally owns AI risk decisions and reviews them on a defined cadence with real information, not a status slide.",
+          "tier": "T3",
+          "autonomy": "A1",
+          "evidence": "Meeting minutes, standing agenda item, escalation records.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 2.3, GOVERN 1.5",
+            "ISO 42001": "Clause 5, A.3.2",
+            "EU AI Act": "—",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "GOV-06",
+          "title": "Cross-functional review body",
+          "statement": "A standing group with legal, security, privacy, and domain representation reviews new agent use cases before they go live.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Terms of reference, membership, review records with decisions.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 3.1, GOVERN 4.1",
+            "ISO 42001": "A.3.2, A.5.2",
+            "EU AI Act": "Art. 27 (FRIA, where applicable)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "GOV-07",
+          "title": "Resourcing",
+          "statement": "Budget and staff time are explicitly allocated to AI governance work. It is someone's job, not everyone's spare time.",
+          "tier": "T3",
+          "autonomy": "A1",
+          "evidence": "Budget line, headcount allocation, or documented time allocation.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 2.1, GOVERN 2.1",
+            "ISO 42001": "Clause 7.1, A.4.2",
+            "EU AI Act": "—",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "GOV-08",
+          "title": "Contractual flow-down to suppliers",
+          "statement": "AI governance requirements — data use, training rights, incident notification, model change notice, evidence access — are written into supplier and vendor contracts.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Contract clauses, vendor questionnaire, procurement standard.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 6.1, MAP 4.1",
+            "ISO 42001": "A.10.2, A.10.3",
+            "EU AI Act": "Art. 25 (value chain), Art. 53(b)",
+            "Other": "US: OMB M-25-22 flow-downs for federal contractors"
+          }
+        },
+        {
+          "id": "GOV-09",
+          "title": "Regulatory applicability determination",
+          "statement": "The organization has determined which AI-specific laws apply to it, in which jurisdictions, on what dates — and refreshes that determination as the law moves.",
+          "tier": "T2",
+          "autonomy": "A0",
+          "evidence": "Applicability memo with jurisdictions, obligations and dates; review date.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.1, MAP 1.1",
+            "ISO 42001": "Clause 4.1, 4.2, A.2.3",
+            "EU AI Act": "Art. 2 (scope), Art. 113 (as amended by Reg. (EU) 2026/1744)",
+            "Other": "US state law: CO ADMTA (1 Jan 2027), TX TRAIGA, CA SB 53, IL SB 315"
+          }
+        }
+      ]
+    },
+    {
+      "id": "INV",
+      "plane": "F",
+      "name": "Inventory, Classification & Risk Tiering",
+      "purpose": "You know every AI system and agent operating on your behalf, what each one touches, how autonomous it is, and how much damage it could do.",
+      "why": "You cannot govern what you cannot enumerate. Inventory is the single highest-leverage control in the framework and the one most often skipped because it is unglamorous.",
+      "controls": [
+        {
+          "id": "INV-01",
+          "title": "Register of AI systems and agents",
+          "statement": "A maintained register lists every AI system and agent in use, including AI features embedded inside SaaS products you did not choose to buy as AI.",
+          "tier": "T1",
+          "autonomy": "A0",
+          "evidence": "The register itself, with a last-reviewed date.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.6",
+            "ISO 42001": "A.4.2, A.6.2.7",
+            "EU AI Act": "Art. 49 (registration, where high-risk)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "INV-02",
+          "title": "Register content is sufficient to govern",
+          "statement": "Each entry records purpose, business owner, model/provider, data it can reach, tools and actions available to it, and where it runs.",
+          "tier": "T1",
+          "autonomy": "A0",
+          "evidence": "Register schema and a populated sample.",
+          "xw": {
+            "NIST AI RMF": "MAP 1.1, MAP 2.1",
+            "ISO 42001": "A.6.2.2, A.6.2.7",
+            "EU AI Act": "Art. 11 + Annex IV (technical documentation)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "INV-03",
+          "title": "Autonomy tier assigned",
+          "statement": "Every agent is assigned an autonomy level (advisory → assistive → gated → bounded autonomous → open autonomous) and that assignment drives which controls apply.",
+          "tier": "T1",
+          "autonomy": "A0",
+          "evidence": "Autonomy tier recorded per entry; tier definitions documented.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.3, MAP 2.2, MAP 3.5",
+            "ISO 42001": "A.6.2.2, A.9.4",
+            "EU AI Act": "Art. 14(1) (oversight proportionate to autonomy); Annex XIII(e)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "INV-04",
+          "title": "Impact and consequence classification",
+          "statement": "Each use case records who is affected by its outputs and how badly — including people who are not your users.",
+          "tier": "T2",
+          "autonomy": "A0",
+          "evidence": "Impact assessment per use case; affected-population analysis.",
+          "xw": {
+            "NIST AI RMF": "MAP 5.1, MAP 3.2",
+            "ISO 42001": "A.5.2, A.5.3, A.5.4, A.5.5",
+            "EU AI Act": "Art. 27 (FRIA)",
+            "Other": "ISO/IEC 42005:2025"
+          }
+        },
+        {
+          "id": "INV-05",
+          "title": "Regulatory classification per use case",
+          "statement": "Each use case is classified against applicable regimes — prohibited, high-risk, transparency-only, or minimal — and the reasoning is recorded.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Classification record with rationale, reviewed by someone competent to review it.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.1, GOVERN 1.3",
+            "ISO 42001": "A.5.2, Clause 6.1",
+            "EU AI Act": "Art. 5, Art. 6, Art. 6(3)–(4), Annex III, Art. 50",
+            "Other": "CO ADMTA 'consequential decision'"
+          }
+        },
+        {
+          "id": "INV-06",
+          "title": "Shadow AI discovery",
+          "statement": "There is an active mechanism to find AI and agent use that never came through the approval process — not just a policy telling people not to do it.",
+          "tier": "T2",
+          "autonomy": "A0",
+          "evidence": "Discovery method (egress logs, SaaS discovery, expense review, survey) and findings from the last cycle.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.6, MEASURE 3.1",
+            "ISO 42001": "A.4.2, A.9.2",
+            "EU AI Act": "—",
+            "Other": "OWASP ASI10 (Rogue Agents)"
+          }
+        },
+        {
+          "id": "INV-07",
+          "title": "Reclassification triggers",
+          "statement": "Defined events — model version change, new tool or connector, scope expansion, new data domain — force re-review rather than silently inheriting the old approval.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Trigger list; examples of triggered re-reviews.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 4.1, MEASURE 2.4",
+            "ISO 42001": "A.6.2.6, Clause 8.1",
+            "EU AI Act": "Art. 25 (substantial modification), Art. 43(4)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "INV-08",
+          "title": "Inventory reconciled to identity and spend",
+          "statement": "The AI register is periodically reconciled against issued credentials, API keys, connector grants and billing — the three places undeclared agents show up.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Reconciliation report; discrepancies and their resolution.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.6, MANAGE 3.1",
+            "ISO 42001": "A.4.2, A.10.3",
+            "EU AI Act": "—",
+            "Other": "—"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DAT",
+      "plane": "T",
+      "name": "Data Boundary, Provenance & Sovereignty",
+      "purpose": "The agent can reach exactly the data it needs, that data's origin and handling terms are known, and it does not cross borders or contracts it shouldn't.",
+      "why": "This is the control most organizations think they have because they have a data classification policy. Having a policy and enforcing it at agent retrieval time are different things.",
+      "controls": [
+        {
+          "id": "DAT-01",
+          "title": "Classification applied to agent-reachable data",
+          "statement": "Any data source an agent can reach is classified. Unclassified data is treated as sensitive by default, not as public.",
+          "tier": "T1",
+          "autonomy": "A0",
+          "evidence": "Classification scheme; classification applied to the sources in the register.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.10, GOVERN 1.4",
+            "ISO 42001": "A.7.2, A.7.4",
+            "EU AI Act": "Art. 10 (data governance)",
+            "Other": "ISO/IEC 27001 A.5.12"
+          }
+        },
+        {
+          "id": "DAT-02",
+          "title": "Default-deny data scope per agent",
+          "statement": "Each agent has an explicit allow-list of data domains. Access is default-deny, not 'everything the service account can see'.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Per-agent scope configuration; a test showing an out-of-scope source is inaccessible.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 1.3, GOVERN 1.4",
+            "ISO 42001": "A.7.2, A.9.4",
+            "EU AI Act": "Art. 26(4)",
+            "Other": "OWASP LLM02, LLM08"
+          }
+        },
+        {
+          "id": "DAT-03",
+          "title": "Retrieval-time minimization",
+          "statement": "The agent receives the least data sufficient for the task — filtered at retrieval, not filtered in the prompt or trusted to the model.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Retrieval filter configuration; sample trace showing the data actually passed.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 1.3, MEASURE 2.10",
+            "ISO 42001": "A.7.2, A.7.6",
+            "EU AI Act": "Art. 10(2)",
+            "Other": "GDPR Art. 5(1)(c)"
+          }
+        },
+        {
+          "id": "DAT-04",
+          "title": "Sensitive-data detection on both directions",
+          "statement": "Detection for personal, health, payment, credential and proprietary data runs on what enters the agent and on what leaves it.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Detector configuration and coverage; recent detection statistics including false-negative testing.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.7, MEASURE 2.10",
+            "ISO 42001": "A.7.4, A.6.2.6",
+            "EU AI Act": "Art. 15 (cybersecurity)",
+            "Other": "OWASP LLM02"
+          }
+        },
+        {
+          "id": "DAT-05",
+          "title": "De-identification and redaction",
+          "statement": "Where the task does not require identified data, the agent receives de-identified, redacted or tokenized data.",
+          "tier": "T3",
+          "autonomy": "A1",
+          "evidence": "De-identification method and its validation; documented decision where full fidelity is required.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 2.1, MEASURE 2.10",
+            "ISO 42001": "A.7.6",
+            "EU AI Act": "Art. 4a (special-category data for bias detection; Art. 10(5) deleted by Reg. (EU) 2026/1744)",
+            "Other": "HIPAA §164.514"
+          }
+        },
+        {
+          "id": "DAT-06",
+          "title": "Residency and sovereignty enforced technically",
+          "statement": "Data residency, cross-border transfer and sovereign-compute constraints are enforced by configuration and network controls, not by a clause in a contract.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Region pinning configuration; egress controls; transfer mechanism documentation.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.1, MAP 4.1",
+            "ISO 42001": "A.4.5, A.10.3",
+            "EU AI Act": "Art. 2 (extraterritorial scope)",
+            "Other": "GDPR Ch. V; sector sovereignty requirements"
+          }
+        },
+        {
+          "id": "DAT-07",
+          "title": "Provider training and retention terms verified",
+          "statement": "You know, in writing, whether your prompts and data train the provider's models, how long they are retained, and who can access them — for every provider, including the ones inside your SaaS tools.",
+          "tier": "T1",
+          "autonomy": "A0",
+          "evidence": "Provider terms extract per provider; configuration proving the elected setting.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 6.1, MAP 4.1, MANAGE 3.1",
+            "ISO 42001": "A.10.3, A.7.3",
+            "EU AI Act": "Art. 25, Art. 53(b)",
+            "Other": "OMB M-25-22 data rights clauses"
+          }
+        },
+        {
+          "id": "DAT-08",
+          "title": "Provenance for corpora and memory",
+          "statement": "For retrieval corpora, fine-tuning sets and persistent agent memory, you can say where each item came from, who could write it, and when.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Provenance metadata schema; sample lineage trace.",
+          "xw": {
+            "NIST AI RMF": "MAP 4.1, MEASURE 2.8",
+            "ISO 42001": "A.7.5",
+            "EU AI Act": "Art. 10(2), Art. 53(d)",
+            "Other": "OWASP ASI06, LLM04"
+          }
+        },
+        {
+          "id": "DAT-09",
+          "title": "Retention and deletion across the whole footprint",
+          "statement": "Retention and deletion rules cover prompts, outputs, embeddings, agent memory and execution traces — not just the system of record.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Retention schedule naming each store; evidence of deletion executing.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.7, MANAGE 4.1",
+            "ISO 42001": "A.7.2, A.6.2.8",
+            "EU AI Act": "Art. 12, Art. 26(6) (min. 6 months for high-risk deployer logs)",
+            "Other": "GDPR Art. 17"
+          }
+        },
+        {
+          "id": "DAT-10",
+          "title": "Lawful basis for what the agent does",
+          "statement": "There is an identified lawful basis or consent for the processing the agent performs, including any secondary use the agent creates.",
+          "tier": "T2",
+          "autonomy": "A0",
+          "evidence": "Records of processing; DPIA where required; consent records.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.1, MAP 1.1",
+            "ISO 42001": "A.5.4, Clause 4.2",
+            "EU AI Act": "Art. 26(9) (DPIA)",
+            "Other": "GDPR Art. 6, Art. 35; HIPAA minimum necessary"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IDA",
+      "plane": "T",
+      "name": "Identity, Authority & Attribution",
+      "purpose": "Every agent has its own identity, acts under authority that traces to a human, holds only the privileges its current task needs, and can be shut off individually.",
+      "why": "The most commonly missing layer, and the one that makes every other control unenforceable when absent. If the agent uses a human's credentials, your logs say a human did it, your revocation kills that human's access, and your least-privilege story is fiction.",
+      "controls": [
+        {
+          "id": "IDA-01",
+          "title": "Distinct identity per agent",
+          "statement": "Each agent authenticates as itself. It does not borrow a person's credentials, a shared service account, or a long-lived admin key.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Identity per agent in the directory or secret store; no shared-credential exceptions outstanding.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 3.2, MANAGE 1.3",
+            "ISO 42001": "A.3.2, A.9.2",
+            "EU AI Act": "Art. 12 (traceability)",
+            "Other": "OWASP ASI03, T9; CSA Agentic AI IAM"
+          }
+        },
+        {
+          "id": "IDA-02",
+          "title": "Agent identity lifecycle through the IdP",
+          "statement": "Agent identities are created, reviewed and revoked through the same identity provider and joiner-mover-leaver process as everything else.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Provisioning workflow; evidence of a revocation executing end to end.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 2.1, MANAGE 2.4",
+            "ISO 42001": "A.3.2, A.4.6",
+            "EU AI Act": "—",
+            "Other": "OWASP ASI03; SCIM/OIDC provisioning"
+          }
+        },
+        {
+          "id": "IDA-03",
+          "title": "Delegation chain is recorded",
+          "statement": "For any agent action you can answer: which human authorized this, for what scope, and when did that authority start and end.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Delegation records or on-behalf-of claims present in logs; a worked example.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 3.2, MANAGE 4.1",
+            "ISO 42001": "A.6.2.8, A.10.2",
+            "EU AI Act": "Art. 12, Art. 26(2)",
+            "Other": "OWASP T8; draft-ietf-oauth-identity-assertion-authz-grant"
+          }
+        },
+        {
+          "id": "IDA-04",
+          "title": "Per-action scoping, not per-system",
+          "statement": "Privileges are granted at action granularity — draft but not send, read but not delete — rather than by handing over a whole system.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Scope definitions per connector; a test showing a denied action class.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 1.3, MAP 3.5",
+            "ISO 42001": "A.9.2, A.9.4",
+            "EU AI Act": "Art. 14(4)",
+            "Other": "OWASP LLM06 (Excessive Agency), ASI03"
+          }
+        },
+        {
+          "id": "IDA-05",
+          "title": "Short-lived, just-in-time credentials",
+          "statement": "Agents hold credentials scoped to a task and a time window. No standing long-lived static keys.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Token lifetime configuration; absence of static keys in secret inventory.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 1.3, MEASURE 2.7",
+            "ISO 42001": "A.9.2",
+            "EU AI Act": "Art. 15",
+            "Other": "CSA Agentic AI IAM; SPIFFE/SPIRE"
+          }
+        },
+        {
+          "id": "IDA-06",
+          "title": "Audience-bound tokens; no passthrough",
+          "statement": "Tokens are bound to the specific resource they were issued for. A credential presented to one service is never forwarded to another.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Token audience validation enabled; architecture review confirming no passthrough path.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.7",
+            "ISO 42001": "A.6.2.5",
+            "EU AI Act": "Art. 15",
+            "Other": "MCP authorization spec (RFC 8707 resource indicators; passthrough prohibited)"
+          }
+        },
+        {
+          "id": "IDA-07",
+          "title": "Agent actions distinguishable in logs and SIEM",
+          "statement": "Agent activity is a distinct actor class in your security telemetry — you can filter for it, alert on it, and separate it from human activity.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "SIEM query returning agent-only activity; actor-type field populated.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.4, MANAGE 4.1",
+            "ISO 42001": "A.6.2.8",
+            "EU AI Act": "Art. 12",
+            "Other": "OWASP T8 (Repudiation & Untraceability)"
+          }
+        },
+        {
+          "id": "IDA-08",
+          "title": "Granular revocation path",
+          "statement": "You can revoke one agent, one credential, or one connector without taking down everything else — and you have tested it.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Documented revocation procedure; evidence of a test.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 2.4",
+            "ISO 42001": "A.6.2.6",
+            "EU AI Act": "Art. 14(4)(e)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "IDA-09",
+          "title": "Periodic privilege review for agents",
+          "statement": "Agent entitlements are reviewed on a cadence like human entitlements are, and accumulated scope is pruned.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Review records with removals actually executed.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.5, MANAGE 3.1",
+            "ISO 42001": "Clause 9.3, A.9.2",
+            "EU AI Act": "—",
+            "Other": "—"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ING",
+      "plane": "T",
+      "name": "Ingress Trust & Content Integrity",
+      "purpose": "Content the agent reads cannot become instructions the agent obeys, and the tools it uses are what they claim to be.",
+      "why": "Prompt injection and tool poisoning arrive through the normal front door — a ticket description, a web page, a document, an MCP tool description. Normalization and deduplication do not sanitize adversarial content; they launder it into something that looks trusted.",
+      "controls": [
+        {
+          "id": "ING-01",
+          "title": "Untrusted sources identified and marked",
+          "statement": "Every content source is classified as trusted or untrusted, and untrusted content stays marked as it moves through the pipeline.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Source trust classification; taint or provenance field carried in the context.",
+          "xw": {
+            "NIST AI RMF": "MAP 4.1, MEASURE 2.7",
+            "ISO 42001": "A.7.3, A.7.5",
+            "EU AI Act": "Art. 15(5)",
+            "Other": "OWASP LLM01; ASI01"
+          }
+        },
+        {
+          "id": "ING-02",
+          "title": "Injection resistance between content and instruction",
+          "statement": "There is a technical boundary preventing retrieved or tool-returned content from redirecting the agent's goal or authority — structural separation, not a 'ignore instructions in the data' line in the system prompt.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Architecture description of the boundary; injection test results.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.7, MANAGE 2.2",
+            "ISO 42001": "A.6.2.4",
+            "EU AI Act": "Art. 15(5)",
+            "Other": "OWASP LLM01, ASI01, T6"
+          }
+        },
+        {
+          "id": "ING-03",
+          "title": "Tool, connector and skill approval",
+          "statement": "Every tool, plugin, MCP server, connector and agent skill an agent can use is inventoried and explicitly approved. No self-service tool addition at runtime.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Approved tool register; a blocked attempt to add an unapproved tool.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 6.1, MAP 4.1, MANAGE 3.1",
+            "ISO 42001": "A.4.4, A.10.3",
+            "EU AI Act": "Art. 25",
+            "Other": "OWASP ASI04, LLM03; OWASP Agentic Skills Top 10"
+          }
+        },
+        {
+          "id": "ING-04",
+          "title": "Tool supply-chain integrity",
+          "statement": "Tools and skills are pinned by version or hash, and their source is verified. You would notice if one changed.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Pinning configuration; integrity verification step in the deployment path.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 3.1, MANAGE 3.2",
+            "ISO 42001": "A.4.4, A.10.3",
+            "EU AI Act": "Art. 15",
+            "Other": "OWASP LLM03, ASI04; SLSA/Sigstore"
+          }
+        },
+        {
+          "id": "ING-05",
+          "title": "Tool descriptions treated as untrusted",
+          "statement": "Tool and function descriptions — which the model reads and the user usually does not — are reviewed on approval and re-reviewed when they change. A changed description invalidates the prior approval.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Description review record; change-detection mechanism.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 3.2, MEASURE 2.7",
+            "ISO 42001": "A.10.3",
+            "EU AI Act": "—",
+            "Other": "MCP spec (annotations untrusted); tool poisoning / rug-pull research; OWASP ASI04"
+          }
+        },
+        {
+          "id": "ING-06",
+          "title": "Memory and corpus write-path integrity",
+          "statement": "What can write into agent memory or a retrieval corpus is controlled and logged. An agent cannot silently persist attacker-supplied content for its future self or for other agents.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Write-path access controls; memory write audit log.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.7, MANAGE 2.2",
+            "ISO 42001": "A.7.2, A.7.5",
+            "EU AI Act": "Art. 15(4) (feedback-loop bias)",
+            "Other": "OWASP T1 Memory Poisoning, ASI06, LLM08"
+          }
+        },
+        {
+          "id": "ING-07",
+          "title": "Output handling before downstream use",
+          "statement": "Model output is validated, escaped or constrained before it is executed, rendered, or passed to another system. Output is never trusted as code or as a command.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Validation layer; test showing an injection payload in output does not execute downstream.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.7, MANAGE 2.2",
+            "ISO 42001": "A.6.2.4",
+            "EU AI Act": "Art. 15",
+            "Other": "OWASP LLM05, ASI05"
+          }
+        },
+        {
+          "id": "ING-08",
+          "title": "Inter-agent messages authenticated and untrusted",
+          "statement": "In multi-agent systems, messages between agents are authenticated, and a message from another agent is treated as untrusted input rather than as a trusted instruction.",
+          "tier": "T3",
+          "autonomy": "A3",
+          "evidence": "Inter-agent auth mechanism; test showing a spoofed or poisoned message is rejected or contained.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.7, MAP 3.5",
+            "ISO 42001": "A.6.2.5",
+            "EU AI Act": "—",
+            "Other": "OWASP T12, T13, T14; ASI07; CSA MAESTRO L7"
+          }
+        }
+      ]
+    },
+    {
+      "id": "POL",
+      "plane": "T",
+      "name": "Policy Enforcement & Guardrails",
+      "purpose": "Written policy is turned into an evaluated decision that sits between what the agent wants to do and what it is allowed to do, and cannot be talked out of it.",
+      "why": "Most 'trust and safety' layers are a checklist of controls with no decision function. A gate needs inputs, a verdict, an unbypassable enforcement point, and a defined behaviour on deny.",
+      "controls": [
+        {
+          "id": "POL-01",
+          "title": "Policy expressed in evaluable form",
+          "statement": "The rules that govern agent behaviour exist in a form a system can evaluate, not only in prose a person can read.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Policy definitions in code or configuration; mapping from the written policy to the encoded rules.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.4, MANAGE 1.3",
+            "ISO 42001": "A.2.2, A.9.2",
+            "EU AI Act": "Art. 9",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "POL-02",
+          "title": "Enforcement point cannot be bypassed",
+          "statement": "Policy is enforced at a chokepoint between decision and action that the agent cannot route around — not inside the prompt, and not as advice the model may weigh.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Architecture showing the enforcement point; test attempting to bypass it.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 1.3, MEASURE 2.6",
+            "ISO 42001": "A.6.2.5, A.9.2",
+            "EU AI Act": "Art. 14(4)",
+            "Other": "OWASP LLM06, ASI02"
+          }
+        },
+        {
+          "id": "POL-03",
+          "title": "Deny is safe and defined",
+          "statement": "When policy denies, the system fails closed with defined behaviour. It does not silently proceed, retry with a different phrasing, or degrade to an unmonitored path.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Deny-path specification; log of denials showing what happened next.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.6, MANAGE 2.2",
+            "ISO 42001": "A.6.2.5",
+            "EU AI Act": "Art. 15(4) (fail-safe)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "POL-04",
+          "title": "Ambiguity escalates rather than allows",
+          "statement": "When the policy decision is uncertain, the default is escalation to a human, not permission.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Escalation rule; escalation volume and resolution records.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 1.3, MAP 3.5",
+            "ISO 42001": "A.3.3, A.9.2",
+            "EU AI Act": "Art. 14",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "POL-05",
+          "title": "Prohibited uses enforced technically",
+          "statement": "The prohibited-use list from GOV-03 is enforced by controls, not only stated in a policy people have read once.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Technical control mapped to each prohibited use; test evidence.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.2, MANAGE 1.3",
+            "ISO 42001": "A.2.2, A.9.3",
+            "EU AI Act": "Art. 5",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "POL-06",
+          "title": "Output guardrails proportionate to context",
+          "statement": "Output filtering and safety controls are calibrated to the audience and consequence of the use case rather than applied as one global setting.",
+          "tier": "T1",
+          "autonomy": "A1",
+          "evidence": "Guardrail configuration per use case; rationale for the calibration.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.6, MANAGE 2.2",
+            "ISO 42001": "A.6.2.4, A.9.4",
+            "EU AI Act": "Art. 9(2)",
+            "Other": "OWASP LLM09"
+          }
+        },
+        {
+          "id": "POL-07",
+          "title": "Policy versioning bound to decisions",
+          "statement": "Every recorded decision can be tied to the version of the policy that governed it, so an old action is judged by the rule that applied at the time.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Policy version identifier present in decision records.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.4, MANAGE 4.1",
+            "ISO 42001": "A.2.4, A.6.2.8",
+            "EU AI Act": "Art. 12",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "POL-08",
+          "title": "Exceptions are time-bound and owned",
+          "statement": "Policy exceptions have a named owner, a stated justification, an expiry date, and a review. Permanent exceptions are policy changes and are treated as such.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Exception register with expiry dates; evidence of expired exceptions closing.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.4, MANAGE 1.4",
+            "ISO 42001": "A.2.4, Clause 6.1",
+            "EU AI Act": "—",
+            "Other": "—"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACT",
+      "plane": "X",
+      "name": "Action Control & Blast Radius",
+      "purpose": "The agent's ability to cause harm is bounded by construction — by what class of action it may take, how far a mistake can propagate, and how fast you can stop it.",
+      "why": "This is the layer that has to carry the weight, because the human approval gate empirically does not. Published containment data shows approval rates around 93% and injection success rising sharply under repeated adaptive attempts. Containment must hold when the human clicks Approve.",
+      "controls": [
+        {
+          "id": "ACT-01",
+          "title": "Actions classified by reversibility",
+          "statement": "Every action available to an agent is classified as read-only, reversible write, irreversible, or destructive. This classification, not the tool name, drives the controls.",
+          "tier": "T1",
+          "autonomy": "A2",
+          "evidence": "Action inventory with reversibility class per action.",
+          "xw": {
+            "NIST AI RMF": "MAP 2.1, MANAGE 1.2",
+            "ISO 42001": "A.6.2.2, A.9.4",
+            "EU AI Act": "Art. 9(2)",
+            "Other": "OWASP LLM06"
+          }
+        },
+        {
+          "id": "ACT-02",
+          "title": "Irreversible actions gated or prohibited",
+          "statement": "Irreversible and destructive actions either require explicit human approval or are removed from the agent's reach entirely. They are never in the autonomous envelope.",
+          "tier": "T1",
+          "autonomy": "A2",
+          "evidence": "Configuration showing the gate or the removal; test attempting the action.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 1.3, MAP 3.5",
+            "ISO 42001": "A.9.2, A.9.4",
+            "EU AI Act": "Art. 14(4)(d)",
+            "Other": "OWASP ASI10"
+          }
+        },
+        {
+          "id": "ACT-03",
+          "title": "Isolated execution environment",
+          "statement": "Agent code execution and tool use happen in an environment isolated from production systems and from the operator's host by default.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Sandbox or container configuration; isolation boundary description.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.7, MANAGE 1.3",
+            "ISO 42001": "A.4.5, A.6.2.5",
+            "EU AI Act": "Art. 15(5)",
+            "Other": "OWASP ASI05, T11"
+          }
+        },
+        {
+          "id": "ACT-04",
+          "title": "Controlled network egress",
+          "statement": "Agent runtimes have default-deny outbound network access with an explicit allow-list. Note that egress control constrains but does not eliminate exfiltration through approved destinations.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Egress policy; allow-list with justification per destination.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.7",
+            "ISO 42001": "A.4.5",
+            "EU AI Act": "Art. 15(5)",
+            "Other": "OWASP LLM02"
+          }
+        },
+        {
+          "id": "ACT-05",
+          "title": "Rate, volume and spend limits with automatic cutoff",
+          "statement": "Hard limits on invocations, tokens, tool calls and spend stop the agent automatically rather than generating an alert someone reads later.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Limit configuration; evidence of a cutoff firing.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 1.3, MEASURE 2.6",
+            "ISO 42001": "A.4.5, A.6.2.6",
+            "EU AI Act": "Art. 15",
+            "Other": "OWASP LLM10, T4"
+          }
+        },
+        {
+          "id": "ACT-06",
+          "title": "Scope caps per run",
+          "statement": "Per-execution caps bound how much can be touched — records modified, messages sent, files changed, recipients addressed — so a wrong decision stays small.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Cap configuration per agent; a run halted by a cap.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 1.3, MANAGE 1.2",
+            "ISO 42001": "A.9.4",
+            "EU AI Act": "Art. 9(5)",
+            "Other": "CSA Agentic AI Red Teaming (blast-radius minimization)"
+          }
+        },
+        {
+          "id": "ACT-07",
+          "title": "Layered kill switch",
+          "statement": "You can stop one agent, one connector, one class of write action, or all agents organization-wide — and each layer has been tested, not just designed.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Kill switch at each layer; test records with time-to-stop measured.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 2.4, MANAGE 4.1",
+            "ISO 42001": "A.6.2.6",
+            "EU AI Act": "Art. 14(4)(e) (stop button)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "ACT-08",
+          "title": "Rollback or compensating action",
+          "statement": "For reversible writes there is a defined way to undo them, and someone has actually run it.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Rollback procedure per action class; test evidence.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 2.3, MANAGE 4.1",
+            "ISO 42001": "A.6.2.6",
+            "EU AI Act": "Art. 15(4)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "ACT-09",
+          "title": "Autonomy earned incrementally",
+          "statement": "Agents start gated and are promoted to broader autonomy only against pre-stated criteria and evidence of performance. Autonomy is a graduation, not a launch setting.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Promotion criteria; promotion decisions with the supporting evidence.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.6, MANAGE 1.3",
+            "ISO 42001": "A.6.2.4, A.6.2.5",
+            "EU AI Act": "Art. 9(6)–(8)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "ACT-10",
+          "title": "Multi-agent orchestration bounded",
+          "statement": "Where agents invoke agents, there are limits on delegation depth, fan-out, and what authority can be inherited by a sub-agent. A sub-agent never gains privileges its caller lacked.",
+          "tier": "T3",
+          "autonomy": "A3",
+          "evidence": "Orchestration limits in configuration; authority inheritance rules; test of a privilege-escalation attempt via delegation.",
+          "xw": {
+            "NIST AI RMF": "MAP 3.5, MANAGE 1.3",
+            "ISO 42001": "A.6.2.5, A.9.4",
+            "EU AI Act": "Art. 14(1)",
+            "Other": "OWASP T3, T13, ASI07; CSA MAESTRO"
+          }
+        }
+      ]
+    },
+    {
+      "id": "HUM",
+      "plane": "X",
+      "name": "Human Oversight & Competence",
+      "purpose": "The humans in the loop can actually exercise judgment — they have the competence, the information, the authority, and crucially a small enough volume of decisions that their attention still means something.",
+      "why": "Human oversight is a real control that degrades badly when overused. Approving hundreds of low-consequence prompts trains people to approve the one that matters. Oversight must be rationed to be worth anything.",
+      "controls": [
+        {
+          "id": "HUM-01",
+          "title": "Named, competent, empowered overseers",
+          "statement": "Specific people are assigned to oversee each agent, understand its limits, and hold the authority to override or halt it without asking permission.",
+          "tier": "T1",
+          "autonomy": "A2",
+          "evidence": "Assignment records; competence basis; documented authority to stop.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 3.2, MAP 3.4, MAP 3.5",
+            "ISO 42001": "A.4.6, A.9.2",
+            "EU AI Act": "Art. 14(1)–(4), Art. 26(2)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "HUM-02",
+          "title": "Oversight burden is measured",
+          "statement": "You track how many approvals people are asked for and what proportion they approve. A very high approval rate is treated as a control failure signal, not as evidence things are fine.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Approval volume and approval-rate metrics over time, reviewed by the accountable owner.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 1.2, MAP 3.5, MEASURE 4.1",
+            "ISO 42001": "Clause 9.1, A.6.2.6",
+            "EU AI Act": "Art. 14(4)(b) (automation bias)",
+            "Other": "OWASP T10 Overwhelming Human in the Loop"
+          }
+        },
+        {
+          "id": "HUM-03",
+          "title": "Approvals rationed to consequential actions",
+          "statement": "Human approval is required only where it changes the outcome. Routine low-consequence confirmations are removed or automated so attention is available for the decisions that matter.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Mapping of which action classes require approval and why; evidence of prompts removed.",
+          "xw": {
+            "NIST AI RMF": "MAP 3.5, MANAGE 1.2",
+            "ISO 42001": "A.9.2",
+            "EU AI Act": "Art. 14(3)",
+            "Other": "OWASP T10"
+          }
+        },
+        {
+          "id": "HUM-04",
+          "title": "Approvers get enough to decide",
+          "statement": "An approval request shows what will happen, to what, why the agent proposes it, and what the agent is uncertain about — not just an action name and a Yes/No.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Screenshot or specification of the approval interface.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.9, MAP 3.5",
+            "ISO 42001": "A.8.2",
+            "EU AI Act": "Art. 13, Art. 14(4)(c)",
+            "Other": "OWASP ASI09"
+          }
+        },
+        {
+          "id": "HUM-05",
+          "title": "Automation-bias countermeasures",
+          "statement": "Active measures counter over-trust — requiring a stated reason for consequential approvals, sampling approved actions for retrospective review, or periodically surfacing the agent's error record to approvers.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "The measure in operation; sampling results.",
+          "xw": {
+            "NIST AI RMF": "MAP 3.4, MEASURE 2.9",
+            "ISO 42001": "A.4.6, A.9.2",
+            "EU AI Act": "Art. 14(4)(b)",
+            "Other": "OWASP T15, ASI09"
+          }
+        },
+        {
+          "id": "HUM-06",
+          "title": "Affected people are informed",
+          "statement": "People subject to a decision an agent made or materially shaped are told that an AI system was involved.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Notice text and where it appears in the journey.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 5.1, MEASURE 2.9",
+            "ISO 42001": "A.8.2, A.8.5",
+            "EU AI Act": "Art. 26(11), Art. 86",
+            "Other": "CO ADMTA pre-use notice; GDPR Art. 13–14, 22"
+          }
+        },
+        {
+          "id": "HUM-07",
+          "title": "Appeal and human review route",
+          "statement": "There is a working route for a person to contest an agent-driven outcome and get human review, with a stated timeframe.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Documented appeal process; volume and outcome statistics.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 3.3, MANAGE 4.1, GOVERN 5.2",
+            "ISO 42001": "A.8.3, A.8.5",
+            "EU AI Act": "Art. 85, Art. 86",
+            "Other": "CO ADMTA adverse-decision notice (30 days); GDPR Art. 22(3)"
+          }
+        },
+        {
+          "id": "HUM-08",
+          "title": "Disclosure of AI interaction",
+          "statement": "When a person interacts with an AI system and it would not otherwise be obvious, they are told.",
+          "tier": "T1",
+          "autonomy": "A1",
+          "evidence": "The disclosure as it appears to the user.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.8, GOVERN 5.1",
+            "ISO 42001": "A.8.2",
+            "EU AI Act": "Art. 50(1) — applies 2 Aug 2026",
+            "Other": "US state companion-chatbot laws"
+          }
+        },
+        {
+          "id": "HUM-09",
+          "title": "Synthetic content marked",
+          "statement": "AI-generated or materially AI-modified content is marked in a machine-readable way and, where required, disclosed to the audience.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Marking implementation; sample output with the marking present.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.8, GOVERN 4.2",
+            "ISO 42001": "A.8.2",
+            "EU AI Act": "Art. 50(2), 50(4) — applies 2 Aug 2026; existing systems to 2 Dec 2026",
+            "Other": "C2PA; EU Code of Practice on Transparency of AI-Generated Content (10 Jun 2026)"
+          }
+        },
+        {
+          "id": "HUM-10",
+          "title": "Workforce consultation",
+          "statement": "Where agents affect how people work, are evaluated, or are allocated tasks, workers and their representatives are informed before deployment.",
+          "tier": "T3",
+          "autonomy": "A1",
+          "evidence": "Consultation records; notification to worker representatives.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 5.1, MAP 1.6",
+            "ISO 42001": "A.5.4, A.8.5",
+            "EU AI Act": "Art. 26(7)",
+            "Other": "National works-council law"
+          }
+        },
+        {
+          "id": "HUM-11",
+          "title": "Override is captured, not punished",
+          "statement": "The ungoverned path is never silently blocked: overrides and break-glass actions remain possible, are always paged, and convert to a retroactive approval record. Override rate is tracked as a system-health metric, never as an individual-performance one — punishing declared overrides produces hidden overrides, which corrupts the record worse than the occasional bypass.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Break-glass procedure; one paged override converted to a retroactive record; override-rate metric reviewed by the accountable owner.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 4.1, GOVERN 4.1",
+            "ISO 42001": "A.3.3, A.6.2.6",
+            "EU AI Act": "Art. 14(4)(d)",
+            "Other": "OWASP T10, T15"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OBS",
+      "plane": "X",
+      "name": "Observability & Evidence",
+      "purpose": "You can reconstruct what an agent did, why, on whose authority, and what happened as a result — from a record the agent could not have altered.",
+      "why": "This is where your original model is strongest: evidence captured at runtime rather than assembled at audit time. The gap to close is integrity — if the actor can write its own record, it is a log, not evidence.",
+      "controls": [
+        {
+          "id": "OBS-01",
+          "title": "Complete action logging",
+          "statement": "Every tool invocation is logged with the tool, the arguments, the result, and the timestamp. Not just that the agent ran, but what it did.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Log sample showing a full tool invocation record.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.4, MANAGE 4.1",
+            "ISO 42001": "A.6.2.8",
+            "EU AI Act": "Art. 12(1)–(2)",
+            "Other": "OWASP T8; OpenTelemetry GenAI conventions (Development status)"
+          }
+        },
+        {
+          "id": "OBS-02",
+          "title": "Attribution is complete",
+          "statement": "Each record carries agent identity, the human principal being acted for, session, the policy decision made, and the scopes granted. Attribution fails closed: an action that cannot be matched to a principal and grant is quarantined for human adjudication, never auto-assigned to the most probable actor.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Log schema; a record with all fields populated; the quarantine path for unattributable actions and one adjudicated example.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 4.1, GOVERN 3.2",
+            "ISO 42001": "A.6.2.8, A.10.2",
+            "EU AI Act": "Art. 12, Art. 26(6)",
+            "Other": "OWASP T8; CSA Agentic AI IAM"
+          }
+        },
+        {
+          "id": "OBS-03",
+          "title": "Tamper-evident evidence store",
+          "statement": "The evidence record is append-only or tamper-evident, and the agent cannot write to or modify its own audit trail.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Store configuration; access control showing the agent identity lacks write access to the audit path.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.7, MANAGE 4.1",
+            "ISO 42001": "A.6.2.8",
+            "EU AI Act": "Art. 12, Art. 15(5)",
+            "Other": "OWASP T8 Repudiation & Untraceability"
+          }
+        },
+        {
+          "id": "OBS-04",
+          "title": "Retention meets the longest obligation",
+          "statement": "Evidence retention is set to the longest applicable legal, contractual or investigative requirement, and is defensible if asked.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Retention configuration and the obligation it maps to.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.1, MANAGE 4.1",
+            "ISO 42001": "A.6.2.8",
+            "EU AI Act": "Art. 26(6) — at least 6 months for high-risk deployer logs",
+            "Other": "IL SB 315 / CA SB 53 incident records; CO ADMTA 3-year records"
+          }
+        },
+        {
+          "id": "OBS-05",
+          "title": "End-to-end traceability",
+          "statement": "A single trace links the triggering signal, the retrieved context, the model decision, the policy verdict, the approval, the action, and the outcome.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "A worked trace for a real incident or transaction.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.4, MANAGE 4.1",
+            "ISO 42001": "A.6.2.8, A.6.2.6",
+            "EU AI Act": "Art. 12(2)",
+            "Other": "OpenTelemetry GenAI agent spans"
+          }
+        },
+        {
+          "id": "OBS-06",
+          "title": "Behavioural anomaly detection",
+          "statement": "Agent behaviour is monitored for deviation — unusual volume, novel tool sequences, off-hours activity, access to data domains it has not touched before.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Detection rules; alerts generated and triaged.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.4, MEASURE 3.1, MANAGE 4.1",
+            "ISO 42001": "A.6.2.6",
+            "EU AI Act": "Art. 26(5), Art. 72",
+            "Other": "MITRE ATLAS agentic techniques (AML.T0080, T0086, T0101)"
+          }
+        },
+        {
+          "id": "OBS-07",
+          "title": "Cost and consumption telemetry",
+          "statement": "Consumption is monitored per agent so runaway loops and unexpected spend are visible early — and because cost anomalies are often the first visible symptom of a behavioural one.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Per-agent cost dashboard; alert thresholds.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.4",
+            "ISO 42001": "A.4.5",
+            "EU AI Act": "—",
+            "Other": "OWASP LLM10 Unbounded Consumption"
+          }
+        },
+        {
+          "id": "OBS-08",
+          "title": "Evidence is exportable and legible",
+          "statement": "Evidence can be produced in a form a regulator, auditor or customer can actually use, within a timeframe you have committed to.",
+          "tier": "T3",
+          "autonomy": "A1",
+          "evidence": "Export capability; a sample evidence pack.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 4.2, MANAGE 4.1",
+            "ISO 42001": "A.8.3, Clause 9.2",
+            "EU AI Act": "Art. 12, Art. 21 (cooperation), Art. 26(12)",
+            "Other": "ISO/IEC 42006:2025 (what auditors will ask for)"
+          }
+        },
+        {
+          "id": "OBS-09",
+          "title": "Actor-independent ground truth",
+          "statement": "At least one telemetry channel records the agent's effects without any cooperation from the agent runtime — infrastructure event streams, database audit logs, network egress logs — and is reconciled against the agent's own reported actions on a schedule. Unexplained deltas are treated as findings.",
+          "tier": "T3",
+          "autonomy": "A3",
+          "evidence": "Sensor configuration; a reconciliation report including at least one investigated delta.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.4, MEASURE 2.7, MANAGE 4.1",
+            "ISO 42001": "A.6.2.6, A.6.2.8",
+            "EU AI Act": "Art. 26(5), Art. 72",
+            "Other": "OWASP T8; NIST AI 800-4 (monitoring challenges)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASR",
+      "plane": "A",
+      "name": "Assurance, Evaluation & Red Teaming",
+      "purpose": "You have evidence the agent behaves acceptably before it goes live and continues to after — including under someone actively trying to make it misbehave.",
+      "why": "Static, single-attempt testing systematically understates agentic risk. Published evaluation work shows injection success rising from roughly 11% under baseline testing to over 80% under adaptive, multi-attempt attack. If you test once and politely, you will not find what an attacker will.",
+      "controls": [
+        {
+          "id": "ASR-01",
+          "title": "Acceptance criteria defined before launch",
+          "statement": "What 'good enough' means is written down before the agent goes live, in terms someone could disagree with.",
+          "tier": "T1",
+          "autonomy": "A1",
+          "evidence": "Acceptance criteria document dated before go-live.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 1.1, MEASURE 2.3, MAP 2.3",
+            "ISO 42001": "A.6.2.2, A.6.2.4",
+            "EU AI Act": "Art. 9(6)–(8), Art. 15(3)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "ASR-02",
+          "title": "Task-level evaluation with harm weighting",
+          "statement": "Evaluation reports per-task outcomes weighted by consequence, not a single aggregate pass rate. A failure that deletes data and a failure that sends a clumsy email are not the same finding.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Evaluation report showing per-task results and harm weighting.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 1.1, MEASURE 2.3, MEASURE 4.2",
+            "ISO 42001": "A.6.2.4",
+            "EU AI Act": "Art. 9(5)–(6), Art. 15(3)",
+            "Other": "NIST agent-hijacking evaluation guidance"
+          }
+        },
+        {
+          "id": "ASR-03",
+          "title": "Adaptive, multi-attempt adversarial testing",
+          "statement": "Prompt-injection and manipulation testing is adaptive and repeated, and results are reported as success over N attempts rather than single-shot.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Test methodology and results showing attempt counts.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.7, MEASURE 3.1, MANAGE 2.2",
+            "ISO 42001": "A.6.2.4",
+            "EU AI Act": "Art. 15(5), Art. 55(1)(a)",
+            "Other": "NIST agent-hijacking evaluations; OWASP AI Testing Guide"
+          }
+        },
+        {
+          "id": "ASR-04",
+          "title": "Red team covers the agentic surface",
+          "statement": "Red teaming explicitly covers tool misuse, privilege escalation, memory and context poisoning, goal manipulation, and — where relevant — inter-agent and rogue-agent scenarios.",
+          "tier": "T3",
+          "autonomy": "A3",
+          "evidence": "Red team scope mapped to a recognized threat taxonomy; findings and remediation.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.7, MANAGE 2.2",
+            "ISO 42001": "A.6.2.4",
+            "EU AI Act": "Art. 55(1)(a)",
+            "Other": "OWASP ASI Top 10 (ASI01–ASI10) / threat classes T1–T15; MITRE ATLAS; CSA Agentic AI Red Teaming Guide"
+          }
+        },
+        {
+          "id": "ASR-05",
+          "title": "Fairness and disparate-impact evaluation",
+          "statement": "Where outputs affect people's access to opportunity, money, care or liberty, performance is measured across affected groups, not only in aggregate.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Disaggregated performance results; the groups tested and why.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.11, MAP 1.2, MEASURE 4.2",
+            "ISO 42001": "A.5.4, A.7.4",
+            "EU AI Act": "Art. 10(2)(f)–(g), Art. 4a, Art. 15(4)",
+            "Other": "US: Title VII, ECOA, FHA; CO ADMTA"
+          }
+        },
+        {
+          "id": "ASR-06",
+          "title": "Model and provider change management",
+          "statement": "A model version change, provider default change, or system prompt change triggers re-evaluation before it reaches production. Silent upstream upgrades are treated as changes to your system.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Change process; a re-evaluation record triggered by an upstream change.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 3.2, MEASURE 2.4",
+            "ISO 42001": "A.6.2.6, A.10.3",
+            "EU AI Act": "Art. 25, Art. 43(4), Art. 53(b)",
+            "Other": "OWASP LLM03"
+          }
+        },
+        {
+          "id": "ASR-07",
+          "title": "Model and tool supply-chain assurance",
+          "statement": "For each model, tool and dataset you depend on, you know its origin, licence, security posture and the terms under which it may change.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Supply chain record; provider attestations or assessments.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 6.1, GOVERN 6.2, MAP 4.1, MANAGE 3.1",
+            "ISO 42001": "A.10.3, A.7.3",
+            "EU AI Act": "Art. 25, Art. 53(b)",
+            "Other": "OWASP LLM03, ASI04"
+          }
+        },
+        {
+          "id": "ASR-08",
+          "title": "Independent review proportionate to impact",
+          "statement": "High-consequence systems get review by someone who did not build them — internal audit, an independent team, or a third party.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Review report with the reviewer's independence stated.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 1.3, GOVERN 4.1",
+            "ISO 42001": "Clause 9.2, A.6.2.4",
+            "EU AI Act": "Art. 43 (conformity assessment)",
+            "Other": "ISO/IEC 42006:2025; IL SB 315 third-party audit (from 2028)"
+          }
+        },
+        {
+          "id": "ASR-09",
+          "title": "Post-launch drift monitoring",
+          "statement": "Live performance is measured against the acceptance criteria on an ongoing basis, and degradation triggers action rather than a note.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Monitoring dashboard against acceptance thresholds; an example of a triggered response.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.4, MEASURE 3.1, MANAGE 4.1",
+            "ISO 42001": "A.6.2.6, Clause 9.1",
+            "EU AI Act": "Art. 72 (post-market monitoring), Art. 26(5)",
+            "Other": "NIST AI 800-4 (monitoring challenges)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IRR",
+      "plane": "A",
+      "name": "Incident Response, Recovery & Retirement",
+      "purpose": "When an agent does something wrong, you detect it, stop it, undo what can be undone, tell who needs telling, and — when the time comes — retire it cleanly.",
+      "why": "Agent incidents have a property normal incidents don't: the system may have taken hundreds of small correct-looking actions before the wrong one, so containment and remediation are a search problem, not just a shutdown.",
+      "controls": [
+        {
+          "id": "IRR-01",
+          "title": "AI incidents are in scope of the IR process",
+          "statement": "Your incident definition covers agent misbehaviour — wrong actions, harmful output, data exposure, manipulation — and the existing IR process owns it. No parallel undefined path.",
+          "tier": "T1",
+          "autonomy": "A1",
+          "evidence": "IR policy naming AI incident categories.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 4.3, MANAGE 4.3",
+            "ISO 42001": "A.8.4",
+            "EU AI Act": "Art. 3(49) (serious incident), Art. 73",
+            "Other": "OWASP GenAI Incident Response Guide 1.0"
+          }
+        },
+        {
+          "id": "IRR-02",
+          "title": "Detection and triage path",
+          "statement": "There is a defined way agent misbehaviour gets noticed and triaged — from monitoring, from users, and from the people the agent acts upon.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Detection sources; triage criteria; reporting channel.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 4.3, MEASURE 3.1, MEASURE 3.3",
+            "ISO 42001": "A.3.3, A.8.4",
+            "EU AI Act": "Art. 26(5), Art. 73",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "IRR-03",
+          "title": "Containment playbook",
+          "statement": "A written playbook covers isolating the agent, revoking its credentials, hitting the right kill switch layer, and preserving evidence before it rotates out.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "The playbook; evidence it has been exercised.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 2.3, MANAGE 2.4, MANAGE 4.3",
+            "ISO 42001": "A.8.4, A.6.2.6",
+            "EU AI Act": "Art. 26(5) (suspend use)",
+            "Other": "NIST SP 800-61 process, AI-specific evidence steps"
+          }
+        },
+        {
+          "id": "IRR-04",
+          "title": "Remediation of actions already taken",
+          "statement": "You can enumerate everything the agent did in the affected window and reverse or compensate for what needs it.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Method for enumerating actions in a time window; a worked remediation.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 2.3, MANAGE 4.3",
+            "ISO 42001": "A.6.2.6, A.6.2.8",
+            "EU AI Act": "Art. 20 (corrective actions)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "IRR-05",
+          "title": "Notification obligations mapped in advance",
+          "statement": "Who must be told, in what timeframe — regulator, customer, data subject, insurer, model provider — is worked out before the incident, not during it.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Notification matrix with timeframes and named contacts.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 4.3, GOVERN 4.3",
+            "ISO 42001": "A.8.3, A.8.4",
+            "EU AI Act": "Art. 73 (serious incident reporting), Art. 55(1)(c)",
+            "Other": "CA SB 53: Cal OES 15 days / 24h imminent; IL SB 315: 72h / 24h; GDPR Art. 33: 72h"
+          }
+        },
+        {
+          "id": "IRR-06",
+          "title": "Blameless post-incident review",
+          "statement": "Incidents get a structured review that produces root cause and named follow-up owners, run in a way that does not punish reporting.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Post-incident reports with assigned actions and their closure.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 4.3, GOVERN 4.3",
+            "ISO 42001": "A.8.4, Clause 10.2",
+            "EU AI Act": "Art. 73",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "IRR-07",
+          "title": "Clean retirement",
+          "statement": "Retiring an agent is a defined process: credentials revoked, connectors removed, memory and derived data disposed of per policy, dependencies checked, evidence retained.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Decommissioning checklist; a completed retirement record.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.7, MANAGE 2.4, MANAGE 4.1",
+            "ISO 42001": "A.6.2.6",
+            "EU AI Act": "—",
+            "Other": "ISO/IEC 5338:2023 retirement process"
+          }
+        },
+        {
+          "id": "IRR-08",
+          "title": "Continuity without the agent",
+          "statement": "If the agent is stopped — by you, by an incident, or by a provider outage — the work it was doing has a defined fallback. Dependence has been made explicit.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Fallback procedure; the dependency documented in BCP.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 6.2, MANAGE 2.3",
+            "ISO 42001": "A.10.2, A.4.2",
+            "EU AI Act": "Art. 15(4) (fail-safe)",
+            "Other": "—"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LRN",
+      "plane": "A",
+      "name": "Learning & Continuous Improvement",
+      "purpose": "What the system learns in operation changes the system — as specific, owned, tracked artifacts rather than as a resolution to do better.",
+      "why": "This is the other place your original model is stronger than the published frameworks: it closes the loop to named artifact classes. 'Continuous improvement' is unauditable. 'Seventeen repair items, four monitor tuning changes, two ownership corrections' is auditable.",
+      "controls": [
+        {
+          "id": "LRN-01",
+          "title": "Findings route to named artifact classes",
+          "statement": "Operational findings are routed into specific, tracked artifact types — remediation items, threshold changes, procedure updates, ownership corrections — not into an undifferentiated backlog.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "The artifact classes; a report of items by class with closure rates.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 4.1, MANAGE 4.2",
+            "ISO 42001": "Clause 10.2, A.6.2.6",
+            "EU AI Act": "Art. 72 (post-market monitoring plan)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "LRN-02",
+          "title": "Control tuning from operational evidence",
+          "statement": "Guardrail thresholds, policy rules and detection logic are updated based on what actually happened, and the changes are versioned.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "Change log for guardrails and policies with the triggering evidence.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 2.2, MEASURE 3.1, MANAGE 4.1",
+            "ISO 42001": "A.2.4, A.6.2.6",
+            "EU AI Act": "Art. 9(2)(c)–(d)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "LRN-03",
+          "title": "Knowledge artifacts stay current",
+          "statement": "Prompts, procedures, runbooks and reference material the agents and their operators rely on are versioned and updated when they are found wrong.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Version history showing updates driven by findings.",
+          "xw": {
+            "NIST AI RMF": "MANAGE 4.1, GOVERN 4.2",
+            "ISO 42001": "A.6.2.3, A.6.2.7, Clause 7.5",
+            "EU AI Act": "Art. 11 (documentation kept up to date)",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "LRN-04",
+          "title": "Ownership corrections feed back to inventory",
+          "statement": "When an incident reveals that nobody actually owned a system, or the wrong person did, the inventory is corrected and the correction is tracked to closure.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Inventory change log tied to findings.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 2.1, GOVERN 1.6, MANAGE 4.1",
+            "ISO 42001": "A.3.2, A.4.2",
+            "EU AI Act": "—",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "LRN-05",
+          "title": "Metrics reviewed on a cadence",
+          "statement": "A defined set of governance metrics is reviewed by the accountable owner on a stated cadence, with decisions recorded.",
+          "tier": "T2",
+          "autonomy": "A1",
+          "evidence": "Metric set; review records with decisions.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.5, MEASURE 4.3",
+            "ISO 42001": "Clause 9.1, 9.3",
+            "EU AI Act": "Art. 72",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "LRN-06",
+          "title": "Horizon scanning",
+          "statement": "Someone is responsible for tracking changes in applicable regulation, threat technique and provider capability, and for triggering reassessment when they move.",
+          "tier": "T3",
+          "autonomy": "A1",
+          "evidence": "Named owner; scanning sources; a reassessment triggered by an external change.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 1.1, MEASURE 3.1, MANAGE 4.1",
+            "ISO 42001": "Clause 4.1, 4.2",
+            "EU AI Act": "Art. 72",
+            "Other": "—"
+          }
+        },
+        {
+          "id": "LRN-07",
+          "title": "Sharing beyond the organization",
+          "statement": "Where appropriate, lessons and incident patterns are shared with sector peers, ISACs or the wider community — and you consume what others share.",
+          "tier": "T3",
+          "autonomy": "A2",
+          "evidence": "Sharing arrangements; contributions made or received.",
+          "xw": {
+            "NIST AI RMF": "GOVERN 4.3, MANAGE 4.3",
+            "ISO 42001": "A.8.3",
+            "EU AI Act": "Art. 73 (via authorities)",
+            "Other": "MITRE ATLAS case studies; OWASP AI Threat Intelligence Initiative"
+          }
+        }
+      ]
+    }
+  ]
+}</script>
+<script>
+(function(){
+"use strict";
+const CAT = JSON.parse(document.getElementById('catalog').textContent);
+const DOMAINS = CAT.domains, META = CAT.meta;
+const TIER_ORDER = ['T1','T2','T3'];
+const AUTO_ORDER = ['A0','A1','A2','A3','A4'];
+const ALL = DOMAINS.flatMap(d => d.controls.map(c => ({...c, domain:d.id, domainName:d.name, plane:d.plane})));
+const BY_ID = Object.fromEntries(ALL.map(c => [c.id, c]));
+
+const CTX = [
+  {id:'people',   n:'Decisions about people',    d:'Outputs affect employment, credit, housing, education, healthcare, benefits or legal standing.'},
+  {id:'personal', n:'Personal or special-category data', d:'Agents can reach personal, health, biometric or financial data.'},
+  {id:'eu',       n:'EU nexus',                  d:'You place AI on the EU market, or its output is used in the EU.'},
+  {id:'regulated',n:'Regulated sector',          d:'Healthcare, financial services, critical infrastructure, education, law enforcement, or public sector.'},
+  {id:'external', n:'Public-facing agents',      d:'Agents interact directly with customers or the public.'},
+  {id:'multi',    n:'Multi-agent orchestration', d:'Agents invoke other agents, or you run agent frameworks with delegation.'}
+];
+
+const state = {
+  tier:'T2', autonomy:'A2', ctx:{}, answers:{}, notes:{}, view:'setup',
+  assessFilter:{q:'',applies:'req',status:''}, crossFilter:{q:'',domain:''}, open:{}, tableView:false
+};
+
+const SC = Object.fromEntries(META.status_scale.map(s => [s.id, s]));
+const STATUS_VIS = {
+  in_place:{cls:'good',   ic:'●', label:'In place'},
+  partial: {cls:'warning',ic:'◐', label:'Partial'},
+  must:    {cls:'critical',ic:'▲',label:'Must implement'},
+  develop: {cls:'serious',ic:'◆', label:'Develop'},
+  na:      {cls:'none',   ic:'—', label:'Not applicable'},
+  unassessed:{cls:'none', ic:'○', label:'Not assessed'}
+};
+
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const ti = t => TIER_ORDER.indexOf(t), ai = a => AUTO_ORDER.indexOf(a);
+const applies = c => ti(c.tier) <= ti(state.tier) && ai(c.autonomy) <= ai(state.autonomy);
+const ans = id => state.answers[id] || 'unassessed';
+
+/* ---------- scoring ---------- */
+function tally(list){
+  const t = {in_place:0,partial:0,must:0,develop:0,na:0,unassessed:0};
+  list.forEach(c => t[ans(c.id)]++);
+  const scored = list.length - t.na;
+  const pts = t.in_place*3 + t.partial*2 + t.develop*1 + t.must*0 + t.unassessed*0;
+  t.total = list.length; t.scored = scored;
+  t.readiness = scored ? Math.round(pts / (scored*3) * 100) : null;
+  t.gaps = t.must + t.develop;
+  t.assessed = scored - t.unassessed;
+  return t;
+}
+const applicable = () => ALL.filter(applies);
+const domControls = d => d.controls.map(c => BY_ID[c.id]);
+
+/* ---------- setup view ---------- */
+function renderSetup(){
+  document.getElementById('tierOpts').innerHTML = META.tiers.map(t => `
+    <label class="opt" data-on="${state.tier===t.id?1:0}">
+      <input type="radio" name="tier" value="${t.id}" ${state.tier===t.id?'checked':''}>
+      <span><b>${esc(t.id)} · ${esc(t.name)}</b><em>${esc(t.desc)}</em></span></label>`).join('');
+  document.getElementById('autoOpts').innerHTML = META.autonomy.map(a => `
+    <label class="opt" data-on="${state.autonomy===a.id?1:0}">
+      <input type="radio" name="auto" value="${a.id}" ${state.autonomy===a.id?'checked':''}>
+      <span><b>${esc(a.id)} · ${esc(a.name)}</b><em>${esc(a.desc)}</em></span></label>`).join('');
+  document.getElementById('ctxOpts').innerHTML = CTX.map(c => `
+    <label class="opt" data-on="${state.ctx[c.id]?1:0}">
+      <input type="checkbox" name="ctx" value="${c.id}" ${state.ctx[c.id]?'checked':''}>
+      <span><b>${esc(c.n)}</b><em>${esc(c.d)}</em></span></label>`).join('');
+  document.getElementById('scaleTbl').innerHTML = META.status_scale.filter(s=>s.id!=='unassessed').map(s => {
+    const v = STATUS_VIS[s.id];
+    return `<tr><td><span class="chip ${v.cls}"><span class="ic">${v.ic}</span>${esc(s.label)}</span></td>
+      <td class="num">${s.score===null?'—':s.score+' / 3'}</td><td>${esc(s.desc)}</td></tr>`;
+  }).join('');
+}
+document.getElementById('tierOpts').addEventListener('change', e => { state.tier = e.target.value; renderAll(); });
+document.getElementById('autoOpts').addEventListener('change', e => { state.autonomy = e.target.value; renderAll(); });
+document.getElementById('ctxOpts').addEventListener('change', e => { state.ctx[e.target.value] = e.target.checked; renderAll(); });
+
+/* ---------- dashboard ---------- */
+function renderDash(){
+  const app = applicable(), t = tally(app);
+  const tierN = META.tiers.find(x=>x.id===state.tier).name;
+  const autoN = META.autonomy.find(x=>x.id===state.autonomy).name;
+  document.getElementById('dashSub').innerHTML =
+    `Profile: <b>${esc(state.tier)} ${esc(tierN)}</b> at autonomy <b>${esc(state.autonomy)} ${esc(autoN)}</b> — <b>${app.length}</b> of ${ALL.length} controls apply.`;
+
+  document.getElementById('heroPct').innerHTML = t.readiness===null ? '—<small>%</small>' : `${t.readiness}<small>%</small>`;
+  const done = t.assessed, pend = t.unassessed;
+  document.getElementById('heroLab').textContent = pend===app.length
+    ? 'Nothing assessed yet. Open the Assessment tab and work through the domains.'
+    : (pend>0 ? `Based on ${done} of ${t.scored} scored controls. ${pend} still unassessed — readiness will move as you complete them.`
+              : `All applicable controls assessed. ${t.gaps} gap${t.gaps===1?'':'s'} to close.`);
+
+  document.getElementById('heroTiles').innerHTML = [
+    {v:t.in_place, k:'In place', m:'Evidenced today', cls:'good'},
+    {v:t.partial, k:'Partial', m:'Exists but incomplete', cls:'warning'},
+    {v:t.must, k:'Must implement', m:'Known control, absent', cls:'critical'},
+    {v:t.develop, k:'Develop', m:'No off-the-shelf answer', cls:'serious'},
+    {v:t.unassessed, k:'Not assessed', m:'Still to review', cls:'none'}
+  ].map(x => `<div class="tile"><div class="v" style="color:var(--${x.cls==='none'?'text-muted':x.cls})">${x.v}</div>
+    <div class="k">${x.k}</div><div class="m">${x.m}</div></div>`).join('');
+
+  document.getElementById('legend').innerHTML = ['in_place','partial','must','develop','unassessed'].map(k=>{
+    const v = STATUS_VIS[k];
+    return `<i><span class="sw" style="background:${v.cls==='none'?'var(--track)':'var(--'+v.cls+')'}"></span><span class="ic">${v.ic}</span>${v.label}</i>`;
+  }).join('');
+
+  document.getElementById('planeStrip').innerHTML = META.planes.map(p => {
+    const list = app.filter(c => c.plane===p.id), tt = tally(list);
+    return `<div class="plane"><div class="pn">${esc(p.name)}</div><div class="pd">${esc(p.desc)}</div>
+      <div class="meter"><i style="width:${tt.readiness||0}%"></i></div>
+      <div class="pv">${tt.readiness===null?'n/a':tt.readiness+'%'} · ${list.length} controls${tt.gaps?' · '+tt.gaps+' gaps':''}</div></div>`;
+  }).join('');
+
+  document.getElementById('domBars').innerHTML = DOMAINS.map(d => {
+    const list = domControls(d).filter(applies);
+    if(!list.length) return '';
+    const tt = tally(list), n = list.length;
+    const segs = ['in_place','partial','must','develop','unassessed'].map(k => {
+      const c = tt[k]; if(!c) return '';
+      const v = STATUS_VIS[k];
+      return `<div class="seg ${v.cls==='none'?'none':v.cls}" style="flex:${c} 0 0" title="${v.label}: ${c}">${c/n>0.09?c:''}</div>`;
+    }).join('');
+    return `<div class="barrow"><div class="barlab"><span class="dcode">${d.id}</span><span class="dname" title="${esc(d.name)}">${esc(d.name)}</span></div>
+      <div class="stack">${segs}</div><div class="barpct">${tt.readiness===null?'—':tt.readiness+'%'}</div></div>`;
+  }).join('');
+
+  document.getElementById('domTableBody').innerHTML = DOMAINS.map(d => {
+    const list = domControls(d).filter(applies); if(!list.length) return '';
+    const tt = tally(list);
+    const pn = META.planes.find(p=>p.id===d.plane).name;
+    return `<tr><td><b>${d.id}</b> ${esc(d.name)}</td><td>${esc(pn)}</td>
+      <td class="num">${tt.in_place}</td><td class="num">${tt.partial}</td><td class="num">${tt.must}</td>
+      <td class="num">${tt.develop}</td><td class="num">${tt.unassessed}</td><td class="num">${tt.na}</td>
+      <td class="num"><b>${tt.readiness===null?'—':tt.readiness+'%'}</b></td></tr>`;
+  }).join('');
+
+  const gm = t.must, gd = t.develop, gt = gm+gd;
+  document.getElementById('gapStack').innerHTML = gt===0
+    ? `<div class="seg none" style="flex:1;color:var(--text-muted);font-weight:600">No gaps recorded yet</div>`
+    : `${gm?`<div class="seg critical" style="flex:${gm} 0 0">▲ ${gm}</div>`:''}${gd?`<div class="seg serious" style="flex:${gd} 0 0">◆ ${gd}</div>`:''}`;
+  document.getElementById('gapNote').innerHTML = gt===0 ? ''
+    : `<b>${gm}</b> control${gm===1?'':'s'} to implement and <b>${gd}</b> to design. Design work is where schedules slip — scope it before you commit to a date.`;
+}
+document.getElementById('btnTable').addEventListener('click', () => {
+  state.tableView = !state.tableView;
+  document.getElementById('domTable').classList.toggle('hidden', !state.tableView);
+  document.getElementById('btnTable').textContent = state.tableView ? 'Hide table' : 'Show as table';
+});
+
+/* ---------- assessment ---------- */
+function ctxFlags(c){
+  const f = [];
+  const s = (c.statement + ' ' + JSON.stringify(c.xw)).toLowerCase();
+  if(state.ctx.eu && /art\./.test(JSON.stringify(c.xw['EU AI Act']||''))) f.push('EU');
+  if(state.ctx.people && ['ASR-05','HUM-06','HUM-07','INV-04','INV-05','DAT-10','HUM-10'].includes(c.id)) f.push('PEOPLE');
+  if(state.ctx.personal && c.domain==='DAT') f.push('DATA');
+  if(state.ctx.multi && ['ING-08','ACT-10','ASR-04','IDA-06','OBS-05'].includes(c.id)) f.push('MULTI');
+  if(state.ctx.external && ['HUM-08','HUM-09','ING-01','ING-02','POL-06'].includes(c.id)) f.push('PUBLIC');
+  if(state.ctx.regulated && ['ASR-08','OBS-03','OBS-04','OBS-08','GOV-09','IRR-05'].includes(c.id)) f.push('REG');
+  return f;
+}
+function matchQ(c, q){
+  if(!q) return true;
+  const hay = [c.id,c.title,c.statement,c.evidence,c.domainName,...Object.values(c.xw)].join(' ').toLowerCase();
+  return hay.includes(q.toLowerCase());
+}
+function renderAssess(){
+  const f = state.assessFilter;
+  let shown = 0;
+  const html = DOMAINS.map(d => {
+    const list = domControls(d).filter(c => {
+      const ap = applies(c);
+      if(f.applies==='req' && !ap) return false;
+      if(f.applies==='hz' && ap) return false;
+      if(f.status && ans(c.id)!==f.status) return false;
+      return matchQ(c, f.q);
+    });
+    if(!list.length) return '';
+    shown += list.length;
+    const appList = domControls(d).filter(applies), tt = tally(appList);
+    const open = state.open[d.id] || !!f.q || !!f.status;
+    return `<div class="dom" data-open="${open?1:0}" data-d="${d.id}">
+      <div class="domhd" data-toggle="${d.id}">
+        <span class="chev">▶</span><span class="code">${d.id}</span><span class="nm">${esc(d.name)}</span>
+        <span class="pill">${list.length} shown · ${appList.length} apply${tt.readiness===null?'':' · '+tt.readiness+'%'}</span>
+      </div>
+      <div class="dombody">
+        <p class="purpose"><b>Purpose.</b> ${esc(d.purpose)}</p>
+        <p class="why">${esc(d.why)}</p>
+        ${list.map(c => ctrlHtml(c)).join('')}
+      </div></div>`;
+  }).join('');
+  document.getElementById('domList').innerHTML = html || `<div class="card"><p class="emptynote">No controls match those filters.</p></div>`;
+  document.getElementById('assessCount').textContent = `${shown} control${shown===1?'':'s'} shown`;
+}
+function ctrlHtml(c){
+  const ap = applies(c), a = ans(c.id);
+  const flags = ctxFlags(c);
+  const xw = Object.entries(c.xw).filter(([k,v]) => v && v!=='—')
+    .map(([k,v]) => `<span class="xwi"><b>${esc(k)}</b>${esc(v)}</span>`).join('');
+  return `<div class="ctrl" data-applies="${ap?1:0}" data-id="${c.id}">
+    <div class="ctrl-hd"><span class="cid">${c.id}</span><span class="ctitle">${esc(c.title)}</span>
+      <span class="badges">
+        ${flags.map(x=>`<span class="bdg req">${x}</span>`).join('')}
+        <span class="bdg">${c.tier}</span><span class="bdg">${c.autonomy}+</span>
+        ${ap?'':'<span class="bdg hz">HORIZON</span>'}
+      </span></div>
+    <div class="cstate">${esc(c.statement)}</div>
+    <div class="cmeta"><b>Evidence:</b> ${esc(c.evidence)}</div>
+    <div class="xw">${xw}</div>
+    <div class="statusrow">
+      ${['in_place','partial','must','develop','na'].map(s => {
+        const v = STATUS_VIS[s];
+        return `<button class="sbtn" data-s="${s}" data-c="${c.id}" aria-pressed="${a===s}"><span class="ic">${v.ic}</span>${v.label}</button>`;
+      }).join('')}
+      ${a!=='unassessed'?`<button class="sbtn" data-s="unassessed" data-c="${c.id}" title="Clear">Clear</button>`:''}
+    </div>
+    ${a==='na'||a==='must'||a==='develop'||a==='partial'
+      ? `<textarea class="note" data-c="${c.id}" placeholder="${a==='na'?'Justification required for Not Applicable — why is this genuinely out of scope?':'Owner, target date, or what specifically is missing…'}">${esc(state.notes[c.id]||'')}</textarea>` : ''}
+  </div>`;
+}
+document.getElementById('domList').addEventListener('click', e => {
+  const tg = e.target.closest('[data-toggle]');
+  if(tg){ const id = tg.dataset.toggle; state.open[id] = !(state.open[id]); renderAssess(); return; }
+  const b = e.target.closest('.sbtn');
+  if(b){
+    const id = b.dataset.c, s = b.dataset.s;
+    state.answers[id] = (state.answers[id]===s) ? 'unassessed' : s;
+    if(state.answers[id]==='unassessed') delete state.answers[id];
+    renderAssess(); renderDash(); renderReport();
+  }
+});
+document.getElementById('domList').addEventListener('input', e => {
+  if(e.target.classList.contains('note')) state.notes[e.target.dataset.c] = e.target.value;
+});
+document.getElementById('qAssess').addEventListener('input', e => { state.assessFilter.q = e.target.value; renderAssess(); });
+document.getElementById('fApplies').addEventListener('change', e => { state.assessFilter.applies = e.target.value; renderAssess(); });
+document.getElementById('fStatus').addEventListener('change', e => { state.assessFilter.status = e.target.value; renderAssess(); });
+document.getElementById('btnExpand').addEventListener('click', () => {
+  const allOpen = DOMAINS.every(d => state.open[d.id]);
+  DOMAINS.forEach(d => state.open[d.id] = !allOpen);
+  document.getElementById('btnExpand').textContent = allOpen ? 'Expand all' : 'Collapse all';
+  renderAssess();
+});
+
+/* ---------- crosswalk ---------- */
+function renderCross(){
+  const sel = document.getElementById('fDomain');
+  if(sel.options.length===1) DOMAINS.forEach(d => sel.add(new Option(`${d.id} — ${d.name}`, d.id)));
+  const q = state.crossFilter.q.toLowerCase(), dm = state.crossFilter.domain;
+  const rows = ALL.filter(c => (!dm || c.domain===dm) &&
+    (!q || [c.id,c.title,...Object.values(c.xw)].join(' ').toLowerCase().includes(q)));
+  document.getElementById('crossBody').innerHTML = rows.map(c => `<tr>
+    <td><b>${c.id}</b></td><td>${esc(c.title)}</td>
+    <td>${esc(c.xw['NIST AI RMF'])}</td><td>${esc(c.xw['ISO 42001'])}</td>
+    <td>${esc(c.xw['EU AI Act'])}</td><td>${esc(c.xw['Other'])}</td></tr>`).join('')
+    || `<tr><td colspan="6" class="emptynote">No mappings match.</td></tr>`;
+}
+document.getElementById('qCross').addEventListener('input', e => { state.crossFilter.q = e.target.value; renderCross(); });
+document.getElementById('fDomain').addEventListener('change', e => { state.crossFilter.domain = e.target.value; renderCross(); });
+
+/* ---------- report ---------- */
+function priority(c){
+  // lower = more urgent
+  let p = ti(c.tier)*10 + ai(c.autonomy);
+  const a = ans(c.id);
+  if(a==='must') p -= 40; else if(a==='develop') p -= 30; else if(a==='partial') p -= 10;
+  if(['T','X'].includes(c.plane)) p -= 6;              // trust gate + execution first
+  if(['F'].includes(c.plane)) p -= 8;                  // you cannot govern what you cannot enumerate
+  if(ctxFlags(c).length) p -= 3*ctxFlags(c).length;
+  return p;
+}
+function regNotes(){
+  const n = [];
+  if(state.ctx.eu){
+    n.push('<b>EU AI Act — Art. 50 transparency applies from 2 August 2026.</b> Disclosure that a user is interacting with AI, and machine-readable marking of synthetic content, are live obligations now. Systems already on the market get until 2 December 2026 for the marking requirement. This was <em>not</em> deferred by the Digital Omnibus.');
+    n.push('<b>High-risk timelines moved.</b> Regulation (EU) 2026/1744 (in force 27 July 2026) pushed Chapter III obligations for Annex III high-risk systems to <b>2 December 2027</b>, and for Annex I embedded systems to <b>2 August 2028</b>. Art. 5 prohibitions and Art. 4 AI literacy have been in force since February 2025; two new prohibitions on non-consensual intimate imagery and CSAM generation bite from 2 December 2026.');
+    n.push('Deployer duties (Art. 26) — instructions-for-use compliance, competent human oversight, input-data relevance, monitoring, <b>logs retained at least six months</b>, workforce notification, and informing people subject to decisions — attach on those same dates.');
+  }
+  if(state.ctx.people) n.push('<b>Decisions about people.</b> Expect scrutiny on disaggregated performance (ASR-05), notice (HUM-06), and a working appeal route (HUM-07). In the US, Colorado\'s ADMTA replaces the 2024 Colorado AI Act from 1 January 2027 — the impact-assessment and risk-programme duties are gone, but pre-use notice, 30-day adverse-outcome disclosure, three-year records and a trained human who can override remain.');
+  if(state.ctx.regulated) n.push('<b>Regulated sector.</b> ISO/IEC 42001 remains the certifiable artifact; ISO/IEC 42005:2025 gives you the impact-assessment method and 42006:2025 governs what your certification body will demand. In the US, Texas TRAIGA offers a safe harbour tied to conformity with the NIST AI RMF — the strongest current argument for adopting it explicitly.');
+  if(state.ctx.multi) n.push('<b>Multi-agent.</b> The published control base is thinnest exactly here. NIST\'s SP 800-53 overlays for single- and multi-agent systems are still concept-stage, so ING-08, ACT-10 and ASR-04 are likely to score <em>Develop</em> rather than <em>Must implement</em>. Plan for design work, and revisit when the overlays land.');
+  if(state.ctx.external) n.push('<b>Public-facing.</b> AI-interaction disclosure and synthetic-content marking (HUM-08, HUM-09) are the fastest-moving obligations globally and the cheapest to fix. Do them first.');
+  if(!n.length) n.push('No context flags set. Set them on the Profile tab for regulatory notes specific to your situation.');
+  return n;
+}
+function renderReport(){
+  const app = applicable(), t = tally(app);
+  const tierO = META.tiers.find(x=>x.id===state.tier), autoO = META.autonomy.find(x=>x.id===state.autonomy);
+  const gaps = app.filter(c => ['must','develop'].includes(ans(c.id))).sort((a,b)=>priority(a)-priority(b));
+  const partials = app.filter(c => ans(c.id)==='partial').sort((a,b)=>priority(a)-priority(b));
+  const nas = app.filter(c => ans(c.id)==='na');
+  const strengths = DOMAINS.map(d => ({d, t:tally(domControls(d).filter(applies))}))
+    .filter(x => x.t.total>0 && x.t.readiness!==null).sort((a,b)=>b.t.readiness-a.t.readiness);
+  const weakest = strengths.slice().reverse().filter(x=>x.t.readiness<100).slice(0,3);
+  const naNoNote = nas.filter(c => !(state.notes[c.id]||'').trim());
+
+  const flagged = CTX.filter(c=>state.ctx[c.id]).map(c=>c.n);
+  const now = new Date().toISOString().slice(0,10);
+
+  const summary = t.unassessed===app.length
+    ? 'This assessment has not been started. The figures below will populate as controls are scored.'
+    : `Against the ${app.length} controls that apply at this profile, ${t.in_place} are in place, ${t.partial} are partial, ${t.must} require implementation, ${t.develop} require design work, and ${t.unassessed} have not been assessed. Overall readiness is ${t.readiness}%.`;
+
+  document.getElementById('reportBody').innerHTML = `
+  <h2 style="margin-top:0">AGCF gap report</h2>
+  <dl class="kv">
+    <dt>Generated</dt><dd>${now}</dd>
+    <dt>Framework</dt><dd>${esc(META.name)} · ${esc(META.version)}</dd>
+    <dt>Organization tier</dt><dd><b>${state.tier}</b> — ${esc(tierO.name)}</dd>
+    <dt>Autonomy level</dt><dd><b>${state.autonomy}</b> — ${esc(autoO.name)}: ${esc(autoO.desc)}</dd>
+    <dt>Context flags</dt><dd>${flagged.length?esc(flagged.join(' · ')):'<span class="emptynote">none set</span>'}</dd>
+    <dt>Controls in scope</dt><dd>${app.length} of ${ALL.length}</dd>
+    <dt>Readiness</dt><dd><b>${t.readiness===null?'—':t.readiness+'%'}</b>${t.unassessed?` <span class="emptynote">(${t.unassessed} unassessed counted as zero)</span>`:''}</dd>
+  </dl>
+  <p class="lede">${esc(summary)}</p>
+
+  ${naNoNote.length?`<div class="warnbox"><b>${naNoNote.length} control${naNoNote.length===1?'':'s'} marked Not Applicable without a justification.</b> Unjustified exclusions are the first thing an assessor pulls on. Add a reason on the Assessment tab: ${naNoNote.map(c=>c.id).join(', ')}.</div>`:''}
+
+  <h2>Where you are strong</h2>
+  ${strengths.filter(x=>x.t.readiness>=67).length ? `<ul>${strengths.filter(x=>x.t.readiness>=67).map(x=>
+    `<li><b>${x.d.id} ${esc(x.d.name)}</b> — ${x.t.readiness}% (${x.t.in_place} of ${x.t.scored} in place). ${esc(x.d.purpose)}</li>`).join('')}</ul>`
+    : `<p class="emptynote">No domain is above two-thirds yet.</p>`}
+
+  <h2>Where you are weakest</h2>
+  ${weakest.length ? `<ul>${weakest.map(x=>
+    `<li><b>${x.d.id} ${esc(x.d.name)}</b> — ${x.t.readiness===null?'not assessed':x.t.readiness+'%'}, ${x.t.gaps} gap${x.t.gaps===1?'':'s'}, ${x.t.unassessed} unassessed. <em>${esc(x.d.why)}</em></li>`).join('')}</ul>`
+    : `<p class="emptynote">Nothing recorded yet.</p>`}
+
+  <h2>Priority actions</h2>
+  <p class="sub">Ordered by a blend of urgency at your tier, how early the control sits in the chain, and your context flags. Foundation and Trust Gate gaps rank above Execution ones because they change what the later controls are even able to enforce.</p>
+  ${gaps.length ? `<div class="actionlist">${gaps.slice(0,20).map((c,i)=>{
+      const a = ans(c.id), v = STATUS_VIS[a];
+      const note = (state.notes[c.id]||'').trim();
+      return `<div class="actionitem"><div class="rank">${String(i+1).padStart(2,'0')}</div><div class="body">
+        <div class="t"><span class="cid">${c.id}</span> ${esc(c.title)} <span class="chip ${v.cls}"><span class="ic">${v.ic}</span>${v.label}</span></div>
+        <div class="d">${esc(c.statement)}</div>
+        <div class="d"><b>Evidence to produce:</b> ${esc(c.evidence)}</div>
+        ${note?`<div class="d"><b>Your note:</b> ${esc(note)}</div>`:''}
+      </div></div>`;
+    }).join('')}</div>${gaps.length>20?`<p class="emptynote">Showing the top 20 of ${gaps.length} gaps. The full list is in the Assessment tab and in the Markdown export.</p>`:''}`
+    : `<p class="emptynote">No gaps recorded. Either you are in excellent shape or the assessment is incomplete.</p>`}
+
+  ${partials.length?`<h2>Partial controls — finish these before starting new ones</h2>
+    <ul>${partials.slice(0,15).map(c=>`<li><b>${c.id}</b> ${esc(c.title)}${(state.notes[c.id]||'').trim()?` — ${esc(state.notes[c.id])}`:''}</li>`).join('')}</ul>
+    ${partials.length>15?`<p class="emptynote">…and ${partials.length-15} more.</p>`:''}`:''}
+
+  <h2>Horizon — what you take on if you grow</h2>
+  ${(()=>{
+    const parts = [];
+    AUTO_ORDER.slice(ai(state.autonomy)+1).forEach(nx=>{
+      const add = ALL.filter(c => ti(c.tier)<=ti(state.tier) && ai(c.autonomy)===ai(nx));
+      const o = META.autonomy.find(x=>x.id===nx);
+      if(add.length){
+        parts.push(`<h3>Raising autonomy to ${nx} — ${esc(o.name)}</h3><p class="sub">${esc(o.desc)} Adds ${add.length} control${add.length===1?'':'s'} at your current tier.</p>
+          <ul>${add.map(c=>`<li><b>${c.id}</b> ${esc(c.title)} — ${esc(c.statement)}</li>`).join('')}</ul>`);
+      }
+    });
+    TIER_ORDER.slice(ti(state.tier)+1).forEach(nt=>{
+      const add = ALL.filter(c => ti(c.tier)===ti(nt) && ai(c.autonomy)<=ai(state.autonomy));
+      const o = META.tiers.find(x=>x.id===nt);
+      if(add.length){
+        parts.push(`<h3>Growing to ${nt} — ${esc(o.name)}</h3><p class="sub">${esc(o.desc)} Adds ${add.length} control${add.length===1?'':'s'} at your current autonomy level.</p>
+          <ul>${add.map(c=>`<li><b>${c.id}</b> ${esc(c.title)} — ${esc(c.statement)}</li>`).join('')}</ul>`);
+      }
+    });
+    if(!parts.length) return `<p class="emptynote">You are at the top tier and the highest autonomy level — all ${ALL.length} controls already apply. There is no horizon above you; the next move is depth, not breadth.</p>`;
+    return `<p class="sub">Controls that do not apply to you today but would if you moved up. Read this before committing to a capability, not after.</p>` + parts.join('');
+  })()}
+
+  <h2>Regulatory notes for your context</h2>
+  <ul>${regNotes().map(n=>`<li>${n}</li>`).join('')}</ul>
+
+  <h2>Method and limits</h2>
+  <p>Readiness is a weighted completion measure, not a risk score: In place = 3, Partial = 2, Develop = 1, Must implement = 0, over three times the number of scored controls. Not Applicable is excluded from the denominator; Not Assessed is counted as zero so that an unfinished assessment cannot flatter itself. A high score means the controls you claim are present — it does not mean they work. Only the Assurance domain tells you that.</p>
+  <p>Crosswalk mappings are indicative and were compiled on 28 July 2026. The instruments they cite are moving: the NIST AI RMF is under revision, NIST's SP 800-53 control overlays for AI agents are concept-stage, the OpenTelemetry GenAI conventions are pre-stable, and the EU AI Act was amended four days before this framework was written. Re-check before relying on a mapping in an audit.</p>`;
+}
+function reportMarkdown(){
+  const app = applicable(), t = tally(app);
+  const tierO = META.tiers.find(x=>x.id===state.tier), autoO = META.autonomy.find(x=>x.id===state.autonomy);
+  const gaps = app.filter(c => ['must','develop'].includes(ans(c.id))).sort((a,b)=>priority(a)-priority(b));
+  const L = [];
+  L.push(`# AGCF gap report`,'');
+  L.push(`- **Generated:** ${new Date().toISOString().slice(0,10)}`);
+  L.push(`- **Framework:** ${META.name} ${META.version}`);
+  L.push(`- **Tier:** ${state.tier} — ${tierO.name}`);
+  L.push(`- **Autonomy:** ${state.autonomy} — ${autoO.name}`);
+  L.push(`- **Context:** ${CTX.filter(c=>state.ctx[c.id]).map(c=>c.n).join(', ')||'none'}`);
+  L.push(`- **Scope:** ${app.length} of ${ALL.length} controls`);
+  L.push(`- **Readiness:** ${t.readiness===null?'—':t.readiness+'%'}`,'');
+  L.push(`| State | Count |`,`|---|---:|`);
+  [['In place',t.in_place],['Partial',t.partial],['Must implement',t.must],['Develop',t.develop],['Not assessed',t.unassessed],['Not applicable',t.na]]
+    .forEach(([k,v])=>L.push(`| ${k} | ${v} |`));
+  L.push('','## Domain readiness','',`| Domain | Plane | In place | Partial | Must | Develop | Unassessed | Readiness |`,`|---|---|---:|---:|---:|---:|---:|---:|`);
+  DOMAINS.forEach(d=>{
+    const list = domControls(d).filter(applies); if(!list.length) return;
+    const tt = tally(list), pn = META.planes.find(p=>p.id===d.plane).name;
+    L.push(`| ${d.id} ${d.name} | ${pn} | ${tt.in_place} | ${tt.partial} | ${tt.must} | ${tt.develop} | ${tt.unassessed} | ${tt.readiness===null?'—':tt.readiness+'%'} |`);
+  });
+  L.push('','## Priority actions','');
+  if(!gaps.length) L.push('_No gaps recorded._');
+  gaps.forEach((c,i)=>{
+    L.push(`### ${i+1}. ${c.id} — ${c.title}  \n*${STATUS_VIS[ans(c.id)].label} · ${c.domain} · ${c.tier} · ${c.autonomy}+*`,'');
+    L.push(c.statement,'');
+    L.push(`- **Evidence to produce:** ${c.evidence}`);
+    const note=(state.notes[c.id]||'').trim(); if(note) L.push(`- **Note:** ${note}`);
+    Object.entries(c.xw).filter(([k,v])=>v&&v!=='—').forEach(([k,v])=>L.push(`- **${k}:** ${v}`));
+    L.push('');
+  });
+  const nas = app.filter(c=>ans(c.id)==='na');
+  if(nas.length){
+    L.push('## Exclusions (Not Applicable)','');
+    nas.forEach(c=>L.push(`- **${c.id}** ${c.title} — ${(state.notes[c.id]||'').trim()||'_no justification recorded_'}`));
+    L.push('');
+  }
+  L.push('## Method','','Readiness = (3×in place + 2×partial + 1×develop) / (3 × scored controls). Not Applicable excluded from the denominator; Not Assessed counted as zero. This is a completion measure, not a risk score.','');
+  return L.join('\n');
+}
+document.getElementById('btnPrint').addEventListener('click', () => window.print());
+document.getElementById('btnMd').addEventListener('click', async () => {
+  try{ await navigator.clipboard.writeText(reportMarkdown());
+    const ok=document.getElementById('copyOk'); ok.style.opacity=1; setTimeout(()=>ok.style.opacity=0,1600);
+  }catch(e){ downloadText(reportMarkdown(),'agcf-gap-report.md','text/markdown'); }
+});
+document.getElementById('btnMdFile').addEventListener('click', () => downloadText(reportMarkdown(),'agcf-gap-report.md','text/markdown'));
+
+/* ---------- save / load ---------- */
+function downloadText(txt, name, mime){
+  const b = new Blob([txt],{type:mime||'text/plain'}), u = URL.createObjectURL(b);
+  const a = document.createElement('a'); a.href=u; a.download=name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(u),2000);
+}
+document.getElementById('btnSave').addEventListener('click', () => {
+  downloadText(JSON.stringify({
+    _format:'agcf-assessment', _version:META.version, saved:new Date().toISOString(),
+    tier:state.tier, autonomy:state.autonomy, ctx:state.ctx, answers:state.answers, notes:state.notes
+  },null,2), `agcf-assessment-${new Date().toISOString().slice(0,10)}.json`, 'application/json');
+});
+document.getElementById('btnLoad').addEventListener('click', () => document.getElementById('fileIn').click());
+document.getElementById('fileIn').addEventListener('change', e => {
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try{
+      const d = JSON.parse(r.result);
+      if(d.tier) state.tier = d.tier;
+      if(d.autonomy) state.autonomy = d.autonomy;
+      state.ctx = d.ctx||{}; state.answers = d.answers||{}; state.notes = d.notes||{};
+      renderAll(); setView('dash');
+    }catch(err){ alert('That file could not be read as an AGCF assessment.'); }
+  };
+  r.readAsText(f); e.target.value='';
+});
+
+/* ---------- theme + nav ---------- */
+document.getElementById('btnTheme').addEventListener('click', () => {
+  document.documentElement.dataset.theme = document.documentElement.dataset.theme==='dark' ? 'light':'dark';
+});
+if(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme='dark';
+
+function setView(v){
+  state.view = v;
+  document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.view===v)));
+  ['setup','dash','assess','cross','report'].forEach(k =>
+    document.getElementById('v-'+k).classList.toggle('hidden', k!==v));
+  window.scrollTo({top:0});
+}
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => setView(t.dataset.view)));
+
+function renderAll(){ renderSetup(); renderDash(); renderAssess(); renderCross(); renderReport(); }
+renderAll();
+document.getElementById('brandsub').textContent = `${ALL.length} controls · 12 domains · 4 planes · ${META.date}`;
+})();
+</script>
+</body>
+</html>
