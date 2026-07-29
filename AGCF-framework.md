@@ -1,8 +1,8 @@
 # AGCF — Agentic Governance & Control Framework
 
-**Version 0.9.2 (draft for review) · 28 July 2026**
+**Version 0.9.4 (draft for review) · 29 July 2026**
 
-*v0.9.2 adds two controls generalized from a field implementation — HUM-11 (override is captured, not punished) and OBS-09 (actor-independent ground truth) — amends OBS-02 to require fail-closed attribution, and ships with a companion **Implementation Guide** that collapses the catalogue into a nine-component buildable architecture with a prompt library for executing it in any environment.*
+*v0.9.2 adds two controls generalized from a field implementation — HUM-11 (override is captured, not punished) and OBS-09 (actor-independent ground truth) — amends OBS-02 to require fail-closed attribution, and ships with a companion **Implementation Guide** that collapses the catalogue into a nine-component buildable architecture with a prompt library for executing it in any environment. v0.9.3 rewrites all 106 control statements in Simplified Technical English form (active voice, named doer, second person, one term per concept) and passes the project's own two-stage STE gate at zero findings. v0.9.4 tightens the evidence for IDA-01 and IDA-03 so attribution is demonstrated at the point of action rather than the point of issuance, extends POL-02 to require that every verdict reaches a mechanism that carries it out, and adds ASR-10 (dependent controls are tested as a pair) — all three generalized from a field implementation and recorded in the Implementation Field Notes §13–§14.*
 
 A vendor-neutral reference architecture and self-assessment instrument for governing AI agents, assistants and automation. It scales from an individual practitioner to a regulated enterprise, and it is designed to be used in an afternoon rather than adopted over a year.
 
@@ -10,7 +10,7 @@ A vendor-neutral reference architecture and self-assessment instrument for gover
 
 ## 1. What this is, and what it is not
 
-**It is a reference architecture plus a control catalogue.** It says where a control physically sits at runtime — what evaluates a request before the model reasons, what stands between a decision and an action, what writes the record, and what feeds back. Then it lists 106 controls across twelve domains, each tagged with the organization size and the level of agent autonomy at which it becomes mandatory, and each mapped to the standards an auditor or enterprise customer is likely to ask about.
+**It is a reference architecture plus a control catalogue.** It says where a control physically sits at runtime — what evaluates a request before the model reasons, what stands between a decision and an action, what writes the record, and what feeds back. Then it lists 107 controls across twelve domains, each tagged with the organization size and the level of agent autonomy at which it becomes mandatory, and each mapped to the standards an auditor or enterprise customer is likely to ask about.
 
 **It is not a management system standard.** ISO/IEC 42001 is that, and it is certifiable; this is not, and does not try to be. **It is not a risk taxonomy.** OWASP's LLM and Agentic Top 10s and MITRE ATLAS are those, and they are better at it than a general framework can be. **It is not a substitute for legal advice** on any of the regimes it cites.
 
@@ -184,7 +184,7 @@ Levels are cumulative. Assess against the **highest** level you operate anywhere
 - **IRR — Incident Response, Recovery & Retirement.** Detect, stop, undo what can be undone, tell who needs telling, and retire cleanly.
 - **LRN — Learning & Continuous Improvement.** What the system learns in operation changes the system, as specific owned artifacts rather than as a resolution.
 
-The full catalogue — 106 controls with statements, evidence requirements, tier and autonomy tags, and standards mappings — is Appendix A.
+The full catalogue — 107 controls with statements, evidence requirements, tier and autonomy tags, and standards mappings — is Appendix A.
 
 ---
 
@@ -331,7 +331,7 @@ Six things were added because the original, like most operational architectures,
 
 ## Appendix A — Control catalogue
 
-106 controls across 12 domains. **Tier** is the organization tier at which the control becomes mandatory (cumulative: T3 inherits T1 and T2). **Autonomy** is the level at and above which it applies.
+107 controls across 12 domains. **Tier** is the organization tier at which the control becomes mandatory (cumulative: T3 inherits T1 and T2). **Autonomy** is the level at and above which it applies.
 
 ### GOV — Governance & Accountability
 *Plane: Foundation*
@@ -341,52 +341,52 @@ Six things were added because the original, like most operational architectures,
 > Every downstream control inherits its authority from here. Without a named owner and a written boundary, the rest of the framework is a wish list.
 
 **GOV-01 · Named accountable owner**  `T1` `A0+`  
-A specific named person is accountable for AI and agent use, with the authority to stop it. Not a committee, not 'IT'.  
+One named person owns AI and agent use and has the authority to stop it. A committee does not satisfy this control.  
 *Evidence:* Role description, org chart entry, or a line in the AI policy naming the person.  
 **NIST AI RMF:** GOVERN 2.1, GOVERN 2.3 · **ISO 42001:** A.3.2 · **EU AI Act:** Art. 26(2)
 
 **GOV-02 · Written AI use policy**  `T1` `A0+`  
-A written, accessible policy states what AI use is permitted, what is prohibited, what requires approval, and who to ask.  
+You have a written policy that states which AI use you permit, which you prohibit, which needs approval, and who decides.  
 *Evidence:* The policy document, with a version and date. Evidence it was distributed.  
 **NIST AI RMF:** GOVERN 1.2, GOVERN 1.4 · **ISO 42001:** A.2.2, A.2.3, A.9.2 · **EU AI Act:** Art. 26(1)
 
 **GOV-03 · Risk appetite and prohibited-use list**  `T2` `A0+`  
-The organization has decided, in writing, which categories of AI use it will not undertake at all, and what level of residual risk it will accept.  
+You have decided, in writing, which categories of AI use you refuse and how much residual risk you accept.  
 *Evidence:* Prohibited-use list; documented risk tolerance statement approved at the right level.  
 **NIST AI RMF:** GOVERN 1.3, MAP 1.5, MANAGE 1.4 · **ISO 42001:** A.2.2, Annex C · **EU AI Act:** Art. 5 (prohibited practices)
 
 **GOV-04 · AI literacy and role-based training**  `T1` `A0+`  
-People who build, operate, approve or are affected by AI systems receive training proportionate to their role, including what the systems get wrong.  
+You train everyone who builds, operates, or approves an AI system, and everyone the system affects. Training matches the role and covers known failure modes.  
 *Evidence:* Training materials, completion records, role-to-training mapping.  
 **NIST AI RMF:** GOVERN 2.2, MAP 3.4 · **ISO 42001:** A.4.6 · **EU AI Act:** Art. 4 (in force since 2 Feb 2025; amended 27 Jul 2026 to a support-and-provide standard)
 
 **GOV-05 · Executive and board accountability**  `T3` `A1+`  
-Leadership formally owns AI risk decisions and reviews them on a defined cadence with real information, not a status slide.  
+Leadership formally owns AI risk decisions. Leadership reviews those decisions on a defined cadence with primary data, not a status slide.  
 *Evidence:* Meeting minutes, standing agenda item, escalation records.  
 **NIST AI RMF:** GOVERN 2.3, GOVERN 1.5 · **ISO 42001:** Clause 5, A.3.2
 
 **GOV-06 · Cross-functional review body**  `T2` `A2+`  
-A standing group with legal, security, privacy, and domain representation reviews new agent use cases before they go live.  
+A standing group with legal, security, privacy, and domain members reviews each new agent use case before it goes live.  
 *Evidence:* Terms of reference, membership, review records with decisions.  
 **NIST AI RMF:** GOVERN 3.1, GOVERN 4.1 · **ISO 42001:** A.3.2, A.5.2 · **EU AI Act:** Art. 27 (FRIA, where applicable)
 
 **GOV-07 · Resourcing**  `T3` `A1+`  
-Budget and staff time are explicitly allocated to AI governance work. It is someone's job, not everyone's spare time.  
+You allocate budget and staff time to AI governance as named line items. Governance work belongs to a person, not to spare time.  
 *Evidence:* Budget line, headcount allocation, or documented time allocation.  
 **NIST AI RMF:** MANAGE 2.1, GOVERN 2.1 · **ISO 42001:** Clause 7.1, A.4.2
 
 **GOV-08 · Contractual flow-down to suppliers**  `T2` `A1+`  
-AI governance requirements — data use, training rights, incident notification, model change notice, evidence access — are written into supplier and vendor contracts.  
+Your supplier contracts contain the AI governance requirements: data use, training rights, incident notice, model change notice, and evidence access.  
 *Evidence:* Contract clauses, vendor questionnaire, procurement standard.  
 **NIST AI RMF:** GOVERN 6.1, MAP 4.1 · **ISO 42001:** A.10.2, A.10.3 · **EU AI Act:** Art. 25 (value chain), Art. 53(b) · **Other:** US: OMB M-25-22 flow-downs for federal contractors
 
 **GOV-09 · Regulatory applicability determination**  `T2` `A0+`  
-The organization has determined which AI-specific laws apply to it, in which jurisdictions, on what dates — and refreshes that determination as the law moves.  
+You know which AI laws apply to you, in which jurisdictions, on which dates. You refresh this determination when the law moves.  
 *Evidence:* Applicability memo with jurisdictions, obligations and dates; review date.  
 **NIST AI RMF:** GOVERN 1.1, MAP 1.1 · **ISO 42001:** Clause 4.1, 4.2, A.2.3 · **EU AI Act:** Art. 2 (scope), Art. 113 (as amended by Reg. (EU) 2026/1744) · **Other:** US state law: CO ADMTA (1 Jan 2027), TX TRAIGA, CA SB 53, IL SB 315
 
 
-### INV — Inventory, Classification & Risk Tiering
+### INV — AI Register, Classification & Risk Tiering
 *Plane: Foundation*
 
 **Purpose.** You know every AI system and agent operating on your behalf, what each one touches, how autonomous it is, and how much damage it could do.
@@ -394,42 +394,42 @@ The organization has determined which AI-specific laws apply to it, in which jur
 > You cannot govern what you cannot enumerate. Inventory is the single highest-leverage control in the framework and the one most often skipped because it is unglamorous.
 
 **INV-01 · Register of AI systems and agents**  `T1` `A0+`  
-A maintained register lists every AI system and agent in use, including AI features embedded inside SaaS products you did not choose to buy as AI.  
+You maintain an AI register that lists every AI system and agent in use. The register includes AI features embedded inside SaaS products.  
 *Evidence:* The register itself, with a last-reviewed date.  
 **NIST AI RMF:** GOVERN 1.6 · **ISO 42001:** A.4.2, A.6.2.7 · **EU AI Act:** Art. 49 (registration, where high-risk)
 
 **INV-02 · Register content is sufficient to govern**  `T1` `A0+`  
-Each entry records purpose, business owner, model/provider, data it can reach, tools and actions available to it, and where it runs.  
+Each register entry records purpose, business owner, model and provider, reachable data, available tools and actions, and runtime location.  
 *Evidence:* Register schema and a populated sample.  
 **NIST AI RMF:** MAP 1.1, MAP 2.1 · **ISO 42001:** A.6.2.2, A.6.2.7 · **EU AI Act:** Art. 11 + Annex IV (technical documentation)
 
 **INV-03 · Autonomy tier assigned**  `T1` `A0+`  
-Every agent is assigned an autonomy level (advisory → assistive → gated → bounded autonomous → open autonomous) and that assignment drives which controls apply.  
+You assign each agent an autonomy level, from advisory to open autonomous. The assigned level selects which controls apply.  
 *Evidence:* Autonomy tier recorded per entry; tier definitions documented.  
 **NIST AI RMF:** GOVERN 1.3, MAP 2.2, MAP 3.5 · **ISO 42001:** A.6.2.2, A.9.4 · **EU AI Act:** Art. 14(1) (oversight proportionate to autonomy); Annex XIII(e)
 
 **INV-04 · Impact and consequence classification**  `T2` `A0+`  
-Each use case records who is affected by its outputs and how badly — including people who are not your users.  
+Each use case records who the outputs affect and how badly, including people who are not your users.  
 *Evidence:* Impact assessment per use case; affected-population analysis.  
 **NIST AI RMF:** MAP 5.1, MAP 3.2 · **ISO 42001:** A.5.2, A.5.3, A.5.4, A.5.5 · **EU AI Act:** Art. 27 (FRIA) · **Other:** ISO/IEC 42005:2025
 
 **INV-05 · Regulatory classification per use case**  `T2` `A1+`  
-Each use case is classified against applicable regimes — prohibited, high-risk, transparency-only, or minimal — and the reasoning is recorded.  
+You classify each use case against the applicable regimes: prohibited, high risk, transparency only, or minimal. You record the reasoning.  
 *Evidence:* Classification record with rationale, reviewed by someone competent to review it.  
 **NIST AI RMF:** GOVERN 1.1, GOVERN 1.3 · **ISO 42001:** A.5.2, Clause 6.1 · **EU AI Act:** Art. 5, Art. 6, Art. 6(3)–(4), Annex III, Art. 50 · **Other:** CO ADMTA 'consequential decision'
 
 **INV-06 · Shadow AI discovery**  `T2` `A0+`  
-There is an active mechanism to find AI and agent use that never came through the approval process — not just a policy telling people not to do it.  
+You operate an active mechanism that finds AI and agent use which skipped the approval process. A policy alone does not satisfy this control.  
 *Evidence:* Discovery method (egress logs, SaaS discovery, expense review, survey) and findings from the last cycle.  
 **NIST AI RMF:** GOVERN 1.6, MEASURE 3.1 · **ISO 42001:** A.4.2, A.9.2 · **Other:** OWASP ASI10 (Rogue Agents)
 
 **INV-07 · Reclassification triggers**  `T2` `A2+`  
-Defined events — model version change, new tool or connector, scope expansion, new data domain — force re-review rather than silently inheriting the old approval.  
+Defined events force a new review: model version change, new tool or connector, scope expansion, or a new data domain. Old approvals do not carry over.  
 *Evidence:* Trigger list; examples of triggered re-reviews.  
 **NIST AI RMF:** MANAGE 4.1, MEASURE 2.4 · **ISO 42001:** A.6.2.6, Clause 8.1 · **EU AI Act:** Art. 25 (substantial modification), Art. 43(4)
 
-**INV-08 · Inventory reconciled to identity and spend**  `T3` `A2+`  
-The AI register is periodically reconciled against issued credentials, API keys, connector grants and billing — the three places undeclared agents show up.  
+**INV-08 · Register reconciled to identity and spend**  `T3` `A2+`  
+You reconcile the AI register against issued credentials, connector grants, and billing at least monthly. Undeclared agents appear in those three places.  
 *Evidence:* Reconciliation report; discrepancies and their resolution.  
 **NIST AI RMF:** GOVERN 1.6, MANAGE 3.1 · **ISO 42001:** A.4.2, A.10.3
 
@@ -442,52 +442,52 @@ The AI register is periodically reconciled against issued credentials, API keys,
 > This is the control most organizations think they have because they have a data classification policy. Having a policy and enforcing it at agent retrieval time are different things.
 
 **DAT-01 · Classification applied to agent-reachable data**  `T1` `A0+`  
-Any data source an agent can reach is classified. Unclassified data is treated as sensitive by default, not as public.  
+You classify every data source an agent can reach. You treat unclassified data as sensitive by default, not as public.  
 *Evidence:* Classification scheme; classification applied to the sources in the register.  
 **NIST AI RMF:** MEASURE 2.10, GOVERN 1.4 · **ISO 42001:** A.7.2, A.7.4 · **EU AI Act:** Art. 10 (data governance) · **Other:** ISO/IEC 27001 A.5.12
 
 **DAT-02 · Default-deny data scope per agent**  `T2` `A1+`  
-Each agent has an explicit allow-list of data domains. Access is default-deny, not 'everything the service account can see'.  
+Each agent has an explicit allow-list of data domains. Access is default-deny, not everything the service account can see.  
 *Evidence:* Per-agent scope configuration; a test showing an out-of-scope source is inaccessible.  
 **NIST AI RMF:** MANAGE 1.3, GOVERN 1.4 · **ISO 42001:** A.7.2, A.9.4 · **EU AI Act:** Art. 26(4) · **Other:** OWASP LLM02, LLM08
 
 **DAT-03 · Retrieval-time minimization**  `T2` `A1+`  
-The agent receives the least data sufficient for the task — filtered at retrieval, not filtered in the prompt or trusted to the model.  
+The agent receives the least data that completes the task. You filter at retrieval, not in the prompt, and you do not trust the model to filter.  
 *Evidence:* Retrieval filter configuration; sample trace showing the data actually passed.  
 **NIST AI RMF:** MANAGE 1.3, MEASURE 2.10 · **ISO 42001:** A.7.2, A.7.6 · **EU AI Act:** Art. 10(2) · **Other:** GDPR Art. 5(1)(c)
 
 **DAT-04 · Sensitive-data detection on both directions**  `T2` `A1+`  
-Detection for personal, health, payment, credential and proprietary data runs on what enters the agent and on what leaves it.  
+Detection for personal, health, payment, credential, and proprietary data runs on content that enters the agent and on content that leaves it.  
 *Evidence:* Detector configuration and coverage; recent detection statistics including false-negative testing.  
 **NIST AI RMF:** MEASURE 2.7, MEASURE 2.10 · **ISO 42001:** A.7.4, A.6.2.6 · **EU AI Act:** Art. 15 (cybersecurity) · **Other:** OWASP LLM02
 
 **DAT-05 · De-identification and redaction**  `T3` `A1+`  
-Where the task does not require identified data, the agent receives de-identified, redacted or tokenized data.  
+Where a task does not need identified data, the agent receives de-identified, redacted, or masked data.  
 *Evidence:* De-identification method and its validation; documented decision where full fidelity is required.  
 **NIST AI RMF:** MANAGE 2.1, MEASURE 2.10 · **ISO 42001:** A.7.6 · **EU AI Act:** Art. 4a (special-category data for bias detection; Art. 10(5) deleted by Reg. (EU) 2026/1744) · **Other:** HIPAA §164.514
 
 **DAT-06 · Residency and sovereignty enforced technically**  `T2` `A1+`  
-Data residency, cross-border transfer and sovereign-compute constraints are enforced by configuration and network controls, not by a clause in a contract.  
+Configuration and network controls enforce data residency, cross-border transfer limits, and sovereign-compute constraints. A contract clause alone does not satisfy this control.  
 *Evidence:* Region pinning configuration; egress controls; transfer mechanism documentation.  
 **NIST AI RMF:** GOVERN 1.1, MAP 4.1 · **ISO 42001:** A.4.5, A.10.3 · **EU AI Act:** Art. 2 (extraterritorial scope) · **Other:** GDPR Ch. V; sector sovereignty requirements
 
 **DAT-07 · Provider training and retention terms verified**  `T1` `A0+`  
-You know, in writing, whether your prompts and data train the provider's models, how long they are retained, and who can access them — for every provider, including the ones inside your SaaS tools.  
+You know, in writing, whether your prompts and data train each provider model, the retention period, and who can access them. This covers every provider, including AI inside your SaaS tools.  
 *Evidence:* Provider terms extract per provider; configuration proving the elected setting.  
 **NIST AI RMF:** GOVERN 6.1, MAP 4.1, MANAGE 3.1 · **ISO 42001:** A.10.3, A.7.3 · **EU AI Act:** Art. 25, Art. 53(b) · **Other:** OMB M-25-22 data rights clauses
 
 **DAT-08 · Provenance for corpora and memory**  `T3` `A2+`  
-For retrieval corpora, fine-tuning sets and persistent agent memory, you can say where each item came from, who could write it, and when.  
+For each item in a corpus, fine-tuning set, or agent memory, you can name its origin, its writer, and its write time.  
 *Evidence:* Provenance metadata schema; sample lineage trace.  
 **NIST AI RMF:** MAP 4.1, MEASURE 2.8 · **ISO 42001:** A.7.5 · **EU AI Act:** Art. 10(2), Art. 53(d) · **Other:** OWASP ASI06, LLM04
 
 **DAT-09 · Retention and deletion across the whole footprint**  `T2` `A1+`  
-Retention and deletion rules cover prompts, outputs, embeddings, agent memory and execution traces — not just the system of record.  
+Retention and deletion rules cover prompts, outputs, embeddings, agent memory, and execution traces. The rules do not stop at the system of record.  
 *Evidence:* Retention schedule naming each store; evidence of deletion executing.  
 **NIST AI RMF:** GOVERN 1.7, MANAGE 4.1 · **ISO 42001:** A.7.2, A.6.2.8 · **EU AI Act:** Art. 12, Art. 26(6) (min. 6 months for high-risk deployer logs) · **Other:** GDPR Art. 17
 
 **DAT-10 · Lawful basis for what the agent does**  `T2` `A0+`  
-There is an identified lawful basis or consent for the processing the agent performs, including any secondary use the agent creates.  
+You have an identified lawful basis or consent for the processing the agent performs, including secondary use the agent creates.  
 *Evidence:* Records of processing; DPIA where required; consent records.  
 **NIST AI RMF:** GOVERN 1.1, MAP 1.1 · **ISO 42001:** A.5.4, Clause 4.2 · **EU AI Act:** Art. 26(9) (DPIA) · **Other:** GDPR Art. 6, Art. 35; HIPAA minimum necessary
 
@@ -500,47 +500,47 @@ There is an identified lawful basis or consent for the processing the agent perf
 > The most commonly missing layer, and the one that makes every other control unenforceable when absent. If the agent uses a human's credentials, your logs say a human did it, your revocation kills that human's access, and your least-privilege story is fiction.
 
 **IDA-01 · Distinct identity per agent**  `T2` `A1+`  
-Each agent authenticates as itself. It does not borrow a person's credentials, a shared service account, or a long-lived admin key.  
-*Evidence:* Identity per agent in the directory or secret store; no shared-credential exceptions outstanding.  
+Each agent authenticates as itself. An agent never borrows a human credential, a shared service account, or a long-lived admin credential.  
+*Evidence:* Identity per agent in the directory or secret store; no shared-credential exceptions outstanding; the agent identity present on an authorization decision record, not only in the directory.  
 **NIST AI RMF:** GOVERN 3.2, MANAGE 1.3 · **ISO 42001:** A.3.2, A.9.2 · **EU AI Act:** Art. 12 (traceability) · **Other:** OWASP ASI03, T9; CSA Agentic AI IAM
 
 **IDA-02 · Agent identity lifecycle through the IdP**  `T3` `A2+`  
-Agent identities are created, reviewed and revoked through the same identity provider and joiner-mover-leaver process as everything else.  
+You create, review, and revoke agent identities through the same identity provider and joiner-mover-leaver process as human identities.  
 *Evidence:* Provisioning workflow; evidence of a revocation executing end to end.  
 **NIST AI RMF:** GOVERN 2.1, MANAGE 2.4 · **ISO 42001:** A.3.2, A.4.6 · **Other:** OWASP ASI03; SCIM/OIDC provisioning
 
 **IDA-03 · Delegation chain is recorded**  `T2` `A2+`  
-For any agent action you can answer: which human authorized this, for what scope, and when did that authority start and end.  
-*Evidence:* Delegation records or on-behalf-of claims present in logs; a worked example.  
+For any agent action you can answer: which human authorized it, for what scope, and when that authority started and ended.  
+*Evidence:* Delegation records or on-behalf-of claims present in logs; a worked example traced from one action record back to the authorizing human — not forward from a grant.  
 **NIST AI RMF:** GOVERN 3.2, MANAGE 4.1 · **ISO 42001:** A.6.2.8, A.10.2 · **EU AI Act:** Art. 12, Art. 26(2) · **Other:** OWASP T8; draft-ietf-oauth-identity-assertion-authz-grant
 
 **IDA-04 · Per-action scoping, not per-system**  `T2` `A2+`  
-Privileges are granted at action granularity — draft but not send, read but not delete — rather than by handing over a whole system.  
+You grant privileges at action granularity: draft but not send, read but not delete. You never hand over a whole business system.  
 *Evidence:* Scope definitions per connector; a test showing a denied action class.  
 **NIST AI RMF:** MANAGE 1.3, MAP 3.5 · **ISO 42001:** A.9.2, A.9.4 · **EU AI Act:** Art. 14(4) · **Other:** OWASP LLM06 (Excessive Agency), ASI03
 
 **IDA-05 · Short-lived, just-in-time credentials**  `T3` `A2+`  
-Agents hold credentials scoped to a task and a time window. No standing long-lived static keys.  
+Agents hold credentials scoped to one task and one time window. No standing long-lived static credentials exist.  
 *Evidence:* Token lifetime configuration; absence of static keys in secret inventory.  
 **NIST AI RMF:** MANAGE 1.3, MEASURE 2.7 · **ISO 42001:** A.9.2 · **EU AI Act:** Art. 15 · **Other:** CSA Agentic AI IAM; SPIFFE/SPIRE
 
 **IDA-06 · Audience-bound tokens; no passthrough**  `T3` `A2+`  
-Tokens are bound to the specific resource they were issued for. A credential presented to one service is never forwarded to another.  
+Each access token binds to one target resource. This control uses the word token deliberately: the mechanism is OAuth audience binding. A credential presented to one service never travels to another service.  
 *Evidence:* Token audience validation enabled; architecture review confirming no passthrough path.  
 **NIST AI RMF:** MEASURE 2.7 · **ISO 42001:** A.6.2.5 · **EU AI Act:** Art. 15 · **Other:** MCP authorization spec (RFC 8707 resource indicators; passthrough prohibited)
 
 **IDA-07 · Agent actions distinguishable in logs and SIEM**  `T2` `A2+`  
-Agent activity is a distinct actor class in your security telemetry — you can filter for it, alert on it, and separate it from human activity.  
+Agent activity forms a distinct actor class in your security telemetry. You can filter it, alert on it, and separate it from human activity.  
 *Evidence:* SIEM query returning agent-only activity; actor-type field populated.  
 **NIST AI RMF:** MEASURE 2.4, MANAGE 4.1 · **ISO 42001:** A.6.2.8 · **EU AI Act:** Art. 12 · **Other:** OWASP T8 (Repudiation & Untraceability)
 
 **IDA-08 · Granular revocation path**  `T2` `A2+`  
-You can revoke one agent, one credential, or one connector without taking down everything else — and you have tested it.  
+You can revoke one agent, one credential, or one connector without stopping the rest. You have tested this revocation.  
 *Evidence:* Documented revocation procedure; evidence of a test.  
 **NIST AI RMF:** MANAGE 2.4 · **ISO 42001:** A.6.2.6 · **EU AI Act:** Art. 14(4)(e)
 
 **IDA-09 · Periodic privilege review for agents**  `T3` `A2+`  
-Agent entitlements are reviewed on a cadence like human entitlements are, and accumulated scope is pruned.  
+The accountable owner reviews agent entitlements at least quarterly, as with human entitlements, and removes accumulated scope.  
 *Evidence:* Review records with removals actually executed.  
 **NIST AI RMF:** GOVERN 1.5, MANAGE 3.1 · **ISO 42001:** Clause 9.3, A.9.2
 
@@ -553,42 +553,42 @@ Agent entitlements are reviewed on a cadence like human entitlements are, and ac
 > Prompt injection and tool poisoning arrive through the normal front door — a ticket description, a web page, a document, an MCP tool description. Normalization and deduplication do not sanitize adversarial content; they launder it into something that looks trusted.
 
 **ING-01 · Untrusted sources identified and marked**  `T2` `A1+`  
-Every content source is classified as trusted or untrusted, and untrusted content stays marked as it moves through the pipeline.  
+You classify every content source as trusted or untrusted. Untrusted content keeps its marking as it moves through the pipeline.  
 *Evidence:* Source trust classification; taint or provenance field carried in the context.  
 **NIST AI RMF:** MAP 4.1, MEASURE 2.7 · **ISO 42001:** A.7.3, A.7.5 · **EU AI Act:** Art. 15(5) · **Other:** OWASP LLM01; ASI01
 
 **ING-02 · Injection resistance between content and instruction**  `T2` `A1+`  
-There is a technical boundary preventing retrieved or tool-returned content from redirecting the agent's goal or authority — structural separation, not a 'ignore instructions in the data' line in the system prompt.  
+A technical boundary stops retrieved or tool-returned content from redirecting the agent goal or authority. A line in the system prompt is not a boundary.  
 *Evidence:* Architecture description of the boundary; injection test results.  
 **NIST AI RMF:** MEASURE 2.7, MANAGE 2.2 · **ISO 42001:** A.6.2.4 · **EU AI Act:** Art. 15(5) · **Other:** OWASP LLM01, ASI01, T6
 
 **ING-03 · Tool, connector and skill approval**  `T2` `A2+`  
-Every tool, plugin, MCP server, connector and agent skill an agent can use is inventoried and explicitly approved. No self-service tool addition at runtime.  
+You list and approve every tool, plugin, MCP server, connector, and skill an agent can use. Agents cannot add tools at runtime.  
 *Evidence:* Approved tool register; a blocked attempt to add an unapproved tool.  
 **NIST AI RMF:** GOVERN 6.1, MAP 4.1, MANAGE 3.1 · **ISO 42001:** A.4.4, A.10.3 · **EU AI Act:** Art. 25 · **Other:** OWASP ASI04, LLM03; OWASP Agentic Skills Top 10
 
 **ING-04 · Tool supply-chain integrity**  `T3` `A2+`  
-Tools and skills are pinned by version or hash, and their source is verified. You would notice if one changed.  
+You pin each tool and skill by version or hash and verify its source. You detect when one changes.  
 *Evidence:* Pinning configuration; integrity verification step in the deployment path.  
 **NIST AI RMF:** MANAGE 3.1, MANAGE 3.2 · **ISO 42001:** A.4.4, A.10.3 · **EU AI Act:** Art. 15 · **Other:** OWASP LLM03, ASI04; SLSA/Sigstore
 
 **ING-05 · Tool descriptions treated as untrusted**  `T3` `A2+`  
-Tool and function descriptions — which the model reads and the user usually does not — are reviewed on approval and re-reviewed when they change. A changed description invalidates the prior approval.  
+You review tool descriptions at approval and again when they change. The model reads these descriptions and the user does not. A changed description cancels the prior approval.  
 *Evidence:* Description review record; change-detection mechanism.  
 **NIST AI RMF:** MANAGE 3.2, MEASURE 2.7 · **ISO 42001:** A.10.3 · **Other:** MCP spec (annotations untrusted); tool poisoning / rug-pull research; OWASP ASI04
 
 **ING-06 · Memory and corpus write-path integrity**  `T3` `A2+`  
-What can write into agent memory or a retrieval corpus is controlled and logged. An agent cannot silently persist attacker-supplied content for its future self or for other agents.  
+You control and log every write path into agent memory and retrieval corpora. An agent cannot silently store attacker content for later use.  
 *Evidence:* Write-path access controls; memory write audit log.  
 **NIST AI RMF:** MEASURE 2.7, MANAGE 2.2 · **ISO 42001:** A.7.2, A.7.5 · **EU AI Act:** Art. 15(4) (feedback-loop bias) · **Other:** OWASP T1 Memory Poisoning, ASI06, LLM08
 
 **ING-07 · Output handling before downstream use**  `T2` `A1+`  
-Model output is validated, escaped or constrained before it is executed, rendered, or passed to another system. Output is never trusted as code or as a command.  
+You validate, escape, or constrain model output before it executes, renders, or reaches another system. Output never runs as code or as a command.  
 *Evidence:* Validation layer; test showing an injection payload in output does not execute downstream.  
 **NIST AI RMF:** MEASURE 2.7, MANAGE 2.2 · **ISO 42001:** A.6.2.4 · **EU AI Act:** Art. 15 · **Other:** OWASP LLM05, ASI05
 
 **ING-08 · Inter-agent messages authenticated and untrusted**  `T3` `A3+`  
-In multi-agent systems, messages between agents are authenticated, and a message from another agent is treated as untrusted input rather than as a trusted instruction.  
+In multi-agent systems, agents authenticate their messages to each other. A message from another agent counts as untrusted input, not as a trusted instruction.  
 *Evidence:* Inter-agent auth mechanism; test showing a spoofed or poisoned message is rejected or contained.  
 **NIST AI RMF:** MEASURE 2.7, MAP 3.5 · **ISO 42001:** A.6.2.5 · **Other:** OWASP T12, T13, T14; ASI07; CSA MAESTRO L7
 
@@ -601,42 +601,42 @@ In multi-agent systems, messages between agents are authenticated, and a message
 > Most 'trust and safety' layers are a checklist of controls with no decision function. A gate needs inputs, a verdict, an unbypassable enforcement point, and a defined behaviour on deny.
 
 **POL-01 · Policy expressed in evaluable form**  `T3` `A2+`  
-The rules that govern agent behaviour exist in a form a system can evaluate, not only in prose a person can read.  
+The rules that govern agent behaviour exist in a form a machine can evaluate, not only in prose a person can read.  
 *Evidence:* Policy definitions in code or configuration; mapping from the written policy to the encoded rules.  
 **NIST AI RMF:** GOVERN 1.4, MANAGE 1.3 · **ISO 42001:** A.2.2, A.9.2 · **EU AI Act:** Art. 9
 
 **POL-02 · Enforcement point cannot be bypassed**  `T2` `A2+`  
-Policy is enforced at a chokepoint between decision and action that the agent cannot route around — not inside the prompt, and not as advice the model may weigh.  
-*Evidence:* Architecture showing the enforcement point; test attempting to bypass it.  
+A chokepoint between decision and action enforces policy, and the agent cannot route around it. The verdict set is: allow, deny, or escalate. Each verdict reaches a mechanism that carries it out.  
+*Evidence:* Architecture showing the enforcement point; test attempting to bypass it; the named mechanism for each verdict, and a test that carries an escalate verdict through to a human decision.  
 **NIST AI RMF:** MANAGE 1.3, MEASURE 2.6 · **ISO 42001:** A.6.2.5, A.9.2 · **EU AI Act:** Art. 14(4) · **Other:** OWASP LLM06, ASI02
 
 **POL-03 · Deny is safe and defined**  `T2` `A2+`  
-When policy denies, the system fails closed with defined behaviour. It does not silently proceed, retry with a different phrasing, or degrade to an unmonitored path.  
+On deny, the system fails closed with defined behaviour. It does not proceed silently, retry with new phrasing, or degrade to an unmonitored path.  
 *Evidence:* Deny-path specification; log of denials showing what happened next.  
 **NIST AI RMF:** MEASURE 2.6, MANAGE 2.2 · **ISO 42001:** A.6.2.5 · **EU AI Act:** Art. 15(4) (fail-safe)
 
 **POL-04 · Ambiguity escalates rather than allows**  `T2` `A2+`  
-When the policy decision is uncertain, the default is escalation to a human, not permission.  
+On an uncertain policy decision, the gate escalates: it holds the action and pages a human. Uncertainty never defaults to permission.  
 *Evidence:* Escalation rule; escalation volume and resolution records.  
 **NIST AI RMF:** MANAGE 1.3, MAP 3.5 · **ISO 42001:** A.3.3, A.9.2 · **EU AI Act:** Art. 14
 
 **POL-05 · Prohibited uses enforced technically**  `T2` `A1+`  
-The prohibited-use list from GOV-03 is enforced by controls, not only stated in a policy people have read once.  
+Technical controls enforce the prohibited-use list from GOV-03. A policy that people read once is not enforcement.  
 *Evidence:* Technical control mapped to each prohibited use; test evidence.  
 **NIST AI RMF:** GOVERN 1.2, MANAGE 1.3 · **ISO 42001:** A.2.2, A.9.3 · **EU AI Act:** Art. 5
 
 **POL-06 · Output guardrails proportionate to context**  `T1` `A1+`  
-Output filtering and safety controls are calibrated to the audience and consequence of the use case rather than applied as one global setting.  
+You calibrate output guardrails to the audience and the stakes of each use case. One global setting does not fit all uses.  
 *Evidence:* Guardrail configuration per use case; rationale for the calibration.  
 **NIST AI RMF:** MEASURE 2.6, MANAGE 2.2 · **ISO 42001:** A.6.2.4, A.9.4 · **EU AI Act:** Art. 9(2) · **Other:** OWASP LLM09
 
 **POL-07 · Policy versioning bound to decisions**  `T3` `A2+`  
-Every recorded decision can be tied to the version of the policy that governed it, so an old action is judged by the rule that applied at the time.  
+Every recorded decision names the policy version that governed it. You judge an old action by the rule in force at the time.  
 *Evidence:* Policy version identifier present in decision records.  
 **NIST AI RMF:** GOVERN 1.4, MANAGE 4.1 · **ISO 42001:** A.2.4, A.6.2.8 · **EU AI Act:** Art. 12
 
 **POL-08 · Exceptions are time-bound and owned**  `T2` `A1+`  
-Policy exceptions have a named owner, a stated justification, an expiry date, and a review. Permanent exceptions are policy changes and are treated as such.  
+Each policy exception has a named owner, a written justification, an expiry date, and a review. A permanent exception is a policy change.  
 *Evidence:* Exception register with expiry dates; evidence of expired exceptions closing.  
 **NIST AI RMF:** GOVERN 1.4, MANAGE 1.4 · **ISO 42001:** A.2.4, Clause 6.1
 
@@ -649,52 +649,52 @@ Policy exceptions have a named owner, a stated justification, an expiry date, an
 > This is the layer that has to carry the weight, because the human approval gate empirically does not. Published containment data shows approval rates around 93% and injection success rising sharply under repeated adaptive attempts. Containment must hold when the human clicks Approve.
 
 **ACT-01 · Actions classified by reversibility**  `T1` `A2+`  
-Every action available to an agent is classified as read-only, reversible write, irreversible, or destructive. This classification, not the tool name, drives the controls.  
+You classify every available action as read-only, reversible write, irreversible, or destructive. This class, not the tool name, selects the controls.  
 *Evidence:* Action inventory with reversibility class per action.  
 **NIST AI RMF:** MAP 2.1, MANAGE 1.2 · **ISO 42001:** A.6.2.2, A.9.4 · **EU AI Act:** Art. 9(2) · **Other:** OWASP LLM06
 
 **ACT-02 · Irreversible actions gated or prohibited**  `T1` `A2+`  
-Irreversible and destructive actions either require explicit human approval or are removed from the agent's reach entirely. They are never in the autonomous envelope.  
+Irreversible and destructive actions need explicit human approval, or you remove them from agent reach. Such actions never sit inside the autonomous envelope.  
 *Evidence:* Configuration showing the gate or the removal; test attempting the action.  
 **NIST AI RMF:** MANAGE 1.3, MAP 3.5 · **ISO 42001:** A.9.2, A.9.4 · **EU AI Act:** Art. 14(4)(d) · **Other:** OWASP ASI10
 
 **ACT-03 · Isolated execution environment**  `T2` `A2+`  
-Agent code execution and tool use happen in an environment isolated from production systems and from the operator's host by default.  
+Agents execute code and use tools inside an isolated environment. The isolation boundary separates them from business systems and from the operator host.  
 *Evidence:* Sandbox or container configuration; isolation boundary description.  
 **NIST AI RMF:** MEASURE 2.7, MANAGE 1.3 · **ISO 42001:** A.4.5, A.6.2.5 · **EU AI Act:** Art. 15(5) · **Other:** OWASP ASI05, T11
 
 **ACT-04 · Controlled network egress**  `T3` `A2+`  
-Agent runtimes have default-deny outbound network access with an explicit allow-list. Note that egress control constrains but does not eliminate exfiltration through approved destinations.  
+Agent runtimes have default-deny outbound network access with an explicit allow-list. Egress control limits, but does not remove, exfiltration through approved destinations.  
 *Evidence:* Egress policy; allow-list with justification per destination.  
 **NIST AI RMF:** MEASURE 2.7 · **ISO 42001:** A.4.5 · **EU AI Act:** Art. 15(5) · **Other:** OWASP LLM02
 
 **ACT-05 · Rate, volume and spend limits with automatic cutoff**  `T2` `A2+`  
-Hard limits on invocations, tokens, tool calls and spend stop the agent automatically rather than generating an alert someone reads later.  
+Hard limits on invocations, model usage, tool calls, and spend stop the agent automatically. An alert that someone reads later is not a limit.  
 *Evidence:* Limit configuration; evidence of a cutoff firing.  
 **NIST AI RMF:** MANAGE 1.3, MEASURE 2.6 · **ISO 42001:** A.4.5, A.6.2.6 · **EU AI Act:** Art. 15 · **Other:** OWASP LLM10, T4
 
 **ACT-06 · Scope caps per run**  `T2` `A2+`  
-Per-execution caps bound how much can be touched — records modified, messages sent, files changed, recipients addressed — so a wrong decision stays small.  
+Per-run caps bound how much one execution can touch: records changed, messages sent, files changed, recipients addressed. A wrong decision stays small.  
 *Evidence:* Cap configuration per agent; a run halted by a cap.  
 **NIST AI RMF:** MANAGE 1.3, MANAGE 1.2 · **ISO 42001:** A.9.4 · **EU AI Act:** Art. 9(5) · **Other:** CSA Agentic AI Red Teaming (blast-radius minimization)
 
 **ACT-07 · Layered kill switch**  `T2` `A2+`  
-You can stop one agent, one connector, one class of write action, or all agents organization-wide — and each layer has been tested, not just designed.  
+You can stop one agent, one connector, one class of write action, or every agent at once. You have tested each layer.  
 *Evidence:* Kill switch at each layer; test records with time-to-stop measured.  
 **NIST AI RMF:** MANAGE 2.4, MANAGE 4.1 · **ISO 42001:** A.6.2.6 · **EU AI Act:** Art. 14(4)(e) (stop button)
 
 **ACT-08 · Rollback or compensating action**  `T3` `A2+`  
-For reversible writes there is a defined way to undo them, and someone has actually run it.  
+For each reversible write, a defined procedure undoes it, and someone has run that procedure.  
 *Evidence:* Rollback procedure per action class; test evidence.  
 **NIST AI RMF:** MANAGE 2.3, MANAGE 4.1 · **ISO 42001:** A.6.2.6 · **EU AI Act:** Art. 15(4)
 
 **ACT-09 · Autonomy earned incrementally**  `T2` `A2+`  
-Agents start gated and are promoted to broader autonomy only against pre-stated criteria and evidence of performance. Autonomy is a graduation, not a launch setting.  
+Agents start gated and earn broader autonomy against pre-stated criteria and performance evidence. Autonomy is a graduation, not a launch setting.  
 *Evidence:* Promotion criteria; promotion decisions with the supporting evidence.  
 **NIST AI RMF:** MEASURE 2.6, MANAGE 1.3 · **ISO 42001:** A.6.2.4, A.6.2.5 · **EU AI Act:** Art. 9(6)–(8)
 
 **ACT-10 · Multi-agent orchestration bounded**  `T3` `A3+`  
-Where agents invoke agents, there are limits on delegation depth, fan-out, and what authority can be inherited by a sub-agent. A sub-agent never gains privileges its caller lacked.  
+Where agents invoke agents, limits bound delegation depth, fan-out, and inherited authority. A sub-agent never gains privileges its caller lacked.  
 *Evidence:* Orchestration limits in configuration; authority inheritance rules; test of a privilege-escalation attempt via delegation.  
 **NIST AI RMF:** MAP 3.5, MANAGE 1.3 · **ISO 42001:** A.6.2.5, A.9.4 · **EU AI Act:** Art. 14(1) · **Other:** OWASP T3, T13, ASI07; CSA MAESTRO
 
@@ -707,57 +707,57 @@ Where agents invoke agents, there are limits on delegation depth, fan-out, and w
 > Human oversight is a real control that degrades badly when overused. Approving hundreds of low-consequence prompts trains people to approve the one that matters. Oversight must be rationed to be worth anything.
 
 **HUM-01 · Named, competent, empowered overseers**  `T1` `A2+`  
-Specific people are assigned to oversee each agent, understand its limits, and hold the authority to override or halt it without asking permission.  
+Named, competent people oversee each agent. They understand its limits and hold the authority to override or stop it without asking permission.  
 *Evidence:* Assignment records; competence basis; documented authority to stop.  
 **NIST AI RMF:** GOVERN 3.2, MAP 3.4, MAP 3.5 · **ISO 42001:** A.4.6, A.9.2 · **EU AI Act:** Art. 14(1)–(4), Art. 26(2)
 
 **HUM-02 · Oversight burden is measured**  `T2` `A2+`  
-You track how many approvals people are asked for and what proportion they approve. A very high approval rate is treated as a control failure signal, not as evidence things are fine.  
+You track how many approvals people receive and the share they approve. A very high approval rate signals a control failure, not health.  
 *Evidence:* Approval volume and approval-rate metrics over time, reviewed by the accountable owner.  
 **NIST AI RMF:** MEASURE 1.2, MAP 3.5, MEASURE 4.1 · **ISO 42001:** Clause 9.1, A.6.2.6 · **EU AI Act:** Art. 14(4)(b) (automation bias) · **Other:** OWASP T10 Overwhelming Human in the Loop
 
 **HUM-03 · Approvals rationed to consequential actions**  `T2` `A2+`  
-Human approval is required only where it changes the outcome. Routine low-consequence confirmations are removed or automated so attention is available for the decisions that matter.  
+You require human approval only where it changes the outcome. You remove or automate routine low-consequence confirmations to protect attention for decisions that matter.  
 *Evidence:* Mapping of which action classes require approval and why; evidence of prompts removed.  
 **NIST AI RMF:** MAP 3.5, MANAGE 1.2 · **ISO 42001:** A.9.2 · **EU AI Act:** Art. 14(3) · **Other:** OWASP T10
 
 **HUM-04 · Approvers get enough to decide**  `T2` `A2+`  
-An approval request shows what will happen, to what, why the agent proposes it, and what the agent is uncertain about — not just an action name and a Yes/No.  
+An approval request shows what will happen, to what, why the agent proposes it, and where the agent is uncertain. A bare action name with yes and no is not enough.  
 *Evidence:* Screenshot or specification of the approval interface.  
 **NIST AI RMF:** MEASURE 2.9, MAP 3.5 · **ISO 42001:** A.8.2 · **EU AI Act:** Art. 13, Art. 14(4)(c) · **Other:** OWASP ASI09
 
 **HUM-05 · Automation-bias countermeasures**  `T3` `A2+`  
-Active measures counter over-trust — requiring a stated reason for consequential approvals, sampling approved actions for retrospective review, or periodically surfacing the agent's error record to approvers.  
+Active measures counter over-trust. Approvers state a reason for consequential approvals, you sample approved actions for later review, and approvers see the agent error record.  
 *Evidence:* The measure in operation; sampling results.  
 **NIST AI RMF:** MAP 3.4, MEASURE 2.9 · **ISO 42001:** A.4.6, A.9.2 · **EU AI Act:** Art. 14(4)(b) · **Other:** OWASP T15, ASI09
 
 **HUM-06 · Affected people are informed**  `T2` `A1+`  
-People subject to a decision an agent made or materially shaped are told that an AI system was involved.  
+When an agent makes or materially shapes a decision about a person, you tell that person an AI system took part.  
 *Evidence:* Notice text and where it appears in the journey.  
 **NIST AI RMF:** GOVERN 5.1, MEASURE 2.9 · **ISO 42001:** A.8.2, A.8.5 · **EU AI Act:** Art. 26(11), Art. 86 · **Other:** CO ADMTA pre-use notice; GDPR Art. 13–14, 22
 
 **HUM-07 · Appeal and human review route**  `T2` `A1+`  
-There is a working route for a person to contest an agent-driven outcome and get human review, with a stated timeframe.  
+A working route lets a person contest an agent-driven outcome and get human review inside a stated timeframe.  
 *Evidence:* Documented appeal process; volume and outcome statistics.  
 **NIST AI RMF:** MEASURE 3.3, MANAGE 4.1, GOVERN 5.2 · **ISO 42001:** A.8.3, A.8.5 · **EU AI Act:** Art. 85, Art. 86 · **Other:** CO ADMTA adverse-decision notice (30 days); GDPR Art. 22(3)
 
 **HUM-08 · Disclosure of AI interaction**  `T1` `A1+`  
-When a person interacts with an AI system and it would not otherwise be obvious, they are told.  
+When a person interacts with an AI system and it would not otherwise be obvious, you tell them.  
 *Evidence:* The disclosure as it appears to the user.  
 **NIST AI RMF:** MEASURE 2.8, GOVERN 5.1 · **ISO 42001:** A.8.2 · **EU AI Act:** Art. 50(1) — applies 2 Aug 2026 · **Other:** US state companion-chatbot laws
 
 **HUM-09 · Synthetic content marked**  `T2` `A1+`  
-AI-generated or materially AI-modified content is marked in a machine-readable way and, where required, disclosed to the audience.  
+You mark AI-generated or AI-modified content in a machine-readable way and, where the law requires, disclose it to the audience.  
 *Evidence:* Marking implementation; sample output with the marking present.  
 **NIST AI RMF:** MEASURE 2.8, GOVERN 4.2 · **ISO 42001:** A.8.2 · **EU AI Act:** Art. 50(2), 50(4) — applies 2 Aug 2026; existing systems to 2 Dec 2026 · **Other:** C2PA; EU Code of Practice on Transparency of AI-Generated Content (10 Jun 2026)
 
 **HUM-10 · Workforce consultation**  `T3` `A1+`  
-Where agents affect how people work, are evaluated, or are allocated tasks, workers and their representatives are informed before deployment.  
+Where agents change how people work, how you evaluate them, or how you allocate tasks, you inform workers and their representatives before deployment.  
 *Evidence:* Consultation records; notification to worker representatives.  
 **NIST AI RMF:** GOVERN 5.1, MAP 1.6 · **ISO 42001:** A.5.4, A.8.5 · **EU AI Act:** Art. 26(7) · **Other:** National works-council law
 
 **HUM-11 · Override is captured, not punished**  `T2` `A2+`  
-The ungoverned path is never silently blocked: overrides and break-glass actions remain possible, are always paged, and convert to a retroactive approval record. Override rate is tracked as a system-health metric, never as an individual-performance one — punishing declared overrides produces hidden overrides, which corrupts the record worse than the occasional bypass.  
+You never silently block the ungoverned path: overrides stay possible, always page a human, and convert to a retroactive approval record. You track override rate as system health, never as individual performance. A punished declared override becomes a hidden override.  
 *Evidence:* Break-glass procedure; one paged override converted to a retroactive record; override-rate metric reviewed by the accountable owner.  
 **NIST AI RMF:** MANAGE 4.1, GOVERN 4.1 · **ISO 42001:** A.3.3, A.6.2.6 · **EU AI Act:** Art. 14(4)(d) · **Other:** OWASP T10, T15
 
@@ -770,47 +770,47 @@ The ungoverned path is never silently blocked: overrides and break-glass actions
 > This is where your original model is strongest: evidence captured at runtime rather than assembled at audit time. The gap to close is integrity — if the actor can write its own record, it is a log, not evidence.
 
 **OBS-01 · Complete action logging**  `T2` `A2+`  
-Every tool invocation is logged with the tool, the arguments, the result, and the timestamp. Not just that the agent ran, but what it did.  
+The evidence record captures every tool invocation with the tool, the arguments, the result, and the timestamp. It shows what the agent did, not only that it ran.  
 *Evidence:* Log sample showing a full tool invocation record.  
 **NIST AI RMF:** MEASURE 2.4, MANAGE 4.1 · **ISO 42001:** A.6.2.8 · **EU AI Act:** Art. 12(1)–(2) · **Other:** OWASP T8; OpenTelemetry GenAI conventions (Development status)
 
 **OBS-02 · Attribution is complete**  `T2` `A2+`  
-Each record carries agent identity, the human principal being acted for, session, the policy decision made, and the scopes granted. Attribution fails closed: an action that cannot be matched to a principal and grant is quarantined for human adjudication, never auto-assigned to the most probable actor.  
+Each entry carries agent identity, the human principal, the session, the policy decision, and the granted scopes. Attribution fails closed: you quarantine unmatched actions for human adjudication and never auto-assign an actor.  
 *Evidence:* Log schema; a record with all fields populated; the quarantine path for unattributable actions and one adjudicated example.  
 **NIST AI RMF:** MANAGE 4.1, GOVERN 3.2 · **ISO 42001:** A.6.2.8, A.10.2 · **EU AI Act:** Art. 12, Art. 26(6) · **Other:** OWASP T8; CSA Agentic AI IAM
 
 **OBS-03 · Tamper-evident evidence store**  `T3` `A2+`  
-The evidence record is append-only or tamper-evident, and the agent cannot write to or modify its own audit trail.  
+The evidence record is append-only or tamper-evident. The agent identity holds no write access to its own evidence path.  
 *Evidence:* Store configuration; access control showing the agent identity lacks write access to the audit path.  
 **NIST AI RMF:** MEASURE 2.7, MANAGE 4.1 · **ISO 42001:** A.6.2.8 · **EU AI Act:** Art. 12, Art. 15(5) · **Other:** OWASP T8 Repudiation & Untraceability
 
 **OBS-04 · Retention meets the longest obligation**  `T2` `A1+`  
-Evidence retention is set to the longest applicable legal, contractual or investigative requirement, and is defensible if asked.  
+You set evidence retention to the longest applicable legal, contractual, or investigative requirement, and you can defend the number.  
 *Evidence:* Retention configuration and the obligation it maps to.  
 **NIST AI RMF:** GOVERN 1.1, MANAGE 4.1 · **ISO 42001:** A.6.2.8 · **EU AI Act:** Art. 26(6) — at least 6 months for high-risk deployer logs · **Other:** IL SB 315 / CA SB 53 incident records; CO ADMTA 3-year records
 
 **OBS-05 · End-to-end traceability**  `T3` `A2+`  
-A single trace links the triggering signal, the retrieved context, the model decision, the policy verdict, the approval, the action, and the outcome.  
+One trace links the triggering signal, the retrieved context, the model decision, the policy verdict, the approval, the action, and the outcome.  
 *Evidence:* A worked trace for a real incident or transaction.  
 **NIST AI RMF:** MEASURE 2.4, MANAGE 4.1 · **ISO 42001:** A.6.2.8, A.6.2.6 · **EU AI Act:** Art. 12(2) · **Other:** OpenTelemetry GenAI agent spans
 
 **OBS-06 · Behavioural anomaly detection**  `T3` `A2+`  
-Agent behaviour is monitored for deviation — unusual volume, novel tool sequences, off-hours activity, access to data domains it has not touched before.  
+You monitor agent behaviour for deviation: unusual volume, novel tool sequences, off-hours activity, and access to new data domains.  
 *Evidence:* Detection rules; alerts generated and triaged.  
 **NIST AI RMF:** MEASURE 2.4, MEASURE 3.1, MANAGE 4.1 · **ISO 42001:** A.6.2.6 · **EU AI Act:** Art. 26(5), Art. 72 · **Other:** MITRE ATLAS agentic techniques (AML.T0080, T0086, T0101)
 
 **OBS-07 · Cost and consumption telemetry**  `T2` `A1+`  
-Consumption is monitored per agent so runaway loops and unexpected spend are visible early — and because cost anomalies are often the first visible symptom of a behavioural one.  
+You monitor consumption per agent, so runaway loops and unexpected spend surface early. A cost anomaly can be the first visible symptom of a behavioural one.  
 *Evidence:* Per-agent cost dashboard; alert thresholds.  
 **NIST AI RMF:** MEASURE 2.4 · **ISO 42001:** A.4.5 · **Other:** OWASP LLM10 Unbounded Consumption
 
 **OBS-08 · Evidence is exportable and legible**  `T3` `A1+`  
-Evidence can be produced in a form a regulator, auditor or customer can actually use, within a timeframe you have committed to.  
+You can export evidence in a form a regulator, auditor, or customer can use, inside a timeframe you have committed to.  
 *Evidence:* Export capability; a sample evidence pack.  
 **NIST AI RMF:** GOVERN 4.2, MANAGE 4.1 · **ISO 42001:** A.8.3, Clause 9.2 · **EU AI Act:** Art. 12, Art. 21 (cooperation), Art. 26(12) · **Other:** ISO/IEC 42006:2025 (what auditors will ask for)
 
 **OBS-09 · Actor-independent ground truth**  `T3` `A3+`  
-At least one telemetry channel records the agent's effects without any cooperation from the agent runtime — infrastructure event streams, database audit logs, network egress logs — and is reconciled against the agent's own reported actions on a schedule. Unexplained deltas are treated as findings.  
+At least one telemetry channel records agent effects with zero cooperation from the agent runtime: infrastructure events, database audit logs, or egress logs. You reconcile this channel against the evidence record at least weekly and treat unexplained deltas as findings.  
 *Evidence:* Sensor configuration; a reconciliation report including at least one investigated delta.  
 **NIST AI RMF:** MEASURE 2.4, MEASURE 2.7, MANAGE 4.1 · **ISO 42001:** A.6.2.6, A.6.2.8 · **EU AI Act:** Art. 26(5), Art. 72 · **Other:** OWASP T8; NIST AI 800-4 (monitoring challenges)
 
@@ -823,49 +823,54 @@ At least one telemetry channel records the agent's effects without any cooperati
 > Static, single-attempt testing systematically understates agentic risk. Published evaluation work shows injection success rising from roughly 11% under baseline testing to over 80% under adaptive, multi-attempt attack. If you test once and politely, you will not find what an attacker will.
 
 **ASR-01 · Acceptance criteria defined before launch**  `T1` `A1+`  
-What 'good enough' means is written down before the agent goes live, in terms someone could disagree with.  
+You write down what good enough means before the agent goes live, in terms someone could dispute.  
 *Evidence:* Acceptance criteria document dated before go-live.  
 **NIST AI RMF:** MEASURE 1.1, MEASURE 2.3, MAP 2.3 · **ISO 42001:** A.6.2.2, A.6.2.4 · **EU AI Act:** Art. 9(6)–(8), Art. 15(3)
 
 **ASR-02 · Task-level evaluation with harm weighting**  `T2` `A2+`  
-Evaluation reports per-task outcomes weighted by consequence, not a single aggregate pass rate. A failure that deletes data and a failure that sends a clumsy email are not the same finding.  
+Evaluation reports per-task outcomes weighted by consequence, not one aggregate pass rate. A deletion failure and a clumsy email are different findings.  
 *Evidence:* Evaluation report showing per-task results and harm weighting.  
 **NIST AI RMF:** MEASURE 1.1, MEASURE 2.3, MEASURE 4.2 · **ISO 42001:** A.6.2.4 · **EU AI Act:** Art. 9(5)–(6), Art. 15(3) · **Other:** NIST agent-hijacking evaluation guidance
 
 **ASR-03 · Adaptive, multi-attempt adversarial testing**  `T2` `A2+`  
-Prompt-injection and manipulation testing is adaptive and repeated, and results are reported as success over N attempts rather than single-shot.  
+Injection and manipulation testing is adaptive and repeated. You report success over N attempts, never a single shot.  
 *Evidence:* Test methodology and results showing attempt counts.  
 **NIST AI RMF:** MEASURE 2.7, MEASURE 3.1, MANAGE 2.2 · **ISO 42001:** A.6.2.4 · **EU AI Act:** Art. 15(5), Art. 55(1)(a) · **Other:** NIST agent-hijacking evaluations; OWASP AI Testing Guide
 
 **ASR-04 · Red team covers the agentic surface**  `T3` `A3+`  
-Red teaming explicitly covers tool misuse, privilege escalation, memory and context poisoning, goal manipulation, and — where relevant — inter-agent and rogue-agent scenarios.  
+Red teaming covers tool misuse, privilege escalation, memory and context poisoning, and goal manipulation. Where relevant, it covers inter-agent and rogue-agent scenarios.  
 *Evidence:* Red team scope mapped to a recognized threat taxonomy; findings and remediation.  
 **NIST AI RMF:** MEASURE 2.7, MANAGE 2.2 · **ISO 42001:** A.6.2.4 · **EU AI Act:** Art. 55(1)(a) · **Other:** OWASP ASI Top 10 (ASI01–ASI10) / threat classes T1–T15; MITRE ATLAS; CSA Agentic AI Red Teaming Guide
 
 **ASR-05 · Fairness and disparate-impact evaluation**  `T2` `A1+`  
-Where outputs affect people's access to opportunity, money, care or liberty, performance is measured across affected groups, not only in aggregate.  
+Where outputs affect access to opportunity, money, care, or liberty, you measure performance across affected groups, not only in aggregate.  
 *Evidence:* Disaggregated performance results; the groups tested and why.  
 **NIST AI RMF:** MEASURE 2.11, MAP 1.2, MEASURE 4.2 · **ISO 42001:** A.5.4, A.7.4 · **EU AI Act:** Art. 10(2)(f)–(g), Art. 4a, Art. 15(4) · **Other:** US: Title VII, ECOA, FHA; CO ADMTA
 
 **ASR-06 · Model and provider change management**  `T2` `A1+`  
-A model version change, provider default change, or system prompt change triggers re-evaluation before it reaches production. Silent upstream upgrades are treated as changes to your system.  
+A model version change, a provider default change, or a system prompt change triggers re-evaluation before production. A silent upstream upgrade is a change to your AI system.  
 *Evidence:* Change process; a re-evaluation record triggered by an upstream change.  
 **NIST AI RMF:** MANAGE 3.2, MEASURE 2.4 · **ISO 42001:** A.6.2.6, A.10.3 · **EU AI Act:** Art. 25, Art. 43(4), Art. 53(b) · **Other:** OWASP LLM03
 
 **ASR-07 · Model and tool supply-chain assurance**  `T2` `A1+`  
-For each model, tool and dataset you depend on, you know its origin, licence, security posture and the terms under which it may change.  
+For each model, tool, and dataset you use, you know its origin, licence, security posture, and change terms.  
 *Evidence:* Supply chain record; provider attestations or assessments.  
 **NIST AI RMF:** GOVERN 6.1, GOVERN 6.2, MAP 4.1, MANAGE 3.1 · **ISO 42001:** A.10.3, A.7.3 · **EU AI Act:** Art. 25, Art. 53(b) · **Other:** OWASP LLM03, ASI04
 
 **ASR-08 · Independent review proportionate to impact**  `T3` `A2+`  
-High-consequence systems get review by someone who did not build them — internal audit, an independent team, or a third party.  
+Someone who did not build a high-consequence system reviews it: internal audit, an independent team, or a third party.  
 *Evidence:* Review report with the reviewer's independence stated.  
 **NIST AI RMF:** MEASURE 1.3, GOVERN 4.1 · **ISO 42001:** Clause 9.2, A.6.2.4 · **EU AI Act:** Art. 43 (conformity assessment) · **Other:** ISO/IEC 42006:2025; IL SB 315 third-party audit (from 2028)
 
 **ASR-09 · Post-launch drift monitoring**  `T2` `A2+`  
-Live performance is measured against the acceptance criteria on an ongoing basis, and degradation triggers action rather than a note.  
+You measure live performance against the acceptance criteria on a schedule. Degradation triggers action, not a note.  
 *Evidence:* Monitoring dashboard against acceptance thresholds; an example of a triggered response.  
 **NIST AI RMF:** MEASURE 2.4, MEASURE 3.1, MANAGE 4.1 · **ISO 42001:** A.6.2.6, Clause 9.1 · **EU AI Act:** Art. 72 (post-market monitoring), Art. 26(5) · **Other:** NIST AI 800-4 (monitoring challenges)
+
+**ASR-10 · Dependent controls are tested as a pair**  `T2` `A2+`  
+You test controls that depend on each other together, not only one at a time. When one control must invoke another, you name the invocation path and you test it.  
+*Evidence:* For each dependency, the named invocation path and a test that exercises it end to end; a list of controls that nothing else can reach.  
+**NIST AI RMF:** MEASURE 2.6, MANAGE 1.3 · **ISO 42001:** A.6.2.6, Clause 9.1 · **EU AI Act:** Art. 15(1), Art. 17 · **Other:** OWASP ASI02
 
 
 ### IRR — Incident Response, Recovery & Retirement
@@ -876,42 +881,42 @@ Live performance is measured against the acceptance criteria on an ongoing basis
 > Agent incidents have a property normal incidents don't: the system may have taken hundreds of small correct-looking actions before the wrong one, so containment and remediation are a search problem, not just a shutdown.
 
 **IRR-01 · AI incidents are in scope of the IR process**  `T1` `A1+`  
-Your incident definition covers agent misbehaviour — wrong actions, harmful output, data exposure, manipulation — and the existing IR process owns it. No parallel undefined path.  
+Your incident definition covers agent misbehaviour: wrong actions, harmful output, data exposure, and manipulation. The existing incident response process owns these categories.  
 *Evidence:* IR policy naming AI incident categories.  
 **NIST AI RMF:** GOVERN 4.3, MANAGE 4.3 · **ISO 42001:** A.8.4 · **EU AI Act:** Art. 3(49) (serious incident), Art. 73 · **Other:** OWASP GenAI Incident Response Guide 1.0
 
 **IRR-02 · Detection and triage path**  `T2` `A2+`  
-There is a defined way agent misbehaviour gets noticed and triaged — from monitoring, from users, and from the people the agent acts upon.  
+A defined path notices and triages agent misbehaviour, with signals from monitoring, from users, and from the people the agent acts upon.  
 *Evidence:* Detection sources; triage criteria; reporting channel.  
 **NIST AI RMF:** GOVERN 4.3, MEASURE 3.1, MEASURE 3.3 · **ISO 42001:** A.3.3, A.8.4 · **EU AI Act:** Art. 26(5), Art. 73
 
 **IRR-03 · Containment playbook**  `T2` `A2+`  
-A written playbook covers isolating the agent, revoking its credentials, hitting the right kill switch layer, and preserving evidence before it rotates out.  
+A written playbook covers isolating the agent, revoking its credentials, stopping at the right layer, and preserving evidence before it rotates out.  
 *Evidence:* The playbook; evidence it has been exercised.  
 **NIST AI RMF:** MANAGE 2.3, MANAGE 2.4, MANAGE 4.3 · **ISO 42001:** A.8.4, A.6.2.6 · **EU AI Act:** Art. 26(5) (suspend use) · **Other:** NIST SP 800-61 process, AI-specific evidence steps
 
 **IRR-04 · Remediation of actions already taken**  `T2` `A2+`  
-You can enumerate everything the agent did in the affected window and reverse or compensate for what needs it.  
+You can list everything the agent did in the affected window and reverse or compensate for what needs it.  
 *Evidence:* Method for enumerating actions in a time window; a worked remediation.  
 **NIST AI RMF:** MANAGE 2.3, MANAGE 4.3 · **ISO 42001:** A.6.2.6, A.6.2.8 · **EU AI Act:** Art. 20 (corrective actions)
 
 **IRR-05 · Notification obligations mapped in advance**  `T2` `A1+`  
-Who must be told, in what timeframe — regulator, customer, data subject, insurer, model provider — is worked out before the incident, not during it.  
+You map who you must tell, and in what timeframe, before the incident: regulator, customer, data subject, insurer, and model provider.  
 *Evidence:* Notification matrix with timeframes and named contacts.  
 **NIST AI RMF:** MANAGE 4.3, GOVERN 4.3 · **ISO 42001:** A.8.3, A.8.4 · **EU AI Act:** Art. 73 (serious incident reporting), Art. 55(1)(c) · **Other:** CA SB 53: Cal OES 15 days / 24h imminent; IL SB 315: 72h / 24h; GDPR Art. 33: 72h
 
 **IRR-06 · Blameless post-incident review**  `T2` `A1+`  
-Incidents get a structured review that produces root cause and named follow-up owners, run in a way that does not punish reporting.  
+A structured review follows each incident and produces a root cause with named follow-up owners. The review never punishes reporting.  
 *Evidence:* Post-incident reports with assigned actions and their closure.  
 **NIST AI RMF:** MANAGE 4.3, GOVERN 4.3 · **ISO 42001:** A.8.4, Clause 10.2 · **EU AI Act:** Art. 73
 
 **IRR-07 · Clean retirement**  `T2` `A1+`  
-Retiring an agent is a defined process: credentials revoked, connectors removed, memory and derived data disposed of per policy, dependencies checked, evidence retained.  
+Agent retirement follows a defined process: revoke credentials, remove connectors, dispose of memory and derived data per policy, check dependencies, retain evidence.  
 *Evidence:* Decommissioning checklist; a completed retirement record.  
 **NIST AI RMF:** GOVERN 1.7, MANAGE 2.4, MANAGE 4.1 · **ISO 42001:** A.6.2.6 · **Other:** ISO/IEC 5338:2023 retirement process
 
 **IRR-08 · Continuity without the agent**  `T3` `A2+`  
-If the agent is stopped — by you, by an incident, or by a provider outage — the work it was doing has a defined fallback. Dependence has been made explicit.  
+If you, an incident, or a provider outage stops the agent, a defined fallback covers its work. You have made the dependence explicit.  
 *Evidence:* Fallback procedure; the dependency documented in BCP.  
 **NIST AI RMF:** GOVERN 6.2, MANAGE 2.3 · **ISO 42001:** A.10.2, A.4.2 · **EU AI Act:** Art. 15(4) (fail-safe)
 
@@ -924,37 +929,37 @@ If the agent is stopped — by you, by an incident, or by a provider outage — 
 > This is the other place your original model is stronger than the published frameworks: it closes the loop to named artifact classes. 'Continuous improvement' is unauditable. 'Seventeen repair items, four monitor tuning changes, two ownership corrections' is auditable.
 
 **LRN-01 · Findings route to named artifact classes**  `T2` `A1+`  
-Operational findings are routed into specific, tracked artifact types — remediation items, threshold changes, procedure updates, ownership corrections — not into an undifferentiated backlog.  
+You route operational findings into named, tracked artifact types: remediation items, threshold changes, procedure updates, and ownership corrections. An undifferentiated backlog does not satisfy this control.  
 *Evidence:* The artifact classes; a report of items by class with closure rates.  
 **NIST AI RMF:** MANAGE 4.1, MANAGE 4.2 · **ISO 42001:** Clause 10.2, A.6.2.6 · **EU AI Act:** Art. 72 (post-market monitoring plan)
 
 **LRN-02 · Control tuning from operational evidence**  `T2` `A2+`  
-Guardrail thresholds, policy rules and detection logic are updated based on what actually happened, and the changes are versioned.  
+You update guardrail thresholds, policy rules, and detection logic from operational evidence, and you version each change.  
 *Evidence:* Change log for guardrails and policies with the triggering evidence.  
 **NIST AI RMF:** MANAGE 2.2, MEASURE 3.1, MANAGE 4.1 · **ISO 42001:** A.2.4, A.6.2.6 · **EU AI Act:** Art. 9(2)(c)–(d)
 
 **LRN-03 · Knowledge artifacts stay current**  `T2` `A1+`  
-Prompts, procedures, runbooks and reference material the agents and their operators rely on are versioned and updated when they are found wrong.  
+You version the prompts, procedures, runbooks, and reference material that agents and operators rely on, and update them when found wrong.  
 *Evidence:* Version history showing updates driven by findings.  
 **NIST AI RMF:** MANAGE 4.1, GOVERN 4.2 · **ISO 42001:** A.6.2.3, A.6.2.7, Clause 7.5 · **EU AI Act:** Art. 11 (documentation kept up to date)
 
-**LRN-04 · Ownership corrections feed back to inventory**  `T2` `A1+`  
-When an incident reveals that nobody actually owned a system, or the wrong person did, the inventory is corrected and the correction is tracked to closure.  
+**LRN-04 · Ownership corrections feed back to the register**  `T2` `A1+`  
+When an incident reveals missing or wrong ownership, you correct the AI register and track the correction to closure.  
 *Evidence:* Inventory change log tied to findings.  
 **NIST AI RMF:** GOVERN 2.1, GOVERN 1.6, MANAGE 4.1 · **ISO 42001:** A.3.2, A.4.2
 
 **LRN-05 · Metrics reviewed on a cadence**  `T2` `A1+`  
-A defined set of governance metrics is reviewed by the accountable owner on a stated cadence, with decisions recorded.  
+The accountable owner reviews a defined set of governance metrics on a stated cadence and records the decisions.  
 *Evidence:* Metric set; review records with decisions.  
 **NIST AI RMF:** GOVERN 1.5, MEASURE 4.3 · **ISO 42001:** Clause 9.1, 9.3 · **EU AI Act:** Art. 72
 
 **LRN-06 · Horizon scanning**  `T3` `A1+`  
-Someone is responsible for tracking changes in applicable regulation, threat technique and provider capability, and for triggering reassessment when they move.  
+A named person tracks changes in regulation, threat technique, and provider capability, and triggers reassessment when any of them moves.  
 *Evidence:* Named owner; scanning sources; a reassessment triggered by an external change.  
 **NIST AI RMF:** GOVERN 1.1, MEASURE 3.1, MANAGE 4.1 · **ISO 42001:** Clause 4.1, 4.2 · **EU AI Act:** Art. 72
 
 **LRN-07 · Sharing beyond the organization**  `T3` `A2+`  
-Where appropriate, lessons and incident patterns are shared with sector peers, ISACs or the wider community — and you consume what others share.  
+Where sharing is safe and lawful, you share lessons and incident patterns with sector peers and the wider community. You also consume what others share.  
 *Evidence:* Sharing arrangements; contributions made or received.  
 **NIST AI RMF:** GOVERN 4.3, MANAGE 4.3 · **ISO 42001:** A.8.3 · **EU AI Act:** Art. 73 (via authorities) · **Other:** MITRE ATLAS case studies; OWASP AI Threat Intelligence Initiative
 
@@ -981,7 +986,7 @@ Indicative mappings, not equivalence claims. Independently verified 28 July 2026
 | INV-05 | Regulatory classification per use case | GOVERN 1.1, GOVERN 1.3 | A.5.2, Clause 6.1 | Art. 5, Art. 6, Art. 6(3)–(4), Annex III, Art. 50 | CO ADMTA 'consequential decision' |
 | INV-06 | Shadow AI discovery | GOVERN 1.6, MEASURE 3.1 | A.4.2, A.9.2 | — | OWASP ASI10 (Rogue Agents) |
 | INV-07 | Reclassification triggers | MANAGE 4.1, MEASURE 2.4 | A.6.2.6, Clause 8.1 | Art. 25 (substantial modification), Art. 43(4) | — |
-| INV-08 | Inventory reconciled to identity and spend | GOVERN 1.6, MANAGE 3.1 | A.4.2, A.10.3 | — | — |
+| INV-08 | Register reconciled to identity and spend | GOVERN 1.6, MANAGE 3.1 | A.4.2, A.10.3 | — | — |
 | DAT-01 | Classification applied to agent-reachable data | MEASURE 2.10, GOVERN 1.4 | A.7.2, A.7.4 | Art. 10 (data governance) | ISO/IEC 27001 A.5.12 |
 | DAT-02 | Default-deny data scope per agent | MANAGE 1.3, GOVERN 1.4 | A.7.2, A.9.4 | Art. 26(4) | OWASP LLM02, LLM08 |
 | DAT-03 | Retrieval-time minimization | MANAGE 1.3, MEASURE 2.10 | A.7.2, A.7.6 | Art. 10(2) | GDPR Art. 5(1)(c) |
@@ -1056,6 +1061,7 @@ Indicative mappings, not equivalence claims. Independently verified 28 July 2026
 | ASR-07 | Model and tool supply-chain assurance | GOVERN 6.1, GOVERN 6.2, MAP 4.1, MANAGE 3.1 | A.10.3, A.7.3 | Art. 25, Art. 53(b) | OWASP LLM03, ASI04 |
 | ASR-08 | Independent review proportionate to impact | MEASURE 1.3, GOVERN 4.1 | Clause 9.2, A.6.2.4 | Art. 43 (conformity assessment) | ISO/IEC 42006:2025; IL SB 315 third-party audit (from 2028) |
 | ASR-09 | Post-launch drift monitoring | MEASURE 2.4, MEASURE 3.1, MANAGE 4.1 | A.6.2.6, Clause 9.1 | Art. 72 (post-market monitoring), Art. 26(5) | NIST AI 800-4 (monitoring challenges) |
+| ASR-10 | Dependent controls are tested as a pair | MEASURE 2.6, MANAGE 1.3 | A.6.2.6, Clause 9.1 | Art. 15(1), Art. 17 | OWASP ASI02 |
 | IRR-01 | AI incidents are in scope of the IR process | GOVERN 4.3, MANAGE 4.3 | A.8.4 | Art. 3(49) (serious incident), Art. 73 | OWASP GenAI Incident Response Guide 1.0 |
 | IRR-02 | Detection and triage path | GOVERN 4.3, MEASURE 3.1, MEASURE 3.3 | A.3.3, A.8.4 | Art. 26(5), Art. 73 | — |
 | IRR-03 | Containment playbook | MANAGE 2.3, MANAGE 2.4, MANAGE 4.3 | A.8.4, A.6.2.6 | Art. 26(5) (suspend use) | NIST SP 800-61 process, AI-specific evidence steps |
@@ -1067,27 +1073,27 @@ Indicative mappings, not equivalence claims. Independently verified 28 July 2026
 | LRN-01 | Findings route to named artifact classes | MANAGE 4.1, MANAGE 4.2 | Clause 10.2, A.6.2.6 | Art. 72 (post-market monitoring plan) | — |
 | LRN-02 | Control tuning from operational evidence | MANAGE 2.2, MEASURE 3.1, MANAGE 4.1 | A.2.4, A.6.2.6 | Art. 9(2)(c)–(d) | — |
 | LRN-03 | Knowledge artifacts stay current | MANAGE 4.1, GOVERN 4.2 | A.6.2.3, A.6.2.7, Clause 7.5 | Art. 11 (documentation kept up to date) | — |
-| LRN-04 | Ownership corrections feed back to inventory | GOVERN 2.1, GOVERN 1.6, MANAGE 4.1 | A.3.2, A.4.2 | — | — |
+| LRN-04 | Ownership corrections feed back to the register | GOVERN 2.1, GOVERN 1.6, MANAGE 4.1 | A.3.2, A.4.2 | — | — |
 | LRN-05 | Metrics reviewed on a cadence | GOVERN 1.5, MEASURE 4.3 | Clause 9.1, 9.3 | Art. 72 | — |
 | LRN-06 | Horizon scanning | GOVERN 1.1, MEASURE 3.1, MANAGE 4.1 | Clause 4.1, 4.2 | Art. 72 | — |
 | LRN-07 | Sharing beyond the organization | GOVERN 4.3, MANAGE 4.3 | A.8.3 | Art. 73 (via authorities) | MITRE ATLAS case studies; OWASP AI Threat Intelligence Initiative |
 
 ## Appendix C — Applicability matrix
 
-How many of the 106 controls apply at each combination. Read down a column to price raising autonomy; read across a row to price growing.
+How many of the 107 controls apply at each combination. Read down a column to price raising autonomy; read across a row to price growing.
 
 | Tier | A0 | A1 | A2 | A3 | A4 |
 |---|---:|---:|---:|---:|---:|
 | **T1** | 8 | 12 | 15 | 15 | 15 |
-| **T2** | 13 | 45 | 76 | 76 | 76 |
-| **T3** | 13 | 51 | 102 | 106 | 106 |
+| **T2** | 13 | 45 | 77 | 77 | 77 |
+| **T3** | 13 | 51 | 103 | 107 | 107 |
 
 ## Appendix D — Domain index by plane
 
 | Plane | Domain | Controls | T1 | T2 | T3 |
 |---|---|---:|---:|---:|---:|
 | Foundation | **GOV** Governance & Accountability | 9 | 3 | 4 | 2 |
-| Foundation | **INV** Inventory, Classification & Risk Tiering | 8 | 3 | 4 | 1 |
+| Foundation | **INV** AI Register, Classification & Risk Tiering | 8 | 3 | 4 | 1 |
 | Trust Gate | **DAT** Data Boundary, Provenance & Sovereignty | 10 | 2 | 6 | 2 |
 | Trust Gate | **IDA** Identity, Authority & Attribution | 9 | 0 | 5 | 4 |
 | Trust Gate | **ING** Ingress Trust & Content Integrity | 8 | 0 | 4 | 4 |
@@ -1095,7 +1101,7 @@ How many of the 106 controls apply at each combination. Read down a column to pr
 | Execution | **ACT** Action Control & Blast Radius | 10 | 2 | 5 | 3 |
 | Execution | **HUM** Human Oversight & Competence | 11 | 2 | 7 | 2 |
 | Execution | **OBS** Observability & Evidence | 9 | 0 | 4 | 5 |
-| Assurance & Learning | **ASR** Assurance, Evaluation & Red Teaming | 9 | 1 | 6 | 2 |
+| Assurance & Learning | **ASR** Assurance, Evaluation & Red Teaming | 10 | 1 | 7 | 2 |
 | Assurance & Learning | **IRR** Incident Response, Recovery & Retirement | 8 | 1 | 6 | 1 |
 | Assurance & Learning | **LRN** Learning & Continuous Improvement | 7 | 0 | 5 | 2 |
-| | **Total** | **106** | 15 | 61 | 30 |
+| | **Total** | **107** | 15 | 62 | 30 |

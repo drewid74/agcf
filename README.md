@@ -1,9 +1,9 @@
 # AGCF — Agentic Governance & Control Framework
 
-**v0.9.3 (draft for review) · 28 July 2026**
+**v0.9.4 (draft for review) · 29 July 2026**
 
 A vendor-neutral reference architecture and self-assessment instrument for
-governing AI agents, assistants and automation. 106 controls across 12 domains,
+governing AI agents, assistants and automation. 107 controls across 12 domains,
 each tagged with the organization size and autonomy level at which it becomes
 mandatory, and each mapped to the standards an auditor or enterprise customer is
 likely to ask about.
@@ -17,9 +17,9 @@ Designed to be used in an afternoon rather than adopted over a year.
 | If you want to… | Open |
 |---|---|
 | Assess where you stand | **[`AGCF-assessment.html`](AGCF-assessment.html)** — open it in a browser. No install, no server, no data leaves the page. |
-| Read the control catalogue | **[`AGCF-framework.md`](AGCF-framework.md)** — the 106 controls, their evidence requirements, and the standards crosswalk. |
+| Read the control catalogue | **[`AGCF-framework.md`](AGCF-framework.md)** — the 107 controls, their evidence requirements, and the standards crosswalk. |
 | Build the thing | **[`AGCF-implementation.md`](AGCF-implementation.md)** — collapses the catalogue into nine buildable components, with a prompt library for executing each in your own environment. |
-| Avoid the failure modes | **[`AGCF-implementation-field-notes.md`](AGCF-implementation-field-notes.md)** — twelve lessons from implementing these controls on a live stack. Read before you deploy, not after. |
+| Avoid the failure modes | **[`AGCF-implementation-field-notes.md`](AGCF-implementation-field-notes.md)** — fourteen lessons from implementing these controls on a live stack. Read before you deploy, not after. |
 | Consume it programmatically | **[`catalog.json`](catalog.json)** — the full catalogue, machine-readable. |
 
 ## What it is, and what it is not
@@ -55,7 +55,7 @@ sits beside the others rather than competing with them.
 | ACT | Action Control & Blast Radius | 10 |
 | HUM | Human Oversight & Competence | 11 |
 | OBS | Observability & Evidence | 9 |
-| ASR | Assurance, Evaluation & Red Teaming | 9 |
+| ASR | Assurance, Evaluation & Red Teaming | 10 |
 | IRR | Incident Response, Recovery & Retirement | 8 |
 | LRN | Learning & Continuous Improvement | 7 |
 
@@ -93,8 +93,9 @@ move once those publish, `AGCF-framework.md` §9 says so explicitly.
 **Pre-1.0 and marked draft for review.** Control IDs are stable enough to cite,
 but wording and tier assignments may still change. v0.9.3 rewrote all 106 control
 statements in Simplified Technical English (active voice, named doer, second
-person, one term per concept) and passes the project's own two-stage STE gate at
-zero findings.
+person, one term per concept) and passed the project's own two-stage STE gate at
+zero findings. v0.9.4 adds ASR-10 and tightens the evidence for IDA-01, IDA-03
+and POL-02.
 
 The versioned artifacts move together: the tag on this repository always equals
 the version string in `AGCF-framework.md`.

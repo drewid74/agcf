@@ -331,12 +331,94 @@ call path" are different assertions, and only the second one matters.
 
 ---
 
+## 13. Identity must survive to the enforcement point, not just the issuance point
+
+**Observed.** Authority was issued correctly: every grant was minted against a
+named principal rather than a bare API key, and that was accurately assessed as
+a control in place. But the principal did not travel with the grant to the gate
+that authorized the resulting action. The gate substituted a request
+identifier — enough to correlate, not enough to attribute.
+
+**Why it generalizes.** Any architecture that separates authorization (mint a
+grant) from execution (spend it) can lose the actor in between. Attribution at
+issuance answers *who asked*. Enforcement needs *who is acting*. Those are the
+same question only if identity is deliberately threaded through, and nothing
+fails loudly when it is not — the request still carries *an* identifier, so
+logs look populated and correlation still works.
+
+The non-obvious consequence is what it does to every control scoped **by**
+principal. A principal-scoped stop that resolves identity at one chokepoint and
+not another produces partial enforcement that presents as total: the model path
+halts, the tool path keeps running. The control is not missing. It is present,
+enabled, and matching nothing.
+
+This also tends to be a single root cause presenting as several unrelated
+defects — a scoped stop that half-works, a gate that cannot check grants, a
+provenance tracker with no session key. Treating them separately produces three
+partial fixes.
+
+**Do.** Assert identity at the point of action, not only at the point of
+authorization. Test principal-scoped controls at **every** chokepoint
+independently — a drill that exercises one path passes while another is wide
+open, and the scope-matching gap is invisible to a test that only checks the
+control fires *somewhere*. For attribution controls, require evidence showing
+the principal on the **action** record, not the authorization record.
+
+**Maps to.** IDA-01, IDA-03, IDA-04, ACT-07.
+
+---
+
+## 14. A verdict with no destination degrades to the nearest one that exists
+
+**Observed.** A gate designed around three verdicts — allow, deny, escalate —
+was to be deployed onto an enforcement substrate that had two. Escalate had
+nowhere to land, so it would have collapsed into deny.
+
+Separately and more interestingly: the human-approval mechanism that *should*
+have been escalate's destination did exist, was working, and was correctly
+assessed as in place. It was simply not reachable from the gate. Two different
+failures that present identically.
+
+**Why it generalizes.**
+
+*Verdict collapse.* An unimplemented verdict does not error — it degrades to
+the nearest implemented one, which for a safety control is usually the most
+restrictive. That sounds like the safe direction and is not. A control that
+escalates routinely becomes an outage once escalate means deny, and a control
+that causes outages gets switched off. Failing safe into an unusable state is
+how controls get removed.
+
+*Unreachable mechanisms.* Assessments score controls **individually**. A control
+can be genuinely in place for its own purpose and still be invisible to the
+control that needs to call it. Every entry on the scorecard is accurate and the
+composition does not work — individually correct, jointly misleading. This is
+§7 one layer up: there, a classifier nothing fed; here, a mechanism nothing can
+reach.
+
+**Do.** Before deploying any gate, enumerate its verdict set and name the
+concrete mechanism each verdict lands in. **A verdict with no named destination
+is not implemented**, however well the gate that emits it is tested. Where one
+control depends on another, make the evidence include the *invocation path*,
+not merely both controls' existence — "we have an approval mechanism" and "the
+gate can invoke the approval mechanism" are different claims and only the
+second one composes.
+
+Check the semantics too, not just the arity. An existing "requires human"
+outcome that is a hard stop is not the same as an escalation that a human
+authorization can convert into a completed action, even though both are
+two-state and both block by default.
+
+**Maps to.** POL-02, HUM-11, ACT-02, LRN-01.
+
+---
+
 ## Reading these together
 
-Eight of the twelve are the same failure wearing different clothes: **the
+Ten of the fourteen are the same failure wearing different clothes: **the
 control was fine and the surrounding truth was not**. Not invoked (§11, §12),
-not durable (§4), not fed (§7), not distinguishable from breakage (§1, §2, §3),
-not attributed correctly (§6).
+not durable (§4), not fed (§7), not reachable (§14), not carrying identity
+(§13), not distinguishable from breakage (§1, §2, §3), not attributed
+correctly (§6).
 
 The practical consequence is that "we implemented control X" is not a
 meaningful claim, and neither is a passing test suite. The claims worth making

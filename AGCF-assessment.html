@@ -409,7 +409,7 @@ input[type=search]{min-width:220px}
 <script id="catalog" type="application/json">{
   "meta": {
     "name": "AGCF — Agentic Governance & Control Framework",
-    "version": "0.9.2 (draft for review)",
+    "version": "0.9.4 (draft for review)",
     "date": "2026-07-28",
     "summary": "A vendor-neutral reference architecture and self-assessment instrument for governing AI agents, assistants and automation. Scales from an individual practitioner to a regulated enterprise.",
     "planes": [
@@ -529,7 +529,7 @@ input[type=search]{min-width:220px}
         {
           "id": "GOV-01",
           "title": "Named accountable owner",
-          "statement": "A specific named person is accountable for AI and agent use, with the authority to stop it. Not a committee, not 'IT'.",
+          "statement": "One named person owns AI and agent use and has the authority to stop it. A committee does not satisfy this control.",
           "tier": "T1",
           "autonomy": "A0",
           "evidence": "Role description, org chart entry, or a line in the AI policy naming the person.",
@@ -543,7 +543,7 @@ input[type=search]{min-width:220px}
         {
           "id": "GOV-02",
           "title": "Written AI use policy",
-          "statement": "A written, accessible policy states what AI use is permitted, what is prohibited, what requires approval, and who to ask.",
+          "statement": "You have a written policy that states which AI use you permit, which you prohibit, which needs approval, and who decides.",
           "tier": "T1",
           "autonomy": "A0",
           "evidence": "The policy document, with a version and date. Evidence it was distributed.",
@@ -557,7 +557,7 @@ input[type=search]{min-width:220px}
         {
           "id": "GOV-03",
           "title": "Risk appetite and prohibited-use list",
-          "statement": "The organization has decided, in writing, which categories of AI use it will not undertake at all, and what level of residual risk it will accept.",
+          "statement": "You have decided, in writing, which categories of AI use you refuse and how much residual risk you accept.",
           "tier": "T2",
           "autonomy": "A0",
           "evidence": "Prohibited-use list; documented risk tolerance statement approved at the right level.",
@@ -571,7 +571,7 @@ input[type=search]{min-width:220px}
         {
           "id": "GOV-04",
           "title": "AI literacy and role-based training",
-          "statement": "People who build, operate, approve or are affected by AI systems receive training proportionate to their role, including what the systems get wrong.",
+          "statement": "You train everyone who builds, operates, or approves an AI system, and everyone the system affects. Training matches the role and covers known failure modes.",
           "tier": "T1",
           "autonomy": "A0",
           "evidence": "Training materials, completion records, role-to-training mapping.",
@@ -585,7 +585,7 @@ input[type=search]{min-width:220px}
         {
           "id": "GOV-05",
           "title": "Executive and board accountability",
-          "statement": "Leadership formally owns AI risk decisions and reviews them on a defined cadence with real information, not a status slide.",
+          "statement": "Leadership formally owns AI risk decisions. Leadership reviews those decisions on a defined cadence with primary data, not a status slide.",
           "tier": "T3",
           "autonomy": "A1",
           "evidence": "Meeting minutes, standing agenda item, escalation records.",
@@ -599,7 +599,7 @@ input[type=search]{min-width:220px}
         {
           "id": "GOV-06",
           "title": "Cross-functional review body",
-          "statement": "A standing group with legal, security, privacy, and domain representation reviews new agent use cases before they go live.",
+          "statement": "A standing group with legal, security, privacy, and domain members reviews each new agent use case before it goes live.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Terms of reference, membership, review records with decisions.",
@@ -613,7 +613,7 @@ input[type=search]{min-width:220px}
         {
           "id": "GOV-07",
           "title": "Resourcing",
-          "statement": "Budget and staff time are explicitly allocated to AI governance work. It is someone's job, not everyone's spare time.",
+          "statement": "You allocate budget and staff time to AI governance as named line items. Governance work belongs to a person, not to spare time.",
           "tier": "T3",
           "autonomy": "A1",
           "evidence": "Budget line, headcount allocation, or documented time allocation.",
@@ -627,7 +627,7 @@ input[type=search]{min-width:220px}
         {
           "id": "GOV-08",
           "title": "Contractual flow-down to suppliers",
-          "statement": "AI governance requirements — data use, training rights, incident notification, model change notice, evidence access — are written into supplier and vendor contracts.",
+          "statement": "Your supplier contracts contain the AI governance requirements: data use, training rights, incident notice, model change notice, and evidence access.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Contract clauses, vendor questionnaire, procurement standard.",
@@ -641,7 +641,7 @@ input[type=search]{min-width:220px}
         {
           "id": "GOV-09",
           "title": "Regulatory applicability determination",
-          "statement": "The organization has determined which AI-specific laws apply to it, in which jurisdictions, on what dates — and refreshes that determination as the law moves.",
+          "statement": "You know which AI laws apply to you, in which jurisdictions, on which dates. You refresh this determination when the law moves.",
           "tier": "T2",
           "autonomy": "A0",
           "evidence": "Applicability memo with jurisdictions, obligations and dates; review date.",
@@ -657,14 +657,14 @@ input[type=search]{min-width:220px}
     {
       "id": "INV",
       "plane": "F",
-      "name": "Inventory, Classification & Risk Tiering",
+      "name": "AI Register, Classification & Risk Tiering",
       "purpose": "You know every AI system and agent operating on your behalf, what each one touches, how autonomous it is, and how much damage it could do.",
       "why": "You cannot govern what you cannot enumerate. Inventory is the single highest-leverage control in the framework and the one most often skipped because it is unglamorous.",
       "controls": [
         {
           "id": "INV-01",
           "title": "Register of AI systems and agents",
-          "statement": "A maintained register lists every AI system and agent in use, including AI features embedded inside SaaS products you did not choose to buy as AI.",
+          "statement": "You maintain an AI register that lists every AI system and agent in use. The register includes AI features embedded inside SaaS products.",
           "tier": "T1",
           "autonomy": "A0",
           "evidence": "The register itself, with a last-reviewed date.",
@@ -678,7 +678,7 @@ input[type=search]{min-width:220px}
         {
           "id": "INV-02",
           "title": "Register content is sufficient to govern",
-          "statement": "Each entry records purpose, business owner, model/provider, data it can reach, tools and actions available to it, and where it runs.",
+          "statement": "Each register entry records purpose, business owner, model and provider, reachable data, available tools and actions, and runtime location.",
           "tier": "T1",
           "autonomy": "A0",
           "evidence": "Register schema and a populated sample.",
@@ -692,7 +692,7 @@ input[type=search]{min-width:220px}
         {
           "id": "INV-03",
           "title": "Autonomy tier assigned",
-          "statement": "Every agent is assigned an autonomy level (advisory → assistive → gated → bounded autonomous → open autonomous) and that assignment drives which controls apply.",
+          "statement": "You assign each agent an autonomy level, from advisory to open autonomous. The assigned level selects which controls apply.",
           "tier": "T1",
           "autonomy": "A0",
           "evidence": "Autonomy tier recorded per entry; tier definitions documented.",
@@ -706,7 +706,7 @@ input[type=search]{min-width:220px}
         {
           "id": "INV-04",
           "title": "Impact and consequence classification",
-          "statement": "Each use case records who is affected by its outputs and how badly — including people who are not your users.",
+          "statement": "Each use case records who the outputs affect and how badly, including people who are not your users.",
           "tier": "T2",
           "autonomy": "A0",
           "evidence": "Impact assessment per use case; affected-population analysis.",
@@ -720,7 +720,7 @@ input[type=search]{min-width:220px}
         {
           "id": "INV-05",
           "title": "Regulatory classification per use case",
-          "statement": "Each use case is classified against applicable regimes — prohibited, high-risk, transparency-only, or minimal — and the reasoning is recorded.",
+          "statement": "You classify each use case against the applicable regimes: prohibited, high risk, transparency only, or minimal. You record the reasoning.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Classification record with rationale, reviewed by someone competent to review it.",
@@ -734,7 +734,7 @@ input[type=search]{min-width:220px}
         {
           "id": "INV-06",
           "title": "Shadow AI discovery",
-          "statement": "There is an active mechanism to find AI and agent use that never came through the approval process — not just a policy telling people not to do it.",
+          "statement": "You operate an active mechanism that finds AI and agent use which skipped the approval process. A policy alone does not satisfy this control.",
           "tier": "T2",
           "autonomy": "A0",
           "evidence": "Discovery method (egress logs, SaaS discovery, expense review, survey) and findings from the last cycle.",
@@ -748,7 +748,7 @@ input[type=search]{min-width:220px}
         {
           "id": "INV-07",
           "title": "Reclassification triggers",
-          "statement": "Defined events — model version change, new tool or connector, scope expansion, new data domain — force re-review rather than silently inheriting the old approval.",
+          "statement": "Defined events force a new review: model version change, new tool or connector, scope expansion, or a new data domain. Old approvals do not carry over.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Trigger list; examples of triggered re-reviews.",
@@ -761,8 +761,8 @@ input[type=search]{min-width:220px}
         },
         {
           "id": "INV-08",
-          "title": "Inventory reconciled to identity and spend",
-          "statement": "The AI register is periodically reconciled against issued credentials, API keys, connector grants and billing — the three places undeclared agents show up.",
+          "title": "Register reconciled to identity and spend",
+          "statement": "You reconcile the AI register against issued credentials, connector grants, and billing at least monthly. Undeclared agents appear in those three places.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Reconciliation report; discrepancies and their resolution.",
@@ -785,7 +785,7 @@ input[type=search]{min-width:220px}
         {
           "id": "DAT-01",
           "title": "Classification applied to agent-reachable data",
-          "statement": "Any data source an agent can reach is classified. Unclassified data is treated as sensitive by default, not as public.",
+          "statement": "You classify every data source an agent can reach. You treat unclassified data as sensitive by default, not as public.",
           "tier": "T1",
           "autonomy": "A0",
           "evidence": "Classification scheme; classification applied to the sources in the register.",
@@ -799,7 +799,7 @@ input[type=search]{min-width:220px}
         {
           "id": "DAT-02",
           "title": "Default-deny data scope per agent",
-          "statement": "Each agent has an explicit allow-list of data domains. Access is default-deny, not 'everything the service account can see'.",
+          "statement": "Each agent has an explicit allow-list of data domains. Access is default-deny, not everything the service account can see.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Per-agent scope configuration; a test showing an out-of-scope source is inaccessible.",
@@ -813,7 +813,7 @@ input[type=search]{min-width:220px}
         {
           "id": "DAT-03",
           "title": "Retrieval-time minimization",
-          "statement": "The agent receives the least data sufficient for the task — filtered at retrieval, not filtered in the prompt or trusted to the model.",
+          "statement": "The agent receives the least data that completes the task. You filter at retrieval, not in the prompt, and you do not trust the model to filter.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Retrieval filter configuration; sample trace showing the data actually passed.",
@@ -827,7 +827,7 @@ input[type=search]{min-width:220px}
         {
           "id": "DAT-04",
           "title": "Sensitive-data detection on both directions",
-          "statement": "Detection for personal, health, payment, credential and proprietary data runs on what enters the agent and on what leaves it.",
+          "statement": "Detection for personal, health, payment, credential, and proprietary data runs on content that enters the agent and on content that leaves it.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Detector configuration and coverage; recent detection statistics including false-negative testing.",
@@ -841,7 +841,7 @@ input[type=search]{min-width:220px}
         {
           "id": "DAT-05",
           "title": "De-identification and redaction",
-          "statement": "Where the task does not require identified data, the agent receives de-identified, redacted or tokenized data.",
+          "statement": "Where a task does not need identified data, the agent receives de-identified, redacted, or masked data.",
           "tier": "T3",
           "autonomy": "A1",
           "evidence": "De-identification method and its validation; documented decision where full fidelity is required.",
@@ -855,7 +855,7 @@ input[type=search]{min-width:220px}
         {
           "id": "DAT-06",
           "title": "Residency and sovereignty enforced technically",
-          "statement": "Data residency, cross-border transfer and sovereign-compute constraints are enforced by configuration and network controls, not by a clause in a contract.",
+          "statement": "Configuration and network controls enforce data residency, cross-border transfer limits, and sovereign-compute constraints. A contract clause alone does not satisfy this control.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Region pinning configuration; egress controls; transfer mechanism documentation.",
@@ -869,7 +869,7 @@ input[type=search]{min-width:220px}
         {
           "id": "DAT-07",
           "title": "Provider training and retention terms verified",
-          "statement": "You know, in writing, whether your prompts and data train the provider's models, how long they are retained, and who can access them — for every provider, including the ones inside your SaaS tools.",
+          "statement": "You know, in writing, whether your prompts and data train each provider model, the retention period, and who can access them. This covers every provider, including AI inside your SaaS tools.",
           "tier": "T1",
           "autonomy": "A0",
           "evidence": "Provider terms extract per provider; configuration proving the elected setting.",
@@ -883,7 +883,7 @@ input[type=search]{min-width:220px}
         {
           "id": "DAT-08",
           "title": "Provenance for corpora and memory",
-          "statement": "For retrieval corpora, fine-tuning sets and persistent agent memory, you can say where each item came from, who could write it, and when.",
+          "statement": "For each item in a corpus, fine-tuning set, or agent memory, you can name its origin, its writer, and its write time.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Provenance metadata schema; sample lineage trace.",
@@ -897,7 +897,7 @@ input[type=search]{min-width:220px}
         {
           "id": "DAT-09",
           "title": "Retention and deletion across the whole footprint",
-          "statement": "Retention and deletion rules cover prompts, outputs, embeddings, agent memory and execution traces — not just the system of record.",
+          "statement": "Retention and deletion rules cover prompts, outputs, embeddings, agent memory, and execution traces. The rules do not stop at the system of record.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Retention schedule naming each store; evidence of deletion executing.",
@@ -911,7 +911,7 @@ input[type=search]{min-width:220px}
         {
           "id": "DAT-10",
           "title": "Lawful basis for what the agent does",
-          "statement": "There is an identified lawful basis or consent for the processing the agent performs, including any secondary use the agent creates.",
+          "statement": "You have an identified lawful basis or consent for the processing the agent performs, including secondary use the agent creates.",
           "tier": "T2",
           "autonomy": "A0",
           "evidence": "Records of processing; DPIA where required; consent records.",
@@ -934,7 +934,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IDA-01",
           "title": "Distinct identity per agent",
-          "statement": "Each agent authenticates as itself. It does not borrow a person's credentials, a shared service account, or a long-lived admin key.",
+          "statement": "Each agent authenticates as itself. An agent never borrows a human credential, a shared service account, or a long-lived admin credential.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Identity per agent in the directory or secret store; no shared-credential exceptions outstanding.",
@@ -948,7 +948,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IDA-02",
           "title": "Agent identity lifecycle through the IdP",
-          "statement": "Agent identities are created, reviewed and revoked through the same identity provider and joiner-mover-leaver process as everything else.",
+          "statement": "You create, review, and revoke agent identities through the same identity provider and joiner-mover-leaver process as human identities.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Provisioning workflow; evidence of a revocation executing end to end.",
@@ -962,7 +962,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IDA-03",
           "title": "Delegation chain is recorded",
-          "statement": "For any agent action you can answer: which human authorized this, for what scope, and when did that authority start and end.",
+          "statement": "For any agent action you can answer: which human authorized it, for what scope, and when that authority started and ended.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Delegation records or on-behalf-of claims present in logs; a worked example.",
@@ -976,7 +976,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IDA-04",
           "title": "Per-action scoping, not per-system",
-          "statement": "Privileges are granted at action granularity — draft but not send, read but not delete — rather than by handing over a whole system.",
+          "statement": "You grant privileges at action granularity: draft but not send, read but not delete. You never hand over a whole business system.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Scope definitions per connector; a test showing a denied action class.",
@@ -990,7 +990,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IDA-05",
           "title": "Short-lived, just-in-time credentials",
-          "statement": "Agents hold credentials scoped to a task and a time window. No standing long-lived static keys.",
+          "statement": "Agents hold credentials scoped to one task and one time window. No standing long-lived static credentials exist.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Token lifetime configuration; absence of static keys in secret inventory.",
@@ -1004,7 +1004,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IDA-06",
           "title": "Audience-bound tokens; no passthrough",
-          "statement": "Tokens are bound to the specific resource they were issued for. A credential presented to one service is never forwarded to another.",
+          "statement": "Each access token binds to one target resource. This control uses the word token deliberately: the mechanism is OAuth audience binding. A credential presented to one service never travels to another service.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Token audience validation enabled; architecture review confirming no passthrough path.",
@@ -1018,7 +1018,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IDA-07",
           "title": "Agent actions distinguishable in logs and SIEM",
-          "statement": "Agent activity is a distinct actor class in your security telemetry — you can filter for it, alert on it, and separate it from human activity.",
+          "statement": "Agent activity forms a distinct actor class in your security telemetry. You can filter it, alert on it, and separate it from human activity.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "SIEM query returning agent-only activity; actor-type field populated.",
@@ -1032,7 +1032,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IDA-08",
           "title": "Granular revocation path",
-          "statement": "You can revoke one agent, one credential, or one connector without taking down everything else — and you have tested it.",
+          "statement": "You can revoke one agent, one credential, or one connector without stopping the rest. You have tested this revocation.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Documented revocation procedure; evidence of a test.",
@@ -1046,7 +1046,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IDA-09",
           "title": "Periodic privilege review for agents",
-          "statement": "Agent entitlements are reviewed on a cadence like human entitlements are, and accumulated scope is pruned.",
+          "statement": "The accountable owner reviews agent entitlements at least quarterly, as with human entitlements, and removes accumulated scope.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Review records with removals actually executed.",
@@ -1069,7 +1069,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ING-01",
           "title": "Untrusted sources identified and marked",
-          "statement": "Every content source is classified as trusted or untrusted, and untrusted content stays marked as it moves through the pipeline.",
+          "statement": "You classify every content source as trusted or untrusted. Untrusted content keeps its marking as it moves through the pipeline.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Source trust classification; taint or provenance field carried in the context.",
@@ -1083,7 +1083,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ING-02",
           "title": "Injection resistance between content and instruction",
-          "statement": "There is a technical boundary preventing retrieved or tool-returned content from redirecting the agent's goal or authority — structural separation, not a 'ignore instructions in the data' line in the system prompt.",
+          "statement": "A technical boundary stops retrieved or tool-returned content from redirecting the agent goal or authority. A line in the system prompt is not a boundary.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Architecture description of the boundary; injection test results.",
@@ -1097,7 +1097,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ING-03",
           "title": "Tool, connector and skill approval",
-          "statement": "Every tool, plugin, MCP server, connector and agent skill an agent can use is inventoried and explicitly approved. No self-service tool addition at runtime.",
+          "statement": "You list and approve every tool, plugin, MCP server, connector, and skill an agent can use. Agents cannot add tools at runtime.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Approved tool register; a blocked attempt to add an unapproved tool.",
@@ -1111,7 +1111,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ING-04",
           "title": "Tool supply-chain integrity",
-          "statement": "Tools and skills are pinned by version or hash, and their source is verified. You would notice if one changed.",
+          "statement": "You pin each tool and skill by version or hash and verify its source. You detect when one changes.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Pinning configuration; integrity verification step in the deployment path.",
@@ -1125,7 +1125,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ING-05",
           "title": "Tool descriptions treated as untrusted",
-          "statement": "Tool and function descriptions — which the model reads and the user usually does not — are reviewed on approval and re-reviewed when they change. A changed description invalidates the prior approval.",
+          "statement": "You review tool descriptions at approval and again when they change. The model reads these descriptions and the user does not. A changed description cancels the prior approval.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Description review record; change-detection mechanism.",
@@ -1139,7 +1139,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ING-06",
           "title": "Memory and corpus write-path integrity",
-          "statement": "What can write into agent memory or a retrieval corpus is controlled and logged. An agent cannot silently persist attacker-supplied content for its future self or for other agents.",
+          "statement": "You control and log every write path into agent memory and retrieval corpora. An agent cannot silently store attacker content for later use.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Write-path access controls; memory write audit log.",
@@ -1153,7 +1153,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ING-07",
           "title": "Output handling before downstream use",
-          "statement": "Model output is validated, escaped or constrained before it is executed, rendered, or passed to another system. Output is never trusted as code or as a command.",
+          "statement": "You validate, escape, or constrain model output before it executes, renders, or reaches another system. Output never runs as code or as a command.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Validation layer; test showing an injection payload in output does not execute downstream.",
@@ -1167,7 +1167,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ING-08",
           "title": "Inter-agent messages authenticated and untrusted",
-          "statement": "In multi-agent systems, messages between agents are authenticated, and a message from another agent is treated as untrusted input rather than as a trusted instruction.",
+          "statement": "In multi-agent systems, agents authenticate their messages to each other. A message from another agent counts as untrusted input, not as a trusted instruction.",
           "tier": "T3",
           "autonomy": "A3",
           "evidence": "Inter-agent auth mechanism; test showing a spoofed or poisoned message is rejected or contained.",
@@ -1190,7 +1190,7 @@ input[type=search]{min-width:220px}
         {
           "id": "POL-01",
           "title": "Policy expressed in evaluable form",
-          "statement": "The rules that govern agent behaviour exist in a form a system can evaluate, not only in prose a person can read.",
+          "statement": "The rules that govern agent behaviour exist in a form a machine can evaluate, not only in prose a person can read.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Policy definitions in code or configuration; mapping from the written policy to the encoded rules.",
@@ -1204,7 +1204,7 @@ input[type=search]{min-width:220px}
         {
           "id": "POL-02",
           "title": "Enforcement point cannot be bypassed",
-          "statement": "Policy is enforced at a chokepoint between decision and action that the agent cannot route around — not inside the prompt, and not as advice the model may weigh.",
+          "statement": "A chokepoint between decision and action enforces policy, and the agent cannot route around it. The verdict set is: allow, deny, or escalate.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Architecture showing the enforcement point; test attempting to bypass it.",
@@ -1218,7 +1218,7 @@ input[type=search]{min-width:220px}
         {
           "id": "POL-03",
           "title": "Deny is safe and defined",
-          "statement": "When policy denies, the system fails closed with defined behaviour. It does not silently proceed, retry with a different phrasing, or degrade to an unmonitored path.",
+          "statement": "On deny, the system fails closed with defined behaviour. It does not proceed silently, retry with new phrasing, or degrade to an unmonitored path.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Deny-path specification; log of denials showing what happened next.",
@@ -1232,7 +1232,7 @@ input[type=search]{min-width:220px}
         {
           "id": "POL-04",
           "title": "Ambiguity escalates rather than allows",
-          "statement": "When the policy decision is uncertain, the default is escalation to a human, not permission.",
+          "statement": "On an uncertain policy decision, the gate escalates: it holds the action and pages a human. Uncertainty never defaults to permission.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Escalation rule; escalation volume and resolution records.",
@@ -1246,7 +1246,7 @@ input[type=search]{min-width:220px}
         {
           "id": "POL-05",
           "title": "Prohibited uses enforced technically",
-          "statement": "The prohibited-use list from GOV-03 is enforced by controls, not only stated in a policy people have read once.",
+          "statement": "Technical controls enforce the prohibited-use list from GOV-03. A policy that people read once is not enforcement.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Technical control mapped to each prohibited use; test evidence.",
@@ -1260,7 +1260,7 @@ input[type=search]{min-width:220px}
         {
           "id": "POL-06",
           "title": "Output guardrails proportionate to context",
-          "statement": "Output filtering and safety controls are calibrated to the audience and consequence of the use case rather than applied as one global setting.",
+          "statement": "You calibrate output guardrails to the audience and the stakes of each use case. One global setting does not fit all uses.",
           "tier": "T1",
           "autonomy": "A1",
           "evidence": "Guardrail configuration per use case; rationale for the calibration.",
@@ -1274,7 +1274,7 @@ input[type=search]{min-width:220px}
         {
           "id": "POL-07",
           "title": "Policy versioning bound to decisions",
-          "statement": "Every recorded decision can be tied to the version of the policy that governed it, so an old action is judged by the rule that applied at the time.",
+          "statement": "Every recorded decision names the policy version that governed it. You judge an old action by the rule in force at the time.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Policy version identifier present in decision records.",
@@ -1288,7 +1288,7 @@ input[type=search]{min-width:220px}
         {
           "id": "POL-08",
           "title": "Exceptions are time-bound and owned",
-          "statement": "Policy exceptions have a named owner, a stated justification, an expiry date, and a review. Permanent exceptions are policy changes and are treated as such.",
+          "statement": "Each policy exception has a named owner, a written justification, an expiry date, and a review. A permanent exception is a policy change.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Exception register with expiry dates; evidence of expired exceptions closing.",
@@ -1311,7 +1311,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ACT-01",
           "title": "Actions classified by reversibility",
-          "statement": "Every action available to an agent is classified as read-only, reversible write, irreversible, or destructive. This classification, not the tool name, drives the controls.",
+          "statement": "You classify every available action as read-only, reversible write, irreversible, or destructive. This class, not the tool name, selects the controls.",
           "tier": "T1",
           "autonomy": "A2",
           "evidence": "Action inventory with reversibility class per action.",
@@ -1325,7 +1325,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ACT-02",
           "title": "Irreversible actions gated or prohibited",
-          "statement": "Irreversible and destructive actions either require explicit human approval or are removed from the agent's reach entirely. They are never in the autonomous envelope.",
+          "statement": "Irreversible and destructive actions need explicit human approval, or you remove them from agent reach. Such actions never sit inside the autonomous envelope.",
           "tier": "T1",
           "autonomy": "A2",
           "evidence": "Configuration showing the gate or the removal; test attempting the action.",
@@ -1339,7 +1339,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ACT-03",
           "title": "Isolated execution environment",
-          "statement": "Agent code execution and tool use happen in an environment isolated from production systems and from the operator's host by default.",
+          "statement": "Agents execute code and use tools inside an isolated environment. The isolation boundary separates them from business systems and from the operator host.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Sandbox or container configuration; isolation boundary description.",
@@ -1353,7 +1353,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ACT-04",
           "title": "Controlled network egress",
-          "statement": "Agent runtimes have default-deny outbound network access with an explicit allow-list. Note that egress control constrains but does not eliminate exfiltration through approved destinations.",
+          "statement": "Agent runtimes have default-deny outbound network access with an explicit allow-list. Egress control limits, but does not remove, exfiltration through approved destinations.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Egress policy; allow-list with justification per destination.",
@@ -1367,7 +1367,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ACT-05",
           "title": "Rate, volume and spend limits with automatic cutoff",
-          "statement": "Hard limits on invocations, tokens, tool calls and spend stop the agent automatically rather than generating an alert someone reads later.",
+          "statement": "Hard limits on invocations, model usage, tool calls, and spend stop the agent automatically. An alert that someone reads later is not a limit.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Limit configuration; evidence of a cutoff firing.",
@@ -1381,7 +1381,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ACT-06",
           "title": "Scope caps per run",
-          "statement": "Per-execution caps bound how much can be touched — records modified, messages sent, files changed, recipients addressed — so a wrong decision stays small.",
+          "statement": "Per-run caps bound how much one execution can touch: records changed, messages sent, files changed, recipients addressed. A wrong decision stays small.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Cap configuration per agent; a run halted by a cap.",
@@ -1395,7 +1395,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ACT-07",
           "title": "Layered kill switch",
-          "statement": "You can stop one agent, one connector, one class of write action, or all agents organization-wide — and each layer has been tested, not just designed.",
+          "statement": "You can stop one agent, one connector, one class of write action, or every agent at once. You have tested each layer.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Kill switch at each layer; test records with time-to-stop measured.",
@@ -1409,7 +1409,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ACT-08",
           "title": "Rollback or compensating action",
-          "statement": "For reversible writes there is a defined way to undo them, and someone has actually run it.",
+          "statement": "For each reversible write, a defined procedure undoes it, and someone has run that procedure.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Rollback procedure per action class; test evidence.",
@@ -1423,7 +1423,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ACT-09",
           "title": "Autonomy earned incrementally",
-          "statement": "Agents start gated and are promoted to broader autonomy only against pre-stated criteria and evidence of performance. Autonomy is a graduation, not a launch setting.",
+          "statement": "Agents start gated and earn broader autonomy against pre-stated criteria and performance evidence. Autonomy is a graduation, not a launch setting.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Promotion criteria; promotion decisions with the supporting evidence.",
@@ -1437,7 +1437,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ACT-10",
           "title": "Multi-agent orchestration bounded",
-          "statement": "Where agents invoke agents, there are limits on delegation depth, fan-out, and what authority can be inherited by a sub-agent. A sub-agent never gains privileges its caller lacked.",
+          "statement": "Where agents invoke agents, limits bound delegation depth, fan-out, and inherited authority. A sub-agent never gains privileges its caller lacked.",
           "tier": "T3",
           "autonomy": "A3",
           "evidence": "Orchestration limits in configuration; authority inheritance rules; test of a privilege-escalation attempt via delegation.",
@@ -1460,7 +1460,7 @@ input[type=search]{min-width:220px}
         {
           "id": "HUM-01",
           "title": "Named, competent, empowered overseers",
-          "statement": "Specific people are assigned to oversee each agent, understand its limits, and hold the authority to override or halt it without asking permission.",
+          "statement": "Named, competent people oversee each agent. They understand its limits and hold the authority to override or stop it without asking permission.",
           "tier": "T1",
           "autonomy": "A2",
           "evidence": "Assignment records; competence basis; documented authority to stop.",
@@ -1474,7 +1474,7 @@ input[type=search]{min-width:220px}
         {
           "id": "HUM-02",
           "title": "Oversight burden is measured",
-          "statement": "You track how many approvals people are asked for and what proportion they approve. A very high approval rate is treated as a control failure signal, not as evidence things are fine.",
+          "statement": "You track how many approvals people receive and the share they approve. A very high approval rate signals a control failure, not health.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Approval volume and approval-rate metrics over time, reviewed by the accountable owner.",
@@ -1488,7 +1488,7 @@ input[type=search]{min-width:220px}
         {
           "id": "HUM-03",
           "title": "Approvals rationed to consequential actions",
-          "statement": "Human approval is required only where it changes the outcome. Routine low-consequence confirmations are removed or automated so attention is available for the decisions that matter.",
+          "statement": "You require human approval only where it changes the outcome. You remove or automate routine low-consequence confirmations to protect attention for decisions that matter.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Mapping of which action classes require approval and why; evidence of prompts removed.",
@@ -1502,7 +1502,7 @@ input[type=search]{min-width:220px}
         {
           "id": "HUM-04",
           "title": "Approvers get enough to decide",
-          "statement": "An approval request shows what will happen, to what, why the agent proposes it, and what the agent is uncertain about — not just an action name and a Yes/No.",
+          "statement": "An approval request shows what will happen, to what, why the agent proposes it, and where the agent is uncertain. A bare action name with yes and no is not enough.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Screenshot or specification of the approval interface.",
@@ -1516,7 +1516,7 @@ input[type=search]{min-width:220px}
         {
           "id": "HUM-05",
           "title": "Automation-bias countermeasures",
-          "statement": "Active measures counter over-trust — requiring a stated reason for consequential approvals, sampling approved actions for retrospective review, or periodically surfacing the agent's error record to approvers.",
+          "statement": "Active measures counter over-trust. Approvers state a reason for consequential approvals, you sample approved actions for later review, and approvers see the agent error record.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "The measure in operation; sampling results.",
@@ -1530,7 +1530,7 @@ input[type=search]{min-width:220px}
         {
           "id": "HUM-06",
           "title": "Affected people are informed",
-          "statement": "People subject to a decision an agent made or materially shaped are told that an AI system was involved.",
+          "statement": "When an agent makes or materially shapes a decision about a person, you tell that person an AI system took part.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Notice text and where it appears in the journey.",
@@ -1544,7 +1544,7 @@ input[type=search]{min-width:220px}
         {
           "id": "HUM-07",
           "title": "Appeal and human review route",
-          "statement": "There is a working route for a person to contest an agent-driven outcome and get human review, with a stated timeframe.",
+          "statement": "A working route lets a person contest an agent-driven outcome and get human review inside a stated timeframe.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Documented appeal process; volume and outcome statistics.",
@@ -1558,7 +1558,7 @@ input[type=search]{min-width:220px}
         {
           "id": "HUM-08",
           "title": "Disclosure of AI interaction",
-          "statement": "When a person interacts with an AI system and it would not otherwise be obvious, they are told.",
+          "statement": "When a person interacts with an AI system and it would not otherwise be obvious, you tell them.",
           "tier": "T1",
           "autonomy": "A1",
           "evidence": "The disclosure as it appears to the user.",
@@ -1572,7 +1572,7 @@ input[type=search]{min-width:220px}
         {
           "id": "HUM-09",
           "title": "Synthetic content marked",
-          "statement": "AI-generated or materially AI-modified content is marked in a machine-readable way and, where required, disclosed to the audience.",
+          "statement": "You mark AI-generated or AI-modified content in a machine-readable way and, where the law requires, disclose it to the audience.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Marking implementation; sample output with the marking present.",
@@ -1586,7 +1586,7 @@ input[type=search]{min-width:220px}
         {
           "id": "HUM-10",
           "title": "Workforce consultation",
-          "statement": "Where agents affect how people work, are evaluated, or are allocated tasks, workers and their representatives are informed before deployment.",
+          "statement": "Where agents change how people work, how you evaluate them, or how you allocate tasks, you inform workers and their representatives before deployment.",
           "tier": "T3",
           "autonomy": "A1",
           "evidence": "Consultation records; notification to worker representatives.",
@@ -1600,7 +1600,7 @@ input[type=search]{min-width:220px}
         {
           "id": "HUM-11",
           "title": "Override is captured, not punished",
-          "statement": "The ungoverned path is never silently blocked: overrides and break-glass actions remain possible, are always paged, and convert to a retroactive approval record. Override rate is tracked as a system-health metric, never as an individual-performance one — punishing declared overrides produces hidden overrides, which corrupts the record worse than the occasional bypass.",
+          "statement": "You never silently block the ungoverned path: overrides stay possible, always page a human, and convert to a retroactive approval record. You track override rate as system health, never as individual performance. A punished declared override becomes a hidden override.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Break-glass procedure; one paged override converted to a retroactive record; override-rate metric reviewed by the accountable owner.",
@@ -1623,7 +1623,7 @@ input[type=search]{min-width:220px}
         {
           "id": "OBS-01",
           "title": "Complete action logging",
-          "statement": "Every tool invocation is logged with the tool, the arguments, the result, and the timestamp. Not just that the agent ran, but what it did.",
+          "statement": "The evidence record captures every tool invocation with the tool, the arguments, the result, and the timestamp. It shows what the agent did, not only that it ran.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Log sample showing a full tool invocation record.",
@@ -1637,7 +1637,7 @@ input[type=search]{min-width:220px}
         {
           "id": "OBS-02",
           "title": "Attribution is complete",
-          "statement": "Each record carries agent identity, the human principal being acted for, session, the policy decision made, and the scopes granted. Attribution fails closed: an action that cannot be matched to a principal and grant is quarantined for human adjudication, never auto-assigned to the most probable actor.",
+          "statement": "Each entry carries agent identity, the human principal, the session, the policy decision, and the granted scopes. Attribution fails closed: you quarantine unmatched actions for human adjudication and never auto-assign an actor.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Log schema; a record with all fields populated; the quarantine path for unattributable actions and one adjudicated example.",
@@ -1651,7 +1651,7 @@ input[type=search]{min-width:220px}
         {
           "id": "OBS-03",
           "title": "Tamper-evident evidence store",
-          "statement": "The evidence record is append-only or tamper-evident, and the agent cannot write to or modify its own audit trail.",
+          "statement": "The evidence record is append-only or tamper-evident. The agent identity holds no write access to its own evidence path.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Store configuration; access control showing the agent identity lacks write access to the audit path.",
@@ -1665,7 +1665,7 @@ input[type=search]{min-width:220px}
         {
           "id": "OBS-04",
           "title": "Retention meets the longest obligation",
-          "statement": "Evidence retention is set to the longest applicable legal, contractual or investigative requirement, and is defensible if asked.",
+          "statement": "You set evidence retention to the longest applicable legal, contractual, or investigative requirement, and you can defend the number.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Retention configuration and the obligation it maps to.",
@@ -1679,7 +1679,7 @@ input[type=search]{min-width:220px}
         {
           "id": "OBS-05",
           "title": "End-to-end traceability",
-          "statement": "A single trace links the triggering signal, the retrieved context, the model decision, the policy verdict, the approval, the action, and the outcome.",
+          "statement": "One trace links the triggering signal, the retrieved context, the model decision, the policy verdict, the approval, the action, and the outcome.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "A worked trace for a real incident or transaction.",
@@ -1693,7 +1693,7 @@ input[type=search]{min-width:220px}
         {
           "id": "OBS-06",
           "title": "Behavioural anomaly detection",
-          "statement": "Agent behaviour is monitored for deviation — unusual volume, novel tool sequences, off-hours activity, access to data domains it has not touched before.",
+          "statement": "You monitor agent behaviour for deviation: unusual volume, novel tool sequences, off-hours activity, and access to new data domains.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Detection rules; alerts generated and triaged.",
@@ -1707,7 +1707,7 @@ input[type=search]{min-width:220px}
         {
           "id": "OBS-07",
           "title": "Cost and consumption telemetry",
-          "statement": "Consumption is monitored per agent so runaway loops and unexpected spend are visible early — and because cost anomalies are often the first visible symptom of a behavioural one.",
+          "statement": "You monitor consumption per agent, so runaway loops and unexpected spend surface early. A cost anomaly can be the first visible symptom of a behavioural one.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Per-agent cost dashboard; alert thresholds.",
@@ -1721,7 +1721,7 @@ input[type=search]{min-width:220px}
         {
           "id": "OBS-08",
           "title": "Evidence is exportable and legible",
-          "statement": "Evidence can be produced in a form a regulator, auditor or customer can actually use, within a timeframe you have committed to.",
+          "statement": "You can export evidence in a form a regulator, auditor, or customer can use, inside a timeframe you have committed to.",
           "tier": "T3",
           "autonomy": "A1",
           "evidence": "Export capability; a sample evidence pack.",
@@ -1735,7 +1735,7 @@ input[type=search]{min-width:220px}
         {
           "id": "OBS-09",
           "title": "Actor-independent ground truth",
-          "statement": "At least one telemetry channel records the agent's effects without any cooperation from the agent runtime — infrastructure event streams, database audit logs, network egress logs — and is reconciled against the agent's own reported actions on a schedule. Unexplained deltas are treated as findings.",
+          "statement": "At least one telemetry channel records agent effects with zero cooperation from the agent runtime: infrastructure events, database audit logs, or egress logs. You reconcile this channel against the evidence record at least weekly and treat unexplained deltas as findings.",
           "tier": "T3",
           "autonomy": "A3",
           "evidence": "Sensor configuration; a reconciliation report including at least one investigated delta.",
@@ -1758,7 +1758,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ASR-01",
           "title": "Acceptance criteria defined before launch",
-          "statement": "What 'good enough' means is written down before the agent goes live, in terms someone could disagree with.",
+          "statement": "You write down what good enough means before the agent goes live, in terms someone could dispute.",
           "tier": "T1",
           "autonomy": "A1",
           "evidence": "Acceptance criteria document dated before go-live.",
@@ -1772,7 +1772,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ASR-02",
           "title": "Task-level evaluation with harm weighting",
-          "statement": "Evaluation reports per-task outcomes weighted by consequence, not a single aggregate pass rate. A failure that deletes data and a failure that sends a clumsy email are not the same finding.",
+          "statement": "Evaluation reports per-task outcomes weighted by consequence, not one aggregate pass rate. A deletion failure and a clumsy email are different findings.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Evaluation report showing per-task results and harm weighting.",
@@ -1786,7 +1786,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ASR-03",
           "title": "Adaptive, multi-attempt adversarial testing",
-          "statement": "Prompt-injection and manipulation testing is adaptive and repeated, and results are reported as success over N attempts rather than single-shot.",
+          "statement": "Injection and manipulation testing is adaptive and repeated. You report success over N attempts, never a single shot.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Test methodology and results showing attempt counts.",
@@ -1800,7 +1800,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ASR-04",
           "title": "Red team covers the agentic surface",
-          "statement": "Red teaming explicitly covers tool misuse, privilege escalation, memory and context poisoning, goal manipulation, and — where relevant — inter-agent and rogue-agent scenarios.",
+          "statement": "Red teaming covers tool misuse, privilege escalation, memory and context poisoning, and goal manipulation. Where relevant, it covers inter-agent and rogue-agent scenarios.",
           "tier": "T3",
           "autonomy": "A3",
           "evidence": "Red team scope mapped to a recognized threat taxonomy; findings and remediation.",
@@ -1814,7 +1814,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ASR-05",
           "title": "Fairness and disparate-impact evaluation",
-          "statement": "Where outputs affect people's access to opportunity, money, care or liberty, performance is measured across affected groups, not only in aggregate.",
+          "statement": "Where outputs affect access to opportunity, money, care, or liberty, you measure performance across affected groups, not only in aggregate.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Disaggregated performance results; the groups tested and why.",
@@ -1828,7 +1828,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ASR-06",
           "title": "Model and provider change management",
-          "statement": "A model version change, provider default change, or system prompt change triggers re-evaluation before it reaches production. Silent upstream upgrades are treated as changes to your system.",
+          "statement": "A model version change, a provider default change, or a system prompt change triggers re-evaluation before production. A silent upstream upgrade is a change to your AI system.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Change process; a re-evaluation record triggered by an upstream change.",
@@ -1842,7 +1842,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ASR-07",
           "title": "Model and tool supply-chain assurance",
-          "statement": "For each model, tool and dataset you depend on, you know its origin, licence, security posture and the terms under which it may change.",
+          "statement": "For each model, tool, and dataset you use, you know its origin, licence, security posture, and change terms.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Supply chain record; provider attestations or assessments.",
@@ -1856,7 +1856,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ASR-08",
           "title": "Independent review proportionate to impact",
-          "statement": "High-consequence systems get review by someone who did not build them — internal audit, an independent team, or a third party.",
+          "statement": "Someone who did not build a high-consequence system reviews it: internal audit, an independent team, or a third party.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Review report with the reviewer's independence stated.",
@@ -1870,7 +1870,7 @@ input[type=search]{min-width:220px}
         {
           "id": "ASR-09",
           "title": "Post-launch drift monitoring",
-          "statement": "Live performance is measured against the acceptance criteria on an ongoing basis, and degradation triggers action rather than a note.",
+          "statement": "You measure live performance against the acceptance criteria on a schedule. Degradation triggers action, not a note.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Monitoring dashboard against acceptance thresholds; an example of a triggered response.",
@@ -1893,7 +1893,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IRR-01",
           "title": "AI incidents are in scope of the IR process",
-          "statement": "Your incident definition covers agent misbehaviour — wrong actions, harmful output, data exposure, manipulation — and the existing IR process owns it. No parallel undefined path.",
+          "statement": "Your incident definition covers agent misbehaviour: wrong actions, harmful output, data exposure, and manipulation. The existing incident response process owns these categories.",
           "tier": "T1",
           "autonomy": "A1",
           "evidence": "IR policy naming AI incident categories.",
@@ -1907,7 +1907,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IRR-02",
           "title": "Detection and triage path",
-          "statement": "There is a defined way agent misbehaviour gets noticed and triaged — from monitoring, from users, and from the people the agent acts upon.",
+          "statement": "A defined path notices and triages agent misbehaviour, with signals from monitoring, from users, and from the people the agent acts upon.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Detection sources; triage criteria; reporting channel.",
@@ -1921,7 +1921,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IRR-03",
           "title": "Containment playbook",
-          "statement": "A written playbook covers isolating the agent, revoking its credentials, hitting the right kill switch layer, and preserving evidence before it rotates out.",
+          "statement": "A written playbook covers isolating the agent, revoking its credentials, stopping at the right layer, and preserving evidence before it rotates out.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "The playbook; evidence it has been exercised.",
@@ -1935,7 +1935,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IRR-04",
           "title": "Remediation of actions already taken",
-          "statement": "You can enumerate everything the agent did in the affected window and reverse or compensate for what needs it.",
+          "statement": "You can list everything the agent did in the affected window and reverse or compensate for what needs it.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Method for enumerating actions in a time window; a worked remediation.",
@@ -1949,7 +1949,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IRR-05",
           "title": "Notification obligations mapped in advance",
-          "statement": "Who must be told, in what timeframe — regulator, customer, data subject, insurer, model provider — is worked out before the incident, not during it.",
+          "statement": "You map who you must tell, and in what timeframe, before the incident: regulator, customer, data subject, insurer, and model provider.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Notification matrix with timeframes and named contacts.",
@@ -1963,7 +1963,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IRR-06",
           "title": "Blameless post-incident review",
-          "statement": "Incidents get a structured review that produces root cause and named follow-up owners, run in a way that does not punish reporting.",
+          "statement": "A structured review follows each incident and produces a root cause with named follow-up owners. The review never punishes reporting.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Post-incident reports with assigned actions and their closure.",
@@ -1977,7 +1977,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IRR-07",
           "title": "Clean retirement",
-          "statement": "Retiring an agent is a defined process: credentials revoked, connectors removed, memory and derived data disposed of per policy, dependencies checked, evidence retained.",
+          "statement": "Agent retirement follows a defined process: revoke credentials, remove connectors, dispose of memory and derived data per policy, check dependencies, retain evidence.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Decommissioning checklist; a completed retirement record.",
@@ -1991,7 +1991,7 @@ input[type=search]{min-width:220px}
         {
           "id": "IRR-08",
           "title": "Continuity without the agent",
-          "statement": "If the agent is stopped — by you, by an incident, or by a provider outage — the work it was doing has a defined fallback. Dependence has been made explicit.",
+          "statement": "If you, an incident, or a provider outage stops the agent, a defined fallback covers its work. You have made the dependence explicit.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Fallback procedure; the dependency documented in BCP.",
@@ -2014,7 +2014,7 @@ input[type=search]{min-width:220px}
         {
           "id": "LRN-01",
           "title": "Findings route to named artifact classes",
-          "statement": "Operational findings are routed into specific, tracked artifact types — remediation items, threshold changes, procedure updates, ownership corrections — not into an undifferentiated backlog.",
+          "statement": "You route operational findings into named, tracked artifact types: remediation items, threshold changes, procedure updates, and ownership corrections. An undifferentiated backlog does not satisfy this control.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "The artifact classes; a report of items by class with closure rates.",
@@ -2028,7 +2028,7 @@ input[type=search]{min-width:220px}
         {
           "id": "LRN-02",
           "title": "Control tuning from operational evidence",
-          "statement": "Guardrail thresholds, policy rules and detection logic are updated based on what actually happened, and the changes are versioned.",
+          "statement": "You update guardrail thresholds, policy rules, and detection logic from operational evidence, and you version each change.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Change log for guardrails and policies with the triggering evidence.",
@@ -2042,7 +2042,7 @@ input[type=search]{min-width:220px}
         {
           "id": "LRN-03",
           "title": "Knowledge artifacts stay current",
-          "statement": "Prompts, procedures, runbooks and reference material the agents and their operators rely on are versioned and updated when they are found wrong.",
+          "statement": "You version the prompts, procedures, runbooks, and reference material that agents and operators rely on, and update them when found wrong.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Version history showing updates driven by findings.",
@@ -2055,8 +2055,8 @@ input[type=search]{min-width:220px}
         },
         {
           "id": "LRN-04",
-          "title": "Ownership corrections feed back to inventory",
-          "statement": "When an incident reveals that nobody actually owned a system, or the wrong person did, the inventory is corrected and the correction is tracked to closure.",
+          "title": "Ownership corrections feed back to the register",
+          "statement": "When an incident reveals missing or wrong ownership, you correct the AI register and track the correction to closure.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Inventory change log tied to findings.",
@@ -2070,7 +2070,7 @@ input[type=search]{min-width:220px}
         {
           "id": "LRN-05",
           "title": "Metrics reviewed on a cadence",
-          "statement": "A defined set of governance metrics is reviewed by the accountable owner on a stated cadence, with decisions recorded.",
+          "statement": "The accountable owner reviews a defined set of governance metrics on a stated cadence and records the decisions.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Metric set; review records with decisions.",
@@ -2084,7 +2084,7 @@ input[type=search]{min-width:220px}
         {
           "id": "LRN-06",
           "title": "Horizon scanning",
-          "statement": "Someone is responsible for tracking changes in applicable regulation, threat technique and provider capability, and for triggering reassessment when they move.",
+          "statement": "A named person tracks changes in regulation, threat technique, and provider capability, and triggers reassessment when any of them moves.",
           "tier": "T3",
           "autonomy": "A1",
           "evidence": "Named owner; scanning sources; a reassessment triggered by an external change.",
@@ -2098,7 +2098,7 @@ input[type=search]{min-width:220px}
         {
           "id": "LRN-07",
           "title": "Sharing beyond the organization",
-          "statement": "Where appropriate, lessons and incident patterns are shared with sector peers, ISACs or the wider community — and you consume what others share.",
+          "statement": "Where sharing is safe and lawful, you share lessons and incident patterns with sector peers and the wider community. You also consume what others share.",
           "tier": "T3",
           "autonomy": "A2",
           "evidence": "Sharing arrangements; contributions made or received.",
