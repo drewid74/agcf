@@ -19,7 +19,7 @@ Designed to be used in an afternoon rather than adopted over a year.
 | Assess where you stand | **[`AGCF-assessment.html`](AGCF-assessment.html)** — open it in a browser. No install, no server, no data leaves the page. |
 | Read the control catalogue | **[`AGCF-framework.md`](AGCF-framework.md)** — the 107 controls, their evidence requirements, and the standards crosswalk. |
 | Build the thing | **[`AGCF-implementation.md`](AGCF-implementation.md)** — collapses the catalogue into nine buildable components, with a prompt library for executing each in your own environment. |
-| Avoid the failure modes | **[`AGCF-implementation-field-notes.md`](AGCF-implementation-field-notes.md)** — fourteen lessons from implementing these controls on a live stack. Read before you deploy, not after. |
+| Avoid the failure modes | **[`AGCF-implementation-field-notes.md`](AGCF-implementation-field-notes.md)** — fifteen lessons from implementing these controls on a live stack. Read before you deploy, not after. |
 | Consume it programmatically | **[`catalog.json`](catalog.json)** — the full catalogue, machine-readable. |
 
 ## What it is, and what it is not
@@ -95,7 +95,8 @@ but wording and tier assignments may still change. v0.9.3 rewrote all 106 contro
 statements in Simplified Technical English (active voice, named doer, second
 person, one term per concept) and passed the project's own two-stage STE gate at
 zero findings. v0.9.4 adds ASR-10 and tightens the evidence for IDA-01, IDA-03
-and POL-02.
+and POL-02. v0.9.5 corrects two STE-gate findings introduced in v0.9.4 and syncs
+the assessment tool with the catalogue.
 
 The versioned artifacts move together: the tag on this repository always equals
 the version string in `AGCF-framework.md`.

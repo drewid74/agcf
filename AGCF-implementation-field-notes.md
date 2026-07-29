@@ -412,13 +412,76 @@ two-state and both block by default.
 
 ---
 
+## 15. A test derived from the implementation confirms the code, not the requirement
+
+**Observed.** Two components each carried a scope-string convention. One
+prefixed identifiers with a namespace on the way in; the other's identifiers
+already carried that prefix. The integration test asserted against a
+double-prefixed value — the namespace applied twice — and **passed**.
+
+Nothing was broken in either component considered alone. Each was internally
+consistent. The test agreed with what the code did, and the code and the test
+were jointly wrong about what the system was supposed to guarantee. The suite
+reported a passing control that was proving a contract nobody wanted.
+
+**Why it generalizes.** A test written by reading the implementation inherits
+the implementation's assumptions, including its mistakes. It cannot fail for
+the reason you need it to, because it was derived from the thing it is meant to
+check. What it verifies is *self-consistency*, which the code already had.
+
+This is most likely exactly where it is least visible — at a **boundary between
+components with independent conventions**. Prefixes, encodings, units,
+timezones, identifier formats. Neither side looks wrong in isolation and no
+single-component test catches it, because the defect exists only in the
+relationship between them.
+
+A green suite makes it worse than an untested boundary would be. An untested
+boundary is a known gap. A boundary covered by a test derived from the
+implementation reports health while proving the wrong thing, and it will keep
+reporting health as the mistake propagates to every new call site that copies
+the convention.
+
+Worth naming a modern amplifier: **tests generated from the code — by a person
+reading the module, or by an agent asked to "write tests for this" — are
+derived by construction.** They are useful for regression and refactoring
+safety, where agreeing with current behaviour is the point. They are close to
+worthless as evidence that behaviour is *correct*, and a control catalogue that
+accepts "tests pass" as evidence should care about the difference.
+
+**Do.** Derive the assertion from the requirement, and write the expected value
+down **before** running anything — if you produce the expectation by executing
+the code and copying the output, you have recorded behaviour, not verified it.
+
+At component boundaries, pin the wire format explicitly: one test that asserts
+the exact string, encoding, or unit crossing the interface, written from the
+interface contract rather than from either implementation. Better still, remove
+the convention — an identifier type that *cannot* be double-namespaced by
+construction beats a rule both sides must remember, which is §8 applied to data
+shapes.
+
+And require that any test derived from an implementation be checked against the
+requirement by someone or something that did not read that implementation. The
+value of a test is precisely the independence of its derivation; a test that
+has never failed for the right reason has not been validated, it has only been
+run.
+
+**Maps to.** ASR-10, IDA-04, LRN-01.
+
+---
+
 ## Reading these together
 
-Ten of the fourteen are the same failure wearing different clothes: **the
+Ten of the fifteen are the same failure wearing different clothes: **the
 control was fine and the surrounding truth was not**. Not invoked (§11, §12),
 not durable (§4), not fed (§7), not reachable (§14), not carrying identity
 (§13), not distinguishable from breakage (§1, §2, §3), not attributed
 correctly (§6).
+
+§15 is a different animal and worth separating. There the control was invoked,
+was fed, was reachable, and *was tested* — and the verification itself was
+unsound, so the passing test was evidence of nothing. Everything else on this
+list can in principle be caught by testing. That one is what happens when the
+test is the thing that is wrong.
 
 The practical consequence is that "we implemented control X" is not a
 meaningful claim, and neither is a passing test suite. The claims worth making
