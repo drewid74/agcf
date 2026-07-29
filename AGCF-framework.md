@@ -1,6 +1,6 @@
 # AGCF — Agentic Governance & Control Framework
 
-**Version 0.9.4 (draft for review) · 29 July 2026**
+**Version 0.9.5 (draft for review) · 29 July 2026**
 
 *v0.9.2 adds two controls generalized from a field implementation — HUM-11 (override is captured, not punished) and OBS-09 (actor-independent ground truth) — amends OBS-02 to require fail-closed attribution, and ships with a companion **Implementation Guide** that collapses the catalogue into a nine-component buildable architecture with a prompt library for executing it in any environment. v0.9.3 rewrites all 106 control statements in Simplified Technical English form (active voice, named doer, second person, one term per concept) and passes the project's own two-stage STE gate at zero findings. v0.9.4 tightens the evidence for IDA-01 and IDA-03 so attribution is demonstrated at the point of action rather than the point of issuance, extends POL-02 to require that every verdict reaches a mechanism that carries it out, and adds ASR-10 (dependent controls are tested as a pair) — all three generalized from a field implementation and recorded in the Implementation Field Notes §13–§14.*
 
@@ -500,7 +500,7 @@ You have an identified lawful basis or consent for the processing the agent perf
 > The most commonly missing layer, and the one that makes every other control unenforceable when absent. If the agent uses a human's credentials, your logs say a human did it, your revocation kills that human's access, and your least-privilege story is fiction.
 
 **IDA-01 · Distinct identity per agent**  `T2` `A1+`  
-Each agent authenticates as itself. An agent never borrows a human credential, a shared service account, or a long-lived admin credential.  
+You give each agent its own identity. You do not let an agent borrow a human credential, a shared service account, or a long-lived admin credential.  
 *Evidence:* Identity per agent in the directory or secret store; no shared-credential exceptions outstanding; the agent identity present on an authorization decision record, not only in the directory.  
 **NIST AI RMF:** GOVERN 3.2, MANAGE 1.3 · **ISO 42001:** A.3.2, A.9.2 · **EU AI Act:** Art. 12 (traceability) · **Other:** OWASP ASI03, T9; CSA Agentic AI IAM
 
@@ -606,7 +606,7 @@ The rules that govern agent behaviour exist in a form a machine can evaluate, no
 **NIST AI RMF:** GOVERN 1.4, MANAGE 1.3 · **ISO 42001:** A.2.2, A.9.2 · **EU AI Act:** Art. 9
 
 **POL-02 · Enforcement point cannot be bypassed**  `T2` `A2+`  
-A chokepoint between decision and action enforces policy, and the agent cannot route around it. The verdict set is: allow, deny, or escalate. Each verdict reaches a mechanism that carries it out.  
+You enforce policy at a chokepoint between decision and action, and the agent cannot route around it. You define three verdicts: allow, deny, and escalate. You connect each verdict to a mechanism that carries it out.  
 *Evidence:* Architecture showing the enforcement point; test attempting to bypass it; the named mechanism for each verdict, and a test that carries an escalate verdict through to a human decision.  
 **NIST AI RMF:** MANAGE 1.3, MEASURE 2.6 · **ISO 42001:** A.6.2.5, A.9.2 · **EU AI Act:** Art. 14(4) · **Other:** OWASP LLM06, ASI02
 
@@ -922,7 +922,7 @@ If you, an incident, or a provider outage stops the agent, a defined fallback co
 
 
 ### LRN — Learning & Continuous Improvement
-*Plane: Assurance & Learning*
+*Plane: Assurance & Learning v0.9.5 corrects v0.9.4, which shipped with two STE-gate findings (IDA-01 and POL-02 used a noun actor rather than the second person) and an assessment tool that had not been synchronised with the catalogue - it carried 106 controls against the catalogue's 107. Tag v0.9.4 is left pointing at that content rather than moved.*
 
 **Purpose.** What the system learns in operation changes the system — as specific, owned, tracked artifacts rather than as a resolution to do better.
 

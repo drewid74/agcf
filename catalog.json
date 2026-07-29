@@ -1,7 +1,7 @@
 {
   "meta": {
     "name": "AGCF — Agentic Governance & Control Framework",
-    "version": "0.9.4 (draft for review)",
+    "version": "0.9.5 (draft for review)",
     "date": "2026-07-29",
     "summary": "A vendor-neutral reference architecture and self-assessment instrument for governing AI agents, assistants and automation. Scales from an individual practitioner to a regulated enterprise.",
     "planes": [
@@ -526,7 +526,7 @@
         {
           "id": "IDA-01",
           "title": "Distinct identity per agent",
-          "statement": "Each agent authenticates as itself. An agent never borrows a human credential, a shared service account, or a long-lived admin credential.",
+          "statement": "You give each agent its own identity. You do not let an agent borrow a human credential, a shared service account, or a long-lived admin credential.",
           "tier": "T2",
           "autonomy": "A1",
           "evidence": "Identity per agent in the directory or secret store; no shared-credential exceptions outstanding; the agent identity present on an authorization decision record, not only in the directory.",
@@ -796,7 +796,7 @@
         {
           "id": "POL-02",
           "title": "Enforcement point cannot be bypassed",
-          "statement": "A chokepoint between decision and action enforces policy, and the agent cannot route around it. The verdict set is: allow, deny, or escalate. Each verdict reaches a mechanism that carries it out.",
+          "statement": "You enforce policy at a chokepoint between decision and action, and the agent cannot route around it. You define three verdicts: allow, deny, and escalate. You connect each verdict to a mechanism that carries it out.",
           "tier": "T2",
           "autonomy": "A2",
           "evidence": "Architecture showing the enforcement point; test attempting to bypass it; the named mechanism for each verdict, and a test that carries an escalate verdict through to a human decision.",

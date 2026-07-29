@@ -1,6 +1,6 @@
 # AGCF — Agentic Governance & Control Framework
 
-**v0.9.4 (draft for review) · 29 July 2026**
+**v0.9.5 (draft for review) · 29 July 2026**
 
 A vendor-neutral reference architecture and self-assessment instrument for
 governing AI agents, assistants and automation. 107 controls across 12 domains,

@@ -1,6 +1,6 @@
 # AGCF Implementation Guide
 
-**Companion to AGCF v0.9.4 · 28 July 2026 · Universal edition**
+**Companion to AGCF v0.9.5 · 28 July 2026 · Universal edition**
 
 The catalogue answers *what must be true and how you'd prove it*. This document answers the question the catalogue deliberately doesn't: **what do you actually build, and in what order, so that one system satisfies many controls at once.**
 

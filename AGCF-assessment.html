@@ -409,7 +409,7 @@ input[type=search]{min-width:220px}
 <script id="catalog" type="application/json">{
   "meta": {
     "name": "AGCF — Agentic Governance & Control Framework",
-    "version": "0.9.4 (draft for review)",
+    "version": "0.9.5 (draft for review)",
     "date": "2026-07-28",
     "summary": "A vendor-neutral reference architecture and self-assessment instrument for governing AI agents, assistants and automation. Scales from an individual practitioner to a regulated enterprise.",
     "planes": [
@@ -934,10 +934,10 @@ input[type=search]{min-width:220px}
         {
           "id": "IDA-01",
           "title": "Distinct identity per agent",
-          "statement": "Each agent authenticates as itself. An agent never borrows a human credential, a shared service account, or a long-lived admin credential.",
+          "statement": "You give each agent its own identity. You do not let an agent borrow a human credential, a shared service account, or a long-lived admin credential.",
           "tier": "T2",
           "autonomy": "A1",
-          "evidence": "Identity per agent in the directory or secret store; no shared-credential exceptions outstanding.",
+          "evidence": "Identity per agent in the directory or secret store; no shared-credential exceptions outstanding; the agent identity present on an authorization decision record, not only in the directory.",
           "xw": {
             "NIST AI RMF": "GOVERN 3.2, MANAGE 1.3",
             "ISO 42001": "A.3.2, A.9.2",
@@ -965,7 +965,7 @@ input[type=search]{min-width:220px}
           "statement": "For any agent action you can answer: which human authorized it, for what scope, and when that authority started and ended.",
           "tier": "T2",
           "autonomy": "A2",
-          "evidence": "Delegation records or on-behalf-of claims present in logs; a worked example.",
+          "evidence": "Delegation records or on-behalf-of claims present in logs; a worked example traced from one action record back to the authorizing human — not forward from a grant.",
           "xw": {
             "NIST AI RMF": "GOVERN 3.2, MANAGE 4.1",
             "ISO 42001": "A.6.2.8, A.10.2",
@@ -1204,10 +1204,10 @@ input[type=search]{min-width:220px}
         {
           "id": "POL-02",
           "title": "Enforcement point cannot be bypassed",
-          "statement": "A chokepoint between decision and action enforces policy, and the agent cannot route around it. The verdict set is: allow, deny, or escalate.",
+          "statement": "You enforce policy at a chokepoint between decision and action, and the agent cannot route around it. You define three verdicts: allow, deny, and escalate. You connect each verdict to a mechanism that carries it out.",
           "tier": "T2",
           "autonomy": "A2",
-          "evidence": "Architecture showing the enforcement point; test attempting to bypass it.",
+          "evidence": "Architecture showing the enforcement point; test attempting to bypass it; the named mechanism for each verdict, and a test that carries an escalate verdict through to a human decision.",
           "xw": {
             "NIST AI RMF": "MANAGE 1.3, MEASURE 2.6",
             "ISO 42001": "A.6.2.5, A.9.2",
@@ -1879,6 +1879,20 @@ input[type=search]{min-width:220px}
             "ISO 42001": "A.6.2.6, Clause 9.1",
             "EU AI Act": "Art. 72 (post-market monitoring), Art. 26(5)",
             "Other": "NIST AI 800-4 (monitoring challenges)"
+          }
+        },
+        {
+          "id": "ASR-10",
+          "title": "Dependent controls are tested as a pair",
+          "statement": "You test controls that depend on each other together, not only one at a time. When one control must invoke another, you name the invocation path and you test it.",
+          "tier": "T2",
+          "autonomy": "A2",
+          "evidence": "For each dependency, the named invocation path and a test that exercises it end to end; a list of controls that nothing else can reach.",
+          "xw": {
+            "NIST AI RMF": "MEASURE 2.6, MANAGE 1.3",
+            "ISO 42001": "A.6.2.6, Clause 9.1",
+            "EU AI Act": "Art. 15(1), Art. 17",
+            "Other": "OWASP ASI02"
           }
         }
       ]
